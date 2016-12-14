@@ -1,0 +1,530 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		70DC6CBC1E01F6DB00CE6953 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC6CBB1E01F6DB00CE6953 /* main.m */; };
+		70DC6CBF1E01F6DB00CE6953 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC6CBE1E01F6DB00CE6953 /* AppDelegate.m */; };
+		70DC6CC21E01F6DB00CE6953 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC6CC11E01F6DB00CE6953 /* ViewController.m */; };
+		70DC6CC51E01F6DB00CE6953 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70DC6CC31E01F6DB00CE6953 /* Main.storyboard */; };
+		70DC6CC71E01F6DB00CE6953 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70DC6CC61E01F6DB00CE6953 /* Assets.xcassets */; };
+		70DC6CCA1E01F6DB00CE6953 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70DC6CC81E01F6DB00CE6953 /* LaunchScreen.storyboard */; };
+		70DC6CD51E01F6DB00CE6953 /* Garage_SaleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC6CD41E01F6DB00CE6953 /* Garage_SaleTests.m */; };
+		70DC6CE01E01F6DB00CE6953 /* Garage_SaleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC6CDF1E01F6DB00CE6953 /* Garage_SaleUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		70DC6CD11E01F6DB00CE6953 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 70DC6CAF1E01F6DB00CE6953 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 70DC6CB61E01F6DB00CE6953;
+			remoteInfo = "Garage Sale";
+		};
+		70DC6CDC1E01F6DB00CE6953 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 70DC6CAF1E01F6DB00CE6953 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 70DC6CB61E01F6DB00CE6953;
+			remoteInfo = "Garage Sale";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		70DC6CB71E01F6DB00CE6953 /* Garage Sale.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Garage Sale.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		70DC6CBB1E01F6DB00CE6953 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		70DC6CBD1E01F6DB00CE6953 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		70DC6CBE1E01F6DB00CE6953 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		70DC6CC01E01F6DB00CE6953 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		70DC6CC11E01F6DB00CE6953 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		70DC6CC41E01F6DB00CE6953 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		70DC6CC61E01F6DB00CE6953 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		70DC6CC91E01F6DB00CE6953 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		70DC6CCB1E01F6DB00CE6953 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		70DC6CD01E01F6DB00CE6953 /* Garage SaleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Garage SaleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		70DC6CD41E01F6DB00CE6953 /* Garage_SaleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Garage_SaleTests.m; sourceTree = "<group>"; };
+		70DC6CD61E01F6DB00CE6953 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		70DC6CDB1E01F6DB00CE6953 /* Garage SaleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Garage SaleUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		70DC6CDF1E01F6DB00CE6953 /* Garage_SaleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Garage_SaleUITests.m; sourceTree = "<group>"; };
+		70DC6CE11E01F6DB00CE6953 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		70DC6CB41E01F6DB00CE6953 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70DC6CCD1E01F6DB00CE6953 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70DC6CD81E01F6DB00CE6953 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		70DC6CAE1E01F6DB00CE6953 = {
+			isa = PBXGroup;
+			children = (
+				70DC6CB91E01F6DB00CE6953 /* Garage Sale */,
+				70DC6CD31E01F6DB00CE6953 /* Garage SaleTests */,
+				70DC6CDE1E01F6DB00CE6953 /* Garage SaleUITests */,
+				70DC6CB81E01F6DB00CE6953 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		70DC6CB81E01F6DB00CE6953 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				70DC6CB71E01F6DB00CE6953 /* Garage Sale.app */,
+				70DC6CD01E01F6DB00CE6953 /* Garage SaleTests.xctest */,
+				70DC6CDB1E01F6DB00CE6953 /* Garage SaleUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		70DC6CB91E01F6DB00CE6953 /* Garage Sale */ = {
+			isa = PBXGroup;
+			children = (
+				70DC6CBD1E01F6DB00CE6953 /* AppDelegate.h */,
+				70DC6CBE1E01F6DB00CE6953 /* AppDelegate.m */,
+				70DC6CC01E01F6DB00CE6953 /* ViewController.h */,
+				70DC6CC11E01F6DB00CE6953 /* ViewController.m */,
+				70DC6CC31E01F6DB00CE6953 /* Main.storyboard */,
+				70DC6CC61E01F6DB00CE6953 /* Assets.xcassets */,
+				70DC6CC81E01F6DB00CE6953 /* LaunchScreen.storyboard */,
+				70DC6CCB1E01F6DB00CE6953 /* Info.plist */,
+				70DC6CBA1E01F6DB00CE6953 /* Supporting Files */,
+			);
+			path = "Garage Sale";
+			sourceTree = "<group>";
+		};
+		70DC6CBA1E01F6DB00CE6953 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				70DC6CBB1E01F6DB00CE6953 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		70DC6CD31E01F6DB00CE6953 /* Garage SaleTests */ = {
+			isa = PBXGroup;
+			children = (
+				70DC6CD41E01F6DB00CE6953 /* Garage_SaleTests.m */,
+				70DC6CD61E01F6DB00CE6953 /* Info.plist */,
+			);
+			path = "Garage SaleTests";
+			sourceTree = "<group>";
+		};
+		70DC6CDE1E01F6DB00CE6953 /* Garage SaleUITests */ = {
+			isa = PBXGroup;
+			children = (
+				70DC6CDF1E01F6DB00CE6953 /* Garage_SaleUITests.m */,
+				70DC6CE11E01F6DB00CE6953 /* Info.plist */,
+			);
+			path = "Garage SaleUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		70DC6CB61E01F6DB00CE6953 /* Garage Sale */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 70DC6CE41E01F6DB00CE6953 /* Build configuration list for PBXNativeTarget "Garage Sale" */;
+			buildPhases = (
+				70DC6CB31E01F6DB00CE6953 /* Sources */,
+				70DC6CB41E01F6DB00CE6953 /* Frameworks */,
+				70DC6CB51E01F6DB00CE6953 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Garage Sale";
+			productName = "Garage Sale";
+			productReference = 70DC6CB71E01F6DB00CE6953 /* Garage Sale.app */;
+			productType = "com.apple.product-type.application";
+		};
+		70DC6CCF1E01F6DB00CE6953 /* Garage SaleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 70DC6CE71E01F6DB00CE6953 /* Build configuration list for PBXNativeTarget "Garage SaleTests" */;
+			buildPhases = (
+				70DC6CCC1E01F6DB00CE6953 /* Sources */,
+				70DC6CCD1E01F6DB00CE6953 /* Frameworks */,
+				70DC6CCE1E01F6DB00CE6953 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				70DC6CD21E01F6DB00CE6953 /* PBXTargetDependency */,
+			);
+			name = "Garage SaleTests";
+			productName = "Garage SaleTests";
+			productReference = 70DC6CD01E01F6DB00CE6953 /* Garage SaleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		70DC6CDA1E01F6DB00CE6953 /* Garage SaleUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 70DC6CEA1E01F6DB00CE6953 /* Build configuration list for PBXNativeTarget "Garage SaleUITests" */;
+			buildPhases = (
+				70DC6CD71E01F6DB00CE6953 /* Sources */,
+				70DC6CD81E01F6DB00CE6953 /* Frameworks */,
+				70DC6CD91E01F6DB00CE6953 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				70DC6CDD1E01F6DB00CE6953 /* PBXTargetDependency */,
+			);
+			name = "Garage SaleUITests";
+			productName = "Garage SaleUITests";
+			productReference = 70DC6CDB1E01F6DB00CE6953 /* Garage SaleUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		70DC6CAF1E01F6DB00CE6953 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = TripleA;
+				TargetAttributes = {
+					70DC6CB61E01F6DB00CE6953 = {
+						CreatedOnToolsVersion = 8.1;
+						ProvisioningStyle = Automatic;
+					};
+					70DC6CCF1E01F6DB00CE6953 = {
+						CreatedOnToolsVersion = 8.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 70DC6CB61E01F6DB00CE6953;
+					};
+					70DC6CDA1E01F6DB00CE6953 = {
+						CreatedOnToolsVersion = 8.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 70DC6CB61E01F6DB00CE6953;
+					};
+				};
+			};
+			buildConfigurationList = 70DC6CB21E01F6DB00CE6953 /* Build configuration list for PBXProject "Garage Sale" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 70DC6CAE1E01F6DB00CE6953;
+			productRefGroup = 70DC6CB81E01F6DB00CE6953 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				70DC6CB61E01F6DB00CE6953 /* Garage Sale */,
+				70DC6CCF1E01F6DB00CE6953 /* Garage SaleTests */,
+				70DC6CDA1E01F6DB00CE6953 /* Garage SaleUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		70DC6CB51E01F6DB00CE6953 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				70DC6CCA1E01F6DB00CE6953 /* LaunchScreen.storyboard in Resources */,
+				70DC6CC71E01F6DB00CE6953 /* Assets.xcassets in Resources */,
+				70DC6CC51E01F6DB00CE6953 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70DC6CCE1E01F6DB00CE6953 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70DC6CD91E01F6DB00CE6953 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		70DC6CB31E01F6DB00CE6953 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				70DC6CC21E01F6DB00CE6953 /* ViewController.m in Sources */,
+				70DC6CBF1E01F6DB00CE6953 /* AppDelegate.m in Sources */,
+				70DC6CBC1E01F6DB00CE6953 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70DC6CCC1E01F6DB00CE6953 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				70DC6CD51E01F6DB00CE6953 /* Garage_SaleTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70DC6CD71E01F6DB00CE6953 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				70DC6CE01E01F6DB00CE6953 /* Garage_SaleUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		70DC6CD21E01F6DB00CE6953 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 70DC6CB61E01F6DB00CE6953 /* Garage Sale */;
+			targetProxy = 70DC6CD11E01F6DB00CE6953 /* PBXContainerItemProxy */;
+		};
+		70DC6CDD1E01F6DB00CE6953 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 70DC6CB61E01F6DB00CE6953 /* Garage Sale */;
+			targetProxy = 70DC6CDC1E01F6DB00CE6953 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		70DC6CC31E01F6DB00CE6953 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				70DC6CC41E01F6DB00CE6953 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		70DC6CC81E01F6DB00CE6953 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				70DC6CC91E01F6DB00CE6953 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		70DC6CE21E01F6DB00CE6953 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		70DC6CE31E01F6DB00CE6953 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		70DC6CE51E01F6DB00CE6953 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "Garage Sale/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "aaa.Garage-Sale";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		70DC6CE61E01F6DB00CE6953 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "Garage Sale/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "aaa.Garage-Sale";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		70DC6CE81E01F6DB00CE6953 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Garage SaleTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "aaa.Garage-SaleTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Garage Sale.app/Garage Sale";
+			};
+			name = Debug;
+		};
+		70DC6CE91E01F6DB00CE6953 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Garage SaleTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "aaa.Garage-SaleTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Garage Sale.app/Garage Sale";
+			};
+			name = Release;
+		};
+		70DC6CEB1E01F6DB00CE6953 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Garage SaleUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "aaa.Garage-SaleUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Garage Sale";
+			};
+			name = Debug;
+		};
+		70DC6CEC1E01F6DB00CE6953 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Garage SaleUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "aaa.Garage-SaleUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Garage Sale";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		70DC6CB21E01F6DB00CE6953 /* Build configuration list for PBXProject "Garage Sale" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				70DC6CE21E01F6DB00CE6953 /* Debug */,
+				70DC6CE31E01F6DB00CE6953 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		70DC6CE41E01F6DB00CE6953 /* Build configuration list for PBXNativeTarget "Garage Sale" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				70DC6CE51E01F6DB00CE6953 /* Debug */,
+				70DC6CE61E01F6DB00CE6953 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		70DC6CE71E01F6DB00CE6953 /* Build configuration list for PBXNativeTarget "Garage SaleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				70DC6CE81E01F6DB00CE6953 /* Debug */,
+				70DC6CE91E01F6DB00CE6953 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		70DC6CEA1E01F6DB00CE6953 /* Build configuration list for PBXNativeTarget "Garage SaleUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				70DC6CEB1E01F6DB00CE6953 /* Debug */,
+				70DC6CEC1E01F6DB00CE6953 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 70DC6CAF1E01F6DB00CE6953 /* Project object */;
+}
