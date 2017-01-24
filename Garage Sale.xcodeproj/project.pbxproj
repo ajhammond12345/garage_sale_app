@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		70223CC01E296FFB001E3724 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70223CBE1E296FFB001E3724 /* Main.storyboard */; };
 		70223CC21E297151001E3724 /* Screen Shot 2017-01-13 at 3.34.10 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 70223CC11E297151001E3724 /* Screen Shot 2017-01-13 at 3.34.10 PM.png */; };
 		70223CC51E297375001E3724 /* Screen Shot 2017-01-13 at 3.43.03 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 70223CC31E297375001E3724 /* Screen Shot 2017-01-13 at 3.43.03 PM.png */; };
 		70223CC61E297375001E3724 /* Screen Shot 2017-01-13 at 3.43.15 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 70223CC41E297375001E3724 /* Screen Shot 2017-01-13 at 3.43.15 PM.png */; };
@@ -52,6 +51,7 @@
 		7043099D1E3478DC0059B736 /* ItemDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 7043099C1E3478DC0059B736 /* ItemDetail.m */; };
 		705E89141E35E04300FA4625 /* Comments.m in Sources */ = {isa = PBXBuildFile; fileRef = 705E89131E35E04300FA4625 /* Comments.m */; };
 		705E89161E368B9100FA4625 /* Instagram-Heart-Solid@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 705E89151E368B9100FA4625 /* Instagram-Heart-Solid@3x.png */; };
+		705E89191E37BE4F00FA4625 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 705E89171E37BE4F00FA4625 /* Main.storyboard */; };
 		70DC6CBC1E01F6DB00CE6953 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC6CBB1E01F6DB00CE6953 /* main.m */; };
 		70DC6CBF1E01F6DB00CE6953 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC6CBE1E01F6DB00CE6953 /* AppDelegate.m */; };
 		70DC6CC21E01F6DB00CE6953 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC6CC11E01F6DB00CE6953 /* ViewController.m */; };
@@ -79,7 +79,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		70223CBF1E296FFB001E3724 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ../../../Oasys/Oasys/Oasys/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		70223CC11E297151001E3724 /* Screen Shot 2017-01-13 at 3.34.10 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen Shot 2017-01-13 at 3.34.10 PM.png"; path = "../../../Screen Shot 2017-01-13 at 3.34.10 PM.png"; sourceTree = "<group>"; };
 		70223CC31E297375001E3724 /* Screen Shot 2017-01-13 at 3.43.03 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen Shot 2017-01-13 at 3.43.03 PM.png"; path = "../../../Screen Shot 2017-01-13 at 3.43.03 PM.png"; sourceTree = "<group>"; };
 		70223CC41E297375001E3724 /* Screen Shot 2017-01-13 at 3.43.15 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen Shot 2017-01-13 at 3.43.15 PM.png"; path = "../../../Screen Shot 2017-01-13 at 3.43.15 PM.png"; sourceTree = "<group>"; };
@@ -132,6 +131,7 @@
 		705E89121E35E04300FA4625 /* Comments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comments.h; sourceTree = "<group>"; };
 		705E89131E35E04300FA4625 /* Comments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comments.m; sourceTree = "<group>"; };
 		705E89151E368B9100FA4625 /* Instagram-Heart-Solid@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Instagram-Heart-Solid@3x.png"; path = "../../../../Downloads/Images/Instagram-Heart-Solid@3x.png"; sourceTree = "<group>"; };
+		705E89181E37BE4F00FA4625 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		70DC6CB71E01F6DB00CE6953 /* Garage Sale.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Garage Sale.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		70DC6CBB1E01F6DB00CE6953 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		70DC6CBD1E01F6DB00CE6953 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -225,7 +225,7 @@
 				70223CDC1E2D7AB5001E3724 /* About.h */,
 				70223CDD1E2D7AB5001E3724 /* About.m */,
 				70DC6CC61E01F6DB00CE6953 /* Assets.xcassets */,
-				70223CBE1E296FFB001E3724 /* Main.storyboard */,
+				705E89171E37BE4F00FA4625 /* Main.storyboard */,
 				70DC6CC81E01F6DB00CE6953 /* LaunchScreen.storyboard */,
 				70DC6CCB1E01F6DB00CE6953 /* Info.plist */,
 				70DC6CBA1E01F6DB00CE6953 /* Supporting Files */,
@@ -406,7 +406,6 @@
 				704309491E3426490059B736 /* TestImage.png in Resources */,
 				70223D131E2DD3B3001E3724 /* cameraIcon@2x.png in Resources */,
 				70223D0A1E2D8C94001E3724 /* Artboard@3x.png in Resources */,
-				70223CC01E296FFB001E3724 /* Main.storyboard in Resources */,
 				70223CC51E297375001E3724 /* Screen Shot 2017-01-13 at 3.43.03 PM.png in Resources */,
 				70DC6CCA1E01F6DB00CE6953 /* LaunchScreen.storyboard in Resources */,
 				70223CEC1E2D8C7B001E3724 /* buy@1x.png in Resources */,
@@ -415,6 +414,7 @@
 				70DC6CC71E01F6DB00CE6953 /* Assets.xcassets in Resources */,
 				70223CF61E2D8C7B001E3724 /* Rectangle 3.png in Resources */,
 				704309471E3426120059B736 /* gradient.png in Resources */,
+				705E89191E37BE4F00FA4625 /* Main.storyboard in Resources */,
 				70223D061E2D8C94001E3724 /* Artboard 3@2x.png in Resources */,
 				70223D0E1E2D8D19001E3724 /* ThankYou@3x.png in Resources */,
 				70223CF11E2D8C7B001E3724 /* Instagram-Heart-Transparent@3x.png in Resources */,
@@ -512,10 +512,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		70223CBE1E296FFB001E3724 /* Main.storyboard */ = {
+		705E89171E37BE4F00FA4625 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				70223CBF1E296FFB001E3724 /* Base */,
+				705E89181E37BE4F00FA4625 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
