@@ -35,7 +35,6 @@ Item *itemToSend;
 
 -(void)loadAllItems;
 -(void)loadLikedItems;
--(void)loadComments;
 
 
 @end
