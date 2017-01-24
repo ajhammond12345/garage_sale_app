@@ -8,9 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-int amountRaisedInCents;
-int goalInCents;
-int daysRemaining;
+
 
 
 @interface About : UIViewController {
@@ -18,8 +16,14 @@ int daysRemaining;
     IBOutlet UIImageView *progressBar;
     IBOutlet UIImageView *totalBar;
     IBOutlet UILabel *daysUntilNLC;
-    IBOutlet UILabel *percentRaise;
+    IBOutlet UILabel *percentRaised;
+    IBOutlet NSLayoutConstraint *progressBarWidth;
+    
     
 }
+
+@property int amountRaisedInCents;
+@property int goalInCents;
+@property int daysRemaining;
 
 @end

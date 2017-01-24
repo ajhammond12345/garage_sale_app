@@ -25,6 +25,7 @@
     [self setProgressBarWidth];
     //updates the text
     [self setAmountRaisedText];
+    [self setPercentRaised];
 }
 
 -(void)updateDaysRemaining {
@@ -41,20 +42,29 @@
     setDaysUntil
  */
 -(void)setProgressBarWidth {
-    float barWidth = (amountRaisedInCents/goalInCents) * totalBar.frame.size.width;
-    progressBar.frame = CGRectMake(progressBar.frame.origin.x, progressBar.frame.origin.y, barWidth, progressBar.frame.size.height);
-    progressBar.hidden = FALSE;
+    int barWidth = (_amountRaisedInCents * totalBar.frame.size.width)/_goalInCents;
+    NSLog(@"Bar Width: %i", barWidth);
+
+    progressBarWidth.constant = barWidth;
+    progressBar.hidden = NO;
+    
+}
+-(void)setPercentRaised {
+    int percentRaisedInt = (100*_amountRaisedInCents)/_goalInCents;
+    percentRaised.text = [NSString stringWithFormat:@"%i%%", percentRaisedInt];
 }
 
 -(void)setAmountRaisedText {
-    int centsRaised = amountRaisedInCents % 100;
-    int dollarsRaised = (amountRaisedInCents - centsRaised)/100;
-    amountRaisedText.text = [NSString stringWithFormat:@"$%i.%i", dollarsRaised, centsRaised];
+    int centsRaised = _amountRaisedInCents % 100;
+    int centsRaisedTens = centsRaised / 10;
+    int centsRaisedOnes = centsRaised % 10;
+    int dollarsRaised = (_amountRaisedInCents - centsRaised)/100;
+    amountRaisedText.text = [NSString stringWithFormat:@"$%i.%i%i", dollarsRaised, centsRaisedTens, centsRaisedOnes];
     amountRaisedText.hidden = FALSE;
 }
 
 -(void)setDaysRemaining {
-    daysUntilNLC.text = [NSString stringWithFormat:@"%i", daysRemaining];
+    daysUntilNLC.text = [NSString stringWithFormat:@"%i Days Until", _daysRemaining];
     daysUntilNLC.hidden = FALSE;
 }
 
@@ -62,7 +72,7 @@
 
 //Methods that load data update stored fields
 -(void)loadAmountRaised {
-    amountRaisedInCents = 5000;
+    _amountRaisedInCents = 70000;
     //insert code to load amountRaised
 }
 
@@ -70,27 +80,20 @@
     //creates NSDate for today
     NSDate *today = [NSDate date];
     //Creates Date Components for start of NLC (end of fundraiser)
-    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
-    //29th
-    [dateComponents setDay:29];
-    //June
-    [dateComponents setMonth:6];
-    //2017
-    [dateComponents setYear:2017];
-    //creates new date from the components
-    NSDate *dateNLC = [[NSCalendar currentCalendar] dateFromComponents:dateComponents];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"YYYY-MM-dd"];
+    NSDate *dateNLC = [dateFormatter dateFromString:@"2017-06-29"];
     
     //next couple declarations from Apple's reccomendation on how to compare dates
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSCalendar *tempCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     
-    NSUInteger unitFlags = NSCalendarUnitMonth | NSCalendarUnitDay;
-    
-    NSDateComponents *components = [gregorian components:unitFlags fromDate:today  toDate:dateNLC options:0];
+    NSDateComponents *components = [tempCalendar components:NSCalendarUnitDay fromDate:today  toDate:dateNLC options:0];
     
     NSInteger days = [components day];
     
+    
     //casts Integer (which stores a long) to int
-    daysRemaining = (int)days;
+    _daysRemaining = (int)days;
     
 }
 
@@ -99,7 +102,8 @@
     // Do any additional setup after loading the view.
     
     //hides the text and progress bar until they are loaded (they are revealed within the update methods through the set methods)
-    goalInCents = 100000;
+    _goalInCents = 100000;
+    _amountRaisedInCents = 0;
     amountRaisedText.hidden = TRUE;
     daysUntilNLC.hidden = TRUE;
     progressBar.hidden = TRUE;

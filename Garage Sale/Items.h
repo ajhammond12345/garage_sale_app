@@ -7,24 +7,35 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Item.h"
+#import "ItemCustomCell.h"
 
-@interface Items : UIViewController {
-    NSMutableArray *items;
-    NSMutableArray *likedItems; //needs to be saved to the device
+
+bool showAll;
+Item *itemToSend;
+
+@interface Items : UIViewController <UITableViewDelegate, UITableViewDataSource, NSURLSessionDelegate>{
+    
+     //needs to be saved to the device
+    
     
     IBOutlet UITableView *itemsView;
     IBOutlet UISegmentedControl *itemListType;
     IBOutlet UINavigationItem *itemName;
     
     
+    
 }
 
--(IBAction)showAllItems;
--(IBAction)showLikedItems;
--(IBAction)uploadComment;
--(IBAction)likeItem;
+@property NSMutableArray *items;
+@property NSArray *likedItems;
+@property NSMutableDictionary *result;
+
+
 
 -(void)loadAllItems;
+-(void)loadLikedItems;
 -(void)loadComments;
+
 
 @end

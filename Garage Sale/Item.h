@@ -7,13 +7,55 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface Item : NSObject
+@interface Item : NSObject {
+    
+}
 
 @property NSString *name;
 @property NSString *condition;
-@property NSString *description;
+@property NSString *itemDescription;
 @property NSInteger *priceInCents;
+@property UIImage *image;
+@property NSInteger *itemID;
+@property NSMutableArray *comments;
+@property bool liked;
+
+
+//some simpler get statements (default set statements adequate)
+-(NSString *)getName;
+
+-(NSString *)getCondition;
+
+-(NSString *)getItemDescription;
+
+-(NSInteger *)getPriceInCents;
+-(void)setThePriceInCents:(int)price;
+-(NSString *)getPriceString;
+
+-(UIImage *)getImage;
+
+-(NSInteger *)getItemID;
+-(void)setTheItemID:(int)ID;
+
+-(bool)getLiked;
+
+-(void)changeLiked;
+
+-(void)addComment:(NSString *)comment;
+-(void)changeComment:(NSString *)oldComment toComment:(NSString *)newComment;
+-(void)removeComment:(NSString *)comment;
+
+-(Item *)createItemFromJson;
+-(void)downloadComments;
+-(void)uploadComment:(NSString *)comment;
+-(NSString *)commentWithIndex:(int)index;
+
+
+
+
+
 
 
 

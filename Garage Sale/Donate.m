@@ -7,15 +7,73 @@
 //
 
 #import "Donate.h"
+#import "Item.h"
 
-@interface Donate () <UITextViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
+@interface Donate () <UITextViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @end
 
 @implementation Donate
 
--(IBAction)done:(id)sender {
+-(IBAction)selectImage:(id)sender {
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *camera = [UIAlertAction actionWithTitle:@"Camera" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [picker setSourceType:UIImagePickerControllerSourceTypeCamera];
+        [self presentViewController:picker animated:true completion:nil];
+    }];
+    UIAlertAction *photoAlbum = [UIAlertAction actionWithTitle:@"Photo Library" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+        [self presentViewController:picker animated:true completion:nil];
+    }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {}];
+    [alert addAction:camera];
+    [alert addAction:photoAlbum];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:true completion:nil];
+}
+
+//delegate methods for image picker
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    //saves the selected image to the image field
+    UIImage *tmpImage = info[UIImagePickerControllerEditedImage];
+    image = tmpImage;
+    [imageView setBackgroundImage:image forState:UIControlStateNormal];
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+
+
+-(IBAction)done:(id)sender {
+    //first need to check that all fields have data
+    if ([name isEqualToString:@""] || [condition isEqualToString:@""] || [description isEqualToString:@""] || priceInCents == 0 || [image isEqual:nil]) {
+        //shows error message for missing information
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Missing Information" message:@"Please fill out all of the required information." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    else {
+        [self.view endEditing:YES];
+        //Then create the Item object
+        Item *newItem = [[Item alloc] init];
+        [newItem setName:name];
+        [newItem setImage:image];
+        [newItem setPriceInCents:&priceInCents];
+        [newItem  setItemDescription:description];
+        [newItem setLiked:false];
+        
+        [self performSegueWithIdentifier:@"showDonationThankYou" sender:(self)];
+        
+        //Then upload the item to the database
+    }
 }
 
 // Control methods for each text/image view
@@ -28,11 +86,17 @@
 }
 
 //makes keyboard disappear after finished editing
--(BOOL) textViewShouldReturn:(UITextView *)textView{
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     
-    [textView resignFirstResponder];
+    if([text isEqualToString:@"\n"]) {
+        
+        [textView resignFirstResponder];
+        return NO;
+    }
+    
     return YES;
 }
+
 
 //for the text fields that are directly edited (name and price)
 -(void)textFieldDidEndEditing:(UITextField *)textField {
@@ -67,6 +131,7 @@
         priceTextField.text = [NSString stringWithFormat:@"%@.%@", dollars, cents];
     }
     [textField resignFirstResponder];
+    [self.view endEditing:YES];
 }
 
 //for condition (not directly edited, uses a picker instead)
@@ -135,7 +200,7 @@
     condition = @"";
     priceInCents = 0;
     description = @"";
-    image = nil;
+    
     conditionOptions = [NSArray arrayWithObjects:@"Option 1", @"Option 2", @"Option 3", @"Option 4", nil];
     
     nameTextField.delegate = self;

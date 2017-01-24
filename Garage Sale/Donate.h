@@ -7,23 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Item.h"
 
 NSString *name;
 NSString *condition;
-int priceInCents;
+NSInteger priceInCents;
 NSString *description;
 UIImage *image;
+
 NSArray *conditionOptions;
 
 
 
-@interface Donate : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UITextViewDelegate, UITextFieldDelegate> {
+@interface Donate : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UITextViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
     
     IBOutlet UITextField *nameTextField;
     IBOutlet UITextField *conditionTextField;
     IBOutlet UITextField *priceTextField;
     IBOutlet UITextView *descriptionTextView;
-    IBOutlet UIImageView *imageView;
+    IBOutlet UIButton *imageView;
     IBOutlet UIButton *cameraButton;
     
 }
@@ -31,5 +33,6 @@ NSArray *conditionOptions;
 @property (strong, nonatomic) UIPickerView *conditionPicker;
 
 -(IBAction)done:(id)sender;
+-(IBAction)selectImage:(id)sender;
 
 @end
