@@ -20,12 +20,17 @@
     _price.text = [_item getPriceString];
     
     if (_item.liked) {
-        [_likeButton setImage:[UIImage imageNamed:@"plain_red_hear_shape.png"] forState:UIControlStateNormal];
+        [_likeButton setImage:[UIImage imageNamed:@"Instagram-Heart-Solid@3x.png"] forState:UIControlStateNormal];
     }
     else {
         [_likeButton setImage:[UIImage imageNamed:@"Instagram-Heart-Transparent.png"] forState:UIControlStateNormal];
     }
-    _image.image = _item.image;
+    if (_item.image != nil) {
+        _image.image = _item.image;
+    }
+    else {
+        _image.image = [UIImage imageNamed:@"default.png"];
+    }
     
 }
 

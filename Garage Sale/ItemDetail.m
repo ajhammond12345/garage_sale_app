@@ -31,12 +31,12 @@
 }
 
 -(void)updateView {
-    displayName.text = _itemOnDisplay.name;
+    displayName.text = [NSString stringWithFormat:@"%zd", _itemOnDisplay.itemID];
     displayCondition.text = _itemOnDisplay.condition;
     displayPrice.text = [_itemOnDisplay getPriceString];
     displayDescription.text = _itemOnDisplay.itemDescription;
     if (_itemOnDisplay.liked) {
-        [displayLikeButton setImage:[UIImage imageNamed:@"plain_red_hear_shape.png"] forState:UIControlStateNormal];
+        [displayLikeButton setImage:[UIImage imageNamed:@"Instagram-Heart-Solid.png"] forState:UIControlStateNormal];
     }
     else {
         [displayLikeButton setImage:[UIImage imageNamed:@"Instagram-Heart-Transparent.png"] forState:UIControlStateNormal];
@@ -51,7 +51,7 @@
 -(IBAction)like:(id)sender {
     [_itemOnDisplay changeLiked];
     if (_itemOnDisplay.liked) {
-        [displayLikeButton setImage:[UIImage imageNamed:@"plain_red_hear_shape.png"] forState:UIControlStateNormal];
+        [displayLikeButton setImage:[UIImage imageNamed:@"Instagram-Heart-Solid.png"] forState:UIControlStateNormal];
     }
     else {
         [displayLikeButton setImage:[UIImage imageNamed:@"Instagram-Heart-Transparent.png"] forState:UIControlStateNormal];

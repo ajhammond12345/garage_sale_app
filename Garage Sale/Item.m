@@ -51,7 +51,9 @@
 }
 -(NSString *)getPriceString {
     int tmpPriceInCents = (int)_priceInCents;
-    NSString *priceCents = [NSString stringWithFormat:@"%i", (tmpPriceInCents%100)];
+    int tmpCentsOnes = tmpPriceInCents %10;
+    int tmpCentsTens = (tmpPriceInCents - tmpCentsOnes)%100;
+    NSString *priceCents = [NSString stringWithFormat:@"%i%i", tmpCentsTens, tmpCentsOnes];
     NSString *priceDollars = [NSString stringWithFormat:@"%i", (tmpPriceInCents/100)];
     
     NSString *priceString =[NSString stringWithFormat:@"$%@.%@", priceDollars, priceCents];
@@ -79,29 +81,66 @@
 -(void)changeLiked {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *likedArray = [defaults objectForKey:@"LikedItems"];
-    if (likedArray == nil) {
+    
+    NSMutableArray *likedArrayMutable = [[NSMutableArray alloc] init];
+    for (int i = 0; i < likedArray.count; i++) {
+        [likedArrayMutable addObject: [likedArray objectAtIndex:i]];
+    }
+    if (_liked == false) {
         _liked = true;
-        likedArray = [likedArray initWithObjects:self, nil];
+        [self setItemDictionary];
+        [likedArrayMutable addObject:_localDictionary];
+    
     }
     else {
-        NSMutableArray *likedArrayMutable = [likedArray mutableCopy];
-        if (_liked == false) {
-            _liked = true;
-            [likedArrayMutable addObject:self];
+        _liked = false;
+        for (int i = 0; i < likedArrayMutable.count; i++) {
+            NSDictionary *tmpDic = [likedArray objectAtIndex:i];
         
-        }
-        else {
-            _liked = false;
-            for (int i = 0; i < likedArray.count; i++) {
-                if ([[likedArray objectAtIndex:i] getItemID] == self.itemID) {
+            NSInteger *tmpInteger = (NSInteger*)[[tmpDic valueForKey:@"id"] integerValue];
+            
+            if (tmpInteger == _itemID) {
                 [likedArrayMutable removeObjectAtIndex:i];
-                }
             }
         }
-        likedArray = [likedArrayMutable copy];
     }
-    [defaults setObject:likedArray forKey:@"LikedItems"];
+    
+    NSArray *newLikedArray = [likedArrayMutable copy];
+    [defaults setObject:newLikedArray forKey:@"LikedItems"];
     [defaults synchronize];
+}
+
+-(void)setItemDictionary {
+    NSData *imageData = UIImagePNGRepresentation(_image);
+    if (imageData == nil)
+        imageData = [imageData init];
+    NSNumber *likedData = [NSNumber numberWithBool:_liked];
+    NSArray *commentsCopy = [_comments copy];
+    if (commentsCopy == nil) {
+        commentsCopy = [[NSArray alloc] init];
+    }
+    if (likedData == nil) {
+        likedData = [NSNumber numberWithBool:true];
+    }
+    _localDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:
+    _name, @"item_name",
+    _condition, @"item_condition",
+    _itemDescription, @"item_description",
+    [NSString stringWithFormat:@"%zd", _priceInCents], @"item_price_in_cents",
+    likedData, @"liked",
+    [NSString stringWithFormat:@"%zd", _itemID], @"id",
+    imageData, @"item_image",
+    commentsCopy, @"item_comments",
+    _itemPurchaseState, @"item_purchase_state",
+    
+                        nil];
+         
+}
+
+
+
+-(void)setItemWithDictionary:(NSDictionary *) dictionary{
+    
 }
 
 -(bool)getLiked {

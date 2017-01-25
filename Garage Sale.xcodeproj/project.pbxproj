@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		700BFA511E388F9600CE276B /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 700BFA501E388F9600CE276B /* default.png */; };
 		70223CC21E297151001E3724 /* Screen Shot 2017-01-13 at 3.34.10 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 70223CC11E297151001E3724 /* Screen Shot 2017-01-13 at 3.34.10 PM.png */; };
 		70223CC51E297375001E3724 /* Screen Shot 2017-01-13 at 3.43.03 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 70223CC31E297375001E3724 /* Screen Shot 2017-01-13 at 3.43.03 PM.png */; };
 		70223CC61E297375001E3724 /* Screen Shot 2017-01-13 at 3.43.15 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 70223CC41E297375001E3724 /* Screen Shot 2017-01-13 at 3.43.15 PM.png */; };
@@ -79,6 +80,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		700BFA501E388F9600CE276B /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default.png; path = ../../../default.png; sourceTree = "<group>"; };
 		70223CC11E297151001E3724 /* Screen Shot 2017-01-13 at 3.34.10 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen Shot 2017-01-13 at 3.34.10 PM.png"; path = "../../../Screen Shot 2017-01-13 at 3.34.10 PM.png"; sourceTree = "<group>"; };
 		70223CC31E297375001E3724 /* Screen Shot 2017-01-13 at 3.43.03 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen Shot 2017-01-13 at 3.43.03 PM.png"; path = "../../../Screen Shot 2017-01-13 at 3.43.03 PM.png"; sourceTree = "<group>"; };
 		70223CC41E297375001E3724 /* Screen Shot 2017-01-13 at 3.43.15 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen Shot 2017-01-13 at 3.43.15 PM.png"; path = "../../../Screen Shot 2017-01-13 at 3.43.15 PM.png"; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 		70DC6CBA1E01F6DB00CE6953 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				700BFA501E388F9600CE276B /* default.png */,
 				704309481E3426490059B736 /* TestImage.png */,
 				7043094A1E3426BB0059B736 /* TestImage1.png */,
 				704309461E3426120059B736 /* gradient.png */,
@@ -443,6 +446,7 @@
 				70223D071E2D8C94001E3724 /* Artboard 3@3x.png in Resources */,
 				70223D031E2D8C94001E3724 /* Artboard 2@2x.png in Resources */,
 				70223CED1E2D8C7B001E3724 /* buy@2x.png in Resources */,
+				700BFA511E388F9600CE276B /* default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

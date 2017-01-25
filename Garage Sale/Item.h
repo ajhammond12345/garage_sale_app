@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+
 @interface Item : NSObject {
     
 }
@@ -21,6 +22,9 @@
 @property NSInteger *itemID;
 @property NSMutableArray *comments;
 @property bool liked;
+@property NSDictionary *localDictionary;
+@property NSNumber *itemPurchaseState;
+
 
 
 //some simpler get statements (default set statements adequate)
@@ -52,6 +56,7 @@
 -(void)uploadComment:(NSString *)comment;
 -(NSString *)commentWithIndex:(int)index;
 
+-(void)setItemDictionary;
 
 
 

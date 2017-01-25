@@ -299,7 +299,7 @@
                                                 </segue>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Done" id="aaX-PW-fs3">
+                                        <barButtonItem key="rightBarButtonItem" title="Send" id="aaX-PW-fs3">
                                             <connections>
                                                 <action selector="done:" destination="qif-7r-rc8" id="ETk-fr-hFF"/>
                                             </connections>
@@ -353,11 +353,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="743" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bvb-HL-oJj">
-                                <rect key="frame" x="27" y="131" width="31" height="23"/>
+                                <rect key="frame" x="25" y="130" width="33" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="bvb-HL-oJj" secondAttribute="height" multiplier="31:23" id="g00-pd-8eU"/>
                                 </constraints>
-                                <state key="normal" title="Add" image="cameraIcon.png"/>
+                                <state key="normal" image="cameraIcon.png"/>
                                 <connections>
                                     <action selector="selectImage:" destination="qif-7r-rc8" eventType="touchUpInside" id="KW2-eL-pgr"/>
                                 </connections>
@@ -382,7 +382,7 @@
                             <constraint firstItem="z9F-fM-Sa6" firstAttribute="leading" secondItem="3iN-vq-mUv" secondAttribute="trailing" constant="-150" id="MPB-0q-OSO"/>
                             <constraint firstItem="Ier-70-c8R" firstAttribute="leading" secondItem="3iN-vq-mUv" secondAttribute="trailing" constant="40" id="Ph3-z9-dPz"/>
                             <constraint firstItem="8Bx-wc-f5W" firstAttribute="top" secondItem="Veo-Ez-QAX" secondAttribute="bottom" constant="28" id="Rsj-ZZ-VlD"/>
-                            <constraint firstItem="3iN-vq-mUv" firstAttribute="width" secondItem="bvb-HL-oJj" secondAttribute="width" multiplier="150:31" id="US6-B3-ARf"/>
+                            <constraint firstItem="3iN-vq-mUv" firstAttribute="width" secondItem="bvb-HL-oJj" secondAttribute="width" multiplier="150:33" id="US6-B3-ARf"/>
                             <constraint firstItem="Ier-70-c8R" firstAttribute="leading" secondItem="3fI-gq-hwk" secondAttribute="trailing" constant="8" id="aK1-3t-0BD"/>
                             <constraint firstItem="z9F-fM-Sa6" firstAttribute="trailing" secondItem="Ier-70-c8R" secondAttribute="trailing" id="asJ-sl-dgd"/>
                             <constraint firstAttribute="trailing" secondItem="U9n-io-J9l" secondAttribute="trailing" id="bpu-f8-iyv"/>

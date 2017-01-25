@@ -29,7 +29,8 @@ Item *itemToSend;
 
 @property NSMutableArray *items;
 @property NSArray *likedItems;
-@property NSMutableDictionary *result;
+@property NSArray *result;
+@property UIImage *tmpImage;
 
 
 

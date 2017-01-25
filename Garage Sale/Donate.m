@@ -64,15 +64,63 @@
         [self.view endEditing:YES];
         //Then create the Item object
         Item *newItem = [[Item alloc] init];
-        [newItem setName:name];
-        [newItem setImage:image];
-        [newItem setPriceInCents:&priceInCents];
-        [newItem  setItemDescription:description];
-        [newItem setLiked:false];
-        
-        [self performSegueWithIdentifier:@"showDonationThankYou" sender:(self)];
+        newItem.name = name;
+        newItem.image = image;
+        newItem.condition = condition;
+        newItem.priceInCents = priceInCents;
+        NSLog(@"%zd", newItem.priceInCents);
+        newItem.itemDescription = description;
+        //item has not been liked (does nothing except prevent nil from stopping dictionary creation)
+        newItem.liked = false;
+        //0 means it has not been purchased
+        newItem.itemPurchaseState = 0;
+    
         
         //Then upload the item to the database
+        //refreshes the internal item dictionary
+        [newItem setItemDictionary];
+        
+        //creates error handler
+        NSError *error;
+        
+        //creates mutable copy of the dictionary to remove extra keys
+        NSMutableDictionary *tmpDic = [newItem.localDictionary mutableCopy];
+        
+        //removes extra keys
+        [tmpDic removeObjectForKey:@"liked"];
+        [tmpDic removeObjectForKey:@"id"];
+        NSString *priceString = [tmpDic objectForKey:@"item_price_in_cents"];
+        NSLog(@"%@", priceString);
+        NSString *imageData = [[tmpDic objectForKey:@"item_image"] base64EncodedStringWithOptions:0];
+        [tmpDic setObject:imageData forKey:@"item_image"];
+        //converts the dictionary to json
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
+        //logs the data to check if it is created successfully
+        //NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+        
+        //creates url for the request
+        NSURL *url = [NSURL URLWithString:@"http://localhost:3001/items.json"];
+
+        //creates a URL request
+        NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+        
+        //specifics for the request (it is a post request with json content)
+        [uploadRequest setHTTPMethod:@"POST"];
+        [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        [uploadRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
+        [uploadRequest setHTTPBody: jsonData];
+        
+        //
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+        
+        [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+            NSLog(@"requestReply: %@", requestReply);
+        }] resume];
+        
+        //perform segue to thank you screen
+        [self performSegueWithIdentifier:@"showDonationThankYou" sender:(self)];
     }
 }
 
@@ -106,7 +154,7 @@
         NSString *dollars;
         int priceCents;
         int priceDollars;
-        int finalPriceInCents;
+        long finalPriceInCents;
         for (int i = 0; i < priceTextField.text.length; i++) {
             if ([[[priceTextField.text substringFromIndex:i] substringToIndex:1] isEqualToString:@"."]) {
                 cents = [priceTextField.text substringFromIndex:i];
@@ -125,9 +173,10 @@
         priceCents = (int)[cents integerValue];
         dollars = [dollars stringByTrimmingCharactersInSet:mySet];
         priceDollars = (int)[dollars integerValue];
-        NSLog(@"%@%i", dollars, priceDollars);
+        NSLog(@"Price: %@%i", dollars, priceDollars);
         finalPriceInCents = (priceDollars * 100) + priceCents;
-        priceInCents = finalPriceInCents;
+        priceInCents = (NSInteger *)finalPriceInCents;
+        NSLog(@"%zd", priceInCents);
         priceTextField.text = [NSString stringWithFormat:@"%@.%@", dollars, cents];
     }
     [textField resignFirstResponder];
@@ -201,7 +250,7 @@
     priceInCents = 0;
     description = @"";
     
-    conditionOptions = [NSArray arrayWithObjects:@"Option 1", @"Option 2", @"Option 3", @"Option 4", nil];
+    conditionOptions = [NSArray arrayWithObjects:@"Brand New", @"Exceptional", @"Great Condition", @"Used", @"Falling Apart", @"Broken", nil];
     
     nameTextField.delegate = self;
     conditionTextField.delegate = self;

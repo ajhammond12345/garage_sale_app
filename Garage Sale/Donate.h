@@ -11,7 +11,7 @@
 
 NSString *name;
 NSString *condition;
-NSInteger priceInCents;
+NSInteger *priceInCents;
 NSString *description;
 UIImage *image;
 

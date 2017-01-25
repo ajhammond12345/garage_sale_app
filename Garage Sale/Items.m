@@ -86,7 +86,7 @@
 -(void)loadAllItems {
     //creates some test Items
     //test code for itemView
-    Item *testItem0 = [[Item alloc] init];
+    /*Item *testItem0 = [[Item alloc] init];
     [testItem0 setName:@"TestName"];
     [testItem0 setLiked:false];
     [testItem0 setItemDescription:@"This is a test item"];
@@ -105,7 +105,6 @@
     [testItem1 setImage:[UIImage imageNamed:@"TestImage.png"]];
     [testItem1 setCondition:@"Usable"];
     [testItem1 setTheItemID:2];
-    [testItem1 changeLiked];
     
     
     
@@ -117,15 +116,14 @@
     [testItem2 setImage:[UIImage imageNamed:@"TestImage1.png"]];
     [testItem2 setCondition:@"Acceptable"];
     [testItem2 setTheItemID:4];
-    [testItem2 changeLiked];
     
     
     
     
     _items = [NSMutableArray arrayWithObjects:testItem0, testItem1, testItem2, nil];
-    
+    */
     //-- Make URL request with server
-    NSString *jsonUrlString = [NSString stringWithFormat:@"http://localhost:3001/items/3.json"];
+    NSString *jsonUrlString = [NSString stringWithFormat:@"http://localhost:3001/items.json"];
     NSURL *url = [NSURL URLWithString:jsonUrlString];
     NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:[NSOperationQueue mainQueue]];
@@ -139,17 +137,27 @@
     
     NSError *error;
     _result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    NSLog(@"Result = %@",_result);
-    Item *testItem = [[Item alloc] init];
-    testItem.name = [_result objectForKey:@"item_name"];
-    testItem.condition = [_result objectForKey:@"item_condition"];
-    testItem.itemDescription = [_result objectForKey:@"item_description"];
-    testItem.priceInCents = (NSInteger *)[[_result objectForKey:@"item_price_in_cents"] integerValue];
-    testItem.itemID = (NSInteger *)[[_result objectForKey:@"id"] integerValue];
-    NSLog(@"Price: %zd, ID: %zd", testItem.priceInCents, testItem.itemID);
+    //NSLog(@"Result (Length: %zd) = %@",_result.count, _result);
+    NSMutableArray *tmpItemArray = [[NSMutableArray alloc] init];
+    for (int i = 0; i < _result.count; i++) {
+        NSDictionary *tmpDic = [_result objectAtIndex:i];
+        //NSLog(@"Dictionary %@", tmpDic);
+        
+        [tmpItemArray addObject:[self itemFromDictionaryExternal:tmpDic]];
+    }
     
+    [self loadLikedItems];
+     
+    //sets the 'liked' value of the loaded items
+    for (int i = 0; i < tmpItemArray.count; i++) {
+        for (int j = 0; j < _likedItems.count; j++) {
+            if ([[tmpItemArray objectAtIndex:i] getItemID] == [[_likedItems objectAtIndex:j] getItemID]) {
+                [[tmpItemArray objectAtIndex:i] setLiked:true];
+            }
+        }
+    }
     
-    [_items addObject:testItem];
+    _items = tmpItemArray;
     [itemsView reloadData];
     [session invalidateAndCancel];
 
@@ -171,9 +179,100 @@
 -(void)loadLikedItems {
     //creates and loads the likedItems array
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    _likedItems = [defaults arrayForKey:@"LikedItems"];
+    NSArray *likedArray = [defaults objectForKey:@"LikedItems"];
+    NSMutableArray *tmpLikedItems = [[NSMutableArray alloc] init];
+    for (int i = 0; i < likedArray.count; i++) {
+        NSDictionary *tmpDic = [likedArray objectAtIndex:i];
+        [tmpLikedItems addObject:[self itemFromDictionaryInternal:tmpDic]];
+    }
+    _likedItems = [tmpLikedItems copy];
 }
 
+-(Item *)itemFromDictionaryInternal:(NSDictionary *) dictionary {
+    Item *tmpItem = [[Item alloc] init];
+    tmpItem.name = [dictionary objectForKey:@"item_name"];
+    tmpItem.condition = [dictionary objectForKey:@"item_condition"];
+    tmpItem.itemDescription = [dictionary objectForKey:@"item_description"];
+    NSData *imageData = [dictionary objectForKey:@"item_image"];
+    if (imageData != nil) {
+        tmpItem.image = [UIImage imageWithData:imageData];
+    }
+    tmpItem.priceInCents = (NSInteger*)[[dictionary objectForKey:@"item_price_in_cents"] integerValue];
+    //NSLog(@"%@", [dictionary objectForKey:@"item_description"]);
+    tmpItem.liked = [[dictionary objectForKey:@"liked"] boolValue];
+    NSInteger *tmpID = (NSInteger*)[[dictionary objectForKey:@"id"] integerValue];
+    //NSLog(@"%@", [dictionary objectForKey:@"id"]);
+    //NSLog(@"%zd", tmpID);
+    tmpItem.itemID = tmpID;
+    tmpItem.itemPurchaseState = (NSNumber *)[dictionary objectForKey:@"item_purchase_state"];
+    NSArray *tmpComments = [dictionary objectForKey:@"item_comments"];
+    [tmpItem.comments removeAllObjects];
+    for (int i = 0; i < tmpComments.count; i++) {
+        [tmpItem.comments addObject:[tmpComments objectAtIndex:i]];
+    }
+    return tmpItem;
+}
+
+//differnt method for handling different image data transfer
+-(Item *)itemFromDictionaryExternal:(NSDictionary *) dictionary {
+    Item *tmpItem = [[Item alloc] init];
+    tmpItem.name = [dictionary objectForKey:@"item_name"];
+    tmpItem.condition = [dictionary objectForKey:@"item_condition"];
+    tmpItem.itemDescription = [dictionary objectForKey:@"item_description"];
+    NSDictionary *jsonImageFilepath = [dictionary objectForKey:@"item_image"];
+    
+    NSString *imageFilepath = [jsonImageFilepath objectForKey:@"url"];
+    NSString *imageURLString = [NSString stringWithFormat:@"http://localhost:3001%@", imageFilepath];
+    //NSURL *imageURL = [NSURL fileURLWithPath:imageURLString];
+    _tmpImage = [[UIImage alloc] init];
+    //NSLog(@"\"%@\"", imageURLString);
+    
+    /*
+    NSURLSessionDownloadTask *downloadPhotoTask = [[NSURLSession sharedSession]
+        downloadTaskWithURL:imageURL completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+            
+            UIImage *downloadedImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
+            NSLog(@"%@",[NSData dataWithContentsOfURL:location]);
+            _tmpImage = downloadedImage;
+            tmpItem.image = _tmpImage;
+    }];
+     */
+    tmpItem.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURLString]]];
+    //[downloadPhotoTask resume];
+     
+     
+    
+    //[self setItemImageFromServerWithURL:imageURL item:tmpItem];
+    tmpItem.priceInCents = (NSInteger*)[[dictionary objectForKey:@"item_price_in_cents"] integerValue];
+    
+    tmpItem.liked = [[dictionary objectForKey:@"liked"] boolValue];
+    NSInteger *tmpID = (NSInteger*)[[dictionary objectForKey:@"id"] integerValue];
+    //NSLog(@"%@", [dictionary objectForKey:@"id"]);
+    //NSLog(@"%zd", tmpID);
+    tmpItem.itemID = tmpID;
+    //NSLog(@"%zd", tmpItem.itemID);
+    tmpItem.itemPurchaseState = (NSNumber *)[dictionary objectForKey:@"item_purchase_state"];
+    NSArray *tmpComments = [dictionary objectForKey:@"item_comments"];
+    [tmpItem.comments removeAllObjects];
+    for (int i = 0; i < tmpComments.count; i++) {
+        [tmpItem.comments addObject:[tmpComments objectAtIndex:i]];
+    }
+    return tmpItem;
+}
+
+
+-(void)setItemImageFromServerWithURL:(NSURL *)imageURL item:(Item *)item {
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    dispatch_async(queue, ^{
+        NSError *error;
+        NSData *data = [NSData dataWithContentsOfURL:imageURL options:NSDataReadingUncached error:&error];
+       // NSLog(@"Image data: %@", data);
+        UIImage *image = [UIImage imageWithData:data];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            item.image = image;
+        });  
+    });
+}
 
 
 
