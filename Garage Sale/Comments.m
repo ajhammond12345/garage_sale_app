@@ -19,7 +19,7 @@
     //sets whatever it gets from server (with its ID) to comments array
     
     NSString *jsonUrlString = [NSString stringWithFormat:@"http://localhost:3001/items/%zd.json", _item.itemID];
-    NSLog(@"URL Request: %@", jsonUrlString);
+    //NSLog(@"URL Request: %@", jsonUrlString);
     NSURL *url = [NSURL URLWithString:jsonUrlString];
     NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:[NSOperationQueue mainQueue]];
@@ -35,17 +35,17 @@
     NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     //NSLog(@"Result (Length: %zd) = %@",_result.count, _result);
     NSArray *fullComments =  [result objectForKey:@"comments"];
-    NSLog(@"All comments:\n%@", fullComments);
+   // NSLog(@"All comments:\n%@", fullComments);
     _item.comments = [[NSMutableArray alloc] init];
     for (int i = 0; i < fullComments.count; i++) {
         NSDictionary *tmpDic = [fullComments objectAtIndex:i];
-        NSLog(@"Dictionary: %@", tmpDic);
+        //NSLog(@"Dictionary: %@", tmpDic);
         NSString *tmpString = [tmpDic objectForKey:@"comment_text"];
-        NSLog(@"Comment Text: %@", tmpString);
+        //NSLog(@"Comment Text: %@", tmpString);
         [_item addComment:tmpString];
-        NSLog(@"Comment Text in comments: %@", _item.comments);
+        //NSLog(@"Comment Text in comments: %@", _item.comments);
     }
-    NSLog(@"Item Comments: %@", _item.comments);
+    //NSLog(@"Item Comments: %@", _item.comments);
     [self showComments];
     [session invalidateAndCancel];
     
@@ -89,12 +89,12 @@
 }
 
 -(void)showComments {
-    NSLog(@"Item has comments: %@", _item.comments);
+    //NSLog(@"Item has comments: %@", _item.comments);
     NSString *commentsOnThisItem = @"";
     for (int i = 0; i < _item.comments.count; i++) {
         commentsOnThisItem = [NSString stringWithFormat:@"%@\n\n%@", commentsOnThisItem, [_item commentWithIndex:i]];
     }
-    NSLog(@"%@\n%@", commentsOnThisItem, _item.comments);
+    //NSLog(@"%@\n%@", commentsOnThisItem, _item.comments);
     otherComments.text = commentsOnThisItem;
 }
 

@@ -83,7 +83,7 @@
 }
 -(NSString *)getPriceString {
     int tmpPriceInCents = (int)_priceInCents;
-    NSLog(@"Price in cents: %zd\nPriceInCents %i", _priceInCents, tmpPriceInCents);
+    //NSLog(@"Price in cents: %zd\nPriceInCents %i", _priceInCents, tmpPriceInCents);
     int tmpCentsOnes = tmpPriceInCents %10;
     int tmpCentsTens = ((tmpPriceInCents - tmpCentsOnes)%100)/10;
     NSString *priceCents = [NSString stringWithFormat:@"%i%i", tmpCentsTens, tmpCentsOnes];

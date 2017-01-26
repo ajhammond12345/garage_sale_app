@@ -237,17 +237,17 @@
    
     tmpItem.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURLString]]];
     NSArray *fullComments =  [dictionary objectForKey:@"comments"];
-    NSLog(@"All comments:\n%@", fullComments);
+    //NSLog(@"All comments:\n%@", fullComments);
     tmpItem.comments = [[NSMutableArray alloc] init];
     for (int i = 0; i < fullComments.count; i++) {
         NSDictionary *tmpDic = [fullComments objectAtIndex:i];
-        NSLog(@"Dictionary: %@", tmpDic);
+        //NSLog(@"Dictionary: %@", tmpDic);
         NSString *tmpString = [tmpDic objectForKey:@"comment_text"];
-        NSLog(@"Comment Text: %@", tmpString);
+        //NSLog(@"Comment Text: %@", tmpString);
         [tmpItem addComment:tmpString];
-        NSLog(@"Comment Text in comments: %@", tmpItem.comments);
+        //NSLog(@"Comment Text in comments: %@", tmpItem.comments);
     }
-    NSLog(@"Item Comments: %@", tmpItem.comments);
+    //NSLog(@"Item Comments: %@", tmpItem.comments);
     //[downloadPhotoTask resume];
      
      
