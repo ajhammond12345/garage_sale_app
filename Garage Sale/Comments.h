@@ -10,7 +10,7 @@
 #import "Item.h"
 #import "ItemDetail.h"
 
-@interface Comments : UIViewController <UITextViewDelegate> {
+@interface Comments : UIViewController <UITextViewDelegate, NSURLSessionDelegate> {
     IBOutlet UITextView *otherComments;
     IBOutlet UITextView *inputComment;
 }

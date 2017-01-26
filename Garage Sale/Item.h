@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface Item : NSObject {
+@interface Item : NSObject  {
     
 }
 
@@ -52,7 +52,6 @@
 -(void)removeComment:(NSString *)comment;
 
 -(Item *)createItemFromJson;
--(void)downloadComments;
 -(void)uploadComment:(NSString *)comment;
 -(NSString *)commentWithIndex:(int)index;
 

@@ -86,13 +86,12 @@
         //creates mutable copy of the dictionary to remove extra keys
         NSMutableDictionary *tmpDic = [newItem.localDictionary mutableCopy];
         
-        //removes extra keys
+        //removes extra keys (image is uploaded later)
         [tmpDic removeObjectForKey:@"liked"];
         [tmpDic removeObjectForKey:@"id"];
+        [tmpDic removeObjectForKey:@"item_image"];
         NSString *priceString = [tmpDic objectForKey:@"item_price_in_cents"];
         NSLog(@"%@", priceString);
-        NSString *imageData = [[tmpDic objectForKey:@"item_image"] base64EncodedStringWithOptions:0];
-        [tmpDic setObject:imageData forKey:@"item_image"];
         //converts the dictionary to json
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
         //logs the data to check if it is created successfully
@@ -118,9 +117,73 @@
             NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
             NSLog(@"requestReply: %@", requestReply);
         }] resume];
+        /*
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+        
+        //Set Params
+        [request setHTTPShouldHandleCookies:NO];
+        [request setTimeoutInterval:60];
+        [request setHTTPMethod:@"POST"];
+        
+        //Create boundary, it can be anything
+        NSString *boundary = @"------VohpleBoundary4QuqLuM1cE5lMwCy";
+        
+        // set Content-Type in HTTP header
+        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+        [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
+        
+        // post body
+        NSMutableData *body = [NSMutableData data];
+        
+        //Populate a dictionary with all the regular values you would like to send.
+        NSMutableDictionary *parameters = tmpDic;
+        
+        // add params (all params are strings)
+        for (NSString *param in parameters) {
+            [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[[NSString stringWithFormat:@"%@\r\n", [parameters objectForKey:param]] dataUsingEncoding:NSUTF8StringEncoding]];
+        }
+        
+        NSString *FileParamConstant = @"item_image";
+        
+        NSData *imageData = UIImageJPEGRepresentation(image, 1);
+        
+        //Assuming data is not nil we add this to the multipart form
+        if (imageData)
+        {
+            [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"image.jpg\"\r\n", FileParamConstant] dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[@"Content-Type:image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:imageData];
+            [body appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        }
+        
+        //Close off the request with the boundary
+        [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        // setting the body of the post to the request
+        [request setHTTPBody:body];
+        
+        // set URL
+        [request setURL:[NSURL URLWithString:@"http://localhost:3001/items"]];
+        
+        [NSURLConnection sendAsynchronousRequest:request
+                                           queue:[NSOperationQueue mainQueue]
+                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                                   
+                                   NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
+                                   
+                                   if ([httpResponse statusCode] == 200) {
+         
+                                       NSLog(@"success");
+                                   }
+                                   
+                               }];
+         */
         
         //perform segue to thank you screen
-        [self performSegueWithIdentifier:@"showDonationThankYou" sender:(self)];
+         [self performSegueWithIdentifier:@"showDonationThankYou" sender:(self)];
     }
 }
 

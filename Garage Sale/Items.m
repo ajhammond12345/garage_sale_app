@@ -123,6 +123,9 @@
     _items = [NSMutableArray arrayWithObjects:testItem0, testItem1, testItem2, nil];
     */
     //-- Make URL request with server
+    if (_items != nil) {
+        [itemsView reloadData];
+    }
     NSString *jsonUrlString = [NSString stringWithFormat:@"http://localhost:3001/items.json"];
     NSURL *url = [NSURL URLWithString:jsonUrlString];
     NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -156,8 +159,15 @@
             }
         }
     }
-    
-    _items = tmpItemArray;
+    if (tmpItemArray != nil) {
+        _items = tmpItemArray;
+    }
+    else {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Connection\n" message:@"Could not load items" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
     [itemsView reloadData];
     [session invalidateAndCancel];
 
@@ -223,21 +233,21 @@
     
     NSString *imageFilepath = [jsonImageFilepath objectForKey:@"url"];
     NSString *imageURLString = [NSString stringWithFormat:@"http://localhost:3001%@", imageFilepath];
-    //NSURL *imageURL = [NSURL fileURLWithPath:imageURLString];
     _tmpImage = [[UIImage alloc] init];
-    //NSLog(@"\"%@\"", imageURLString);
-    
-    /*
-    NSURLSessionDownloadTask *downloadPhotoTask = [[NSURLSession sharedSession]
-        downloadTaskWithURL:imageURL completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-            
-            UIImage *downloadedImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
-            NSLog(@"%@",[NSData dataWithContentsOfURL:location]);
-            _tmpImage = downloadedImage;
-            tmpItem.image = _tmpImage;
-    }];
-     */
+   
     tmpItem.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURLString]]];
+    NSArray *fullComments =  [dictionary objectForKey:@"comments"];
+    NSLog(@"All comments:\n%@", fullComments);
+    tmpItem.comments = [[NSMutableArray alloc] init];
+    for (int i = 0; i < fullComments.count; i++) {
+        NSDictionary *tmpDic = [fullComments objectAtIndex:i];
+        NSLog(@"Dictionary: %@", tmpDic);
+        NSString *tmpString = [tmpDic objectForKey:@"comment_text"];
+        NSLog(@"Comment Text: %@", tmpString);
+        [tmpItem addComment:tmpString];
+        NSLog(@"Comment Text in comments: %@", tmpItem.comments);
+    }
+    NSLog(@"Item Comments: %@", tmpItem.comments);
     //[downloadPhotoTask resume];
      
      
@@ -252,16 +262,11 @@
     tmpItem.itemID = tmpID;
     //NSLog(@"%zd", tmpItem.itemID);
     tmpItem.itemPurchaseState = (NSNumber *)[dictionary objectForKey:@"item_purchase_state"];
-    NSArray *tmpComments = [dictionary objectForKey:@"item_comments"];
-    [tmpItem.comments removeAllObjects];
-    for (int i = 0; i < tmpComments.count; i++) {
-        [tmpItem.comments addObject:[tmpComments objectAtIndex:i]];
-    }
     return tmpItem;
 }
 
 
--(void)setItemImageFromServerWithURL:(NSURL *)imageURL item:(Item *)item {
+/*-(void)setItemImageFromServerWithURL:(NSURL *)imageURL item:(Item *)item {
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
     dispatch_async(queue, ^{
         NSError *error;
@@ -272,7 +277,7 @@
             item.image = image;
         });  
     });
-}
+}*/
 
 
 

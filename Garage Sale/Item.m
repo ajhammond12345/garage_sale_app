@@ -8,22 +8,54 @@
 
 #import "Item.h"
 
-@implementation Item
+@implementation Item 
 
 -(Item *)createItemFromJson {
     Item *tmpItem = [[Item alloc] init];
     return tmpItem;
 }
 
--(void)downloadComments {
-    //sets whatever it gets from server (with its ID) to comments array
-    if (_comments == nil) {
-        _comments = [NSMutableArray arrayWithObjects:@"This is a test comment for the item", nil];
-    }
-}
+
+
+ 
+
+
+
+
 
 -(void)uploadComment:(NSString *)comment {
     [_comments addObject:comment];
+    NSError *error;
+    
+    //creates mutable copy of the dictionary to remove extra keys
+    NSMutableDictionary *tmpDic = [NSMutableDictionary dictionaryWithObject:comment forKey:@"comment_text"];
+    [tmpDic setObject:[NSString stringWithFormat:@"%zd", _itemID] forKey:@"item_id"];
+    
+    //converts the dictionary to json
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
+    //logs the data to check if it is created successfully
+    //NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+    
+    //creates url for the request
+    NSURL *url = [NSURL URLWithString:@"http://localhost:3001/comments.json"];
+    
+    //creates a URL request
+    NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    
+    //specifics for the request (it is a post request with json content)
+    [uploadRequest setHTTPMethod:@"POST"];
+    [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [uploadRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
+    [uploadRequest setHTTPBody: jsonData];
+    
+    //
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    
+    [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+        NSLog(@"requestReply: %@", requestReply);
+    }] resume];
     //add the comment to the server
 }
 
@@ -51,8 +83,9 @@
 }
 -(NSString *)getPriceString {
     int tmpPriceInCents = (int)_priceInCents;
+    NSLog(@"Price in cents: %zd\nPriceInCents %i", _priceInCents, tmpPriceInCents);
     int tmpCentsOnes = tmpPriceInCents %10;
-    int tmpCentsTens = (tmpPriceInCents - tmpCentsOnes)%100;
+    int tmpCentsTens = ((tmpPriceInCents - tmpCentsOnes)%100)/10;
     NSString *priceCents = [NSString stringWithFormat:@"%i%i", tmpCentsTens, tmpCentsOnes];
     NSString *priceDollars = [NSString stringWithFormat:@"%i", (tmpPriceInCents/100)];
     
@@ -116,6 +149,7 @@
         imageData = [imageData init];
     NSNumber *likedData = [NSNumber numberWithBool:_liked];
     NSArray *commentsCopy = [_comments copy];
+    NSLog(@"%@", commentsCopy);
     if (commentsCopy == nil) {
         commentsCopy = [[NSArray alloc] init];
     }
@@ -134,7 +168,6 @@
     _itemPurchaseState, @"item_purchase_state",
     
                         nil];
-         
 }
 
 
