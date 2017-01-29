@@ -13,6 +13,8 @@
 @interface Comments : UIViewController <UITextViewDelegate, NSURLSessionDelegate> {
     IBOutlet UITextView *otherComments;
     IBOutlet UITextView *inputComment;
+    IBOutlet UIImageView *showImage;
+    IBOutlet UIImageView *purchased;
 }
 
 @property Item *item;

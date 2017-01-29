@@ -83,6 +83,33 @@
     }
     else {
         _showAll = true;
+        [self loadLikedItems];
+        //refreshes the liked list in case a user disliked an item while viewing the liked items list
+        NSMutableArray *tmpItemArray = [_items mutableCopy];
+        for (int i = 0; i < tmpItemArray.count; i++) {
+            //must reevaluate every single item in case it was liked while filtered
+            [[tmpItemArray objectAtIndex:i] setLiked:false];
+            for (int j = 0; j < _likedItems.count; j++) {
+                if ([[tmpItemArray objectAtIndex:i] getItemID] == [[_likedItems objectAtIndex:j] getItemID]) {
+                    [[tmpItemArray objectAtIndex:i] setLiked:true];
+                }
+            }
+        }
+        _items = tmpItemArray;
+        //assign a new memory address to prevent accidental copies
+        tmpItemArray = [[NSMutableArray alloc] init];
+        tmpItemArray = [_filteredItems mutableCopy];
+        for (int i = 0; i < tmpItemArray.count; i++) {
+            //must reevaluate every single item in case it was liked while filtered
+            [[tmpItemArray objectAtIndex:i] setLiked:false];
+            for (int j = 0; j < _likedItems.count; j++) {
+                if ([[tmpItemArray objectAtIndex:i] getItemID] == [[_likedItems objectAtIndex:j] getItemID]) {
+                    [[tmpItemArray objectAtIndex:i] setLiked:true];
+                }
+            }
+        }
+        _filteredItems = tmpItemArray;
+        
         //no point in reloading data from the server here
         [itemsView reloadData];
         //[self loadAllItems];
@@ -193,6 +220,13 @@
         [self loadItemImage:tmpItem];
         [tmpItemArray addObject:tmpItem];
     }
+    for (int i = 0; i < tmpItemArray.count; i++) {
+        for (int j = 0; j < _likedItems.count; j++) {
+            if ([[tmpItemArray objectAtIndex:i] getItemID] == [[_likedItems objectAtIndex:j] getItemID]) {
+                [[tmpItemArray objectAtIndex:i] setLiked:true];
+            }
+        }
+    }
     _filteredItems = tmpItemArray;
 }
 
@@ -202,6 +236,7 @@
         // No explicit autorelease pool needed here.
         // The code runs in background, not strangling
         // the main run loop.
+        NSLog(@"Item Url:\n%@", item.url);
         item.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:item.url]]];
         item.imageLoadAttempted = true;
         dispatch_sync(dispatch_get_main_queue(), ^{

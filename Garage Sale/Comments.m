@@ -108,6 +108,21 @@
         //does not use appendString b/c that failed in testing
         commentsOnThisItem = [NSString stringWithFormat:@"%@%@:\n\t%@\n\n", commentsOnThisItem, username, text];
     }
+    if ([commentsOnThisItem isEqualToString:@""]) {
+        commentsOnThisItem = [NSString stringWithFormat:@"No Comments"];
+    }
+    if (_item.image != nil) {
+        showImage.image = _item.image;
+    }
+    else {
+        showImage.image = [UIImage imageNamed:@"missing.png"];
+    }
+    if ([_item.itemPurchaseState intValue] == 1) {
+        purchased.hidden = NO;
+    }
+    else {
+        purchased.hidden = YES;
+    }
     //NSLog(@"%@\n%@", commentsOnThisItem, _item.comments);
     otherComments.text = commentsOnThisItem;
 }
