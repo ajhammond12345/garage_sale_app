@@ -152,6 +152,18 @@
             _bestConditionInt = (NSInteger *)rowTmp;
         }
     }
+    else {
+        if (_conditionFieldBeingEdited == 1) {
+            worstCondition.text = @"";
+            worstCondition.placeholder = @"Worst Condition";
+            _worstConditionInt = nil;
+        }
+        if (_conditionFieldBeingEdited == 2) {
+            bestCondition.text = @"";
+            bestCondition.placeholder = @"Best Condition";
+            _bestConditionInt = nil;
+        }
+    }
     
 }
 
@@ -193,6 +205,9 @@
         }
         if (dollars == nil) {
             dollars = minimumPrice.text;
+            if ([dollars isEqualToString:@""]) {
+                dollars = @"0";
+            }
         }
         if (cents == nil) {
             cents = @".00";
@@ -207,6 +222,11 @@
         _minPriceInCents = (NSInteger *)finalPriceInCents;
         NSLog(@"%zd", _minPriceInCents);
         minimumPrice.text = [NSString stringWithFormat:@"$%@.%@", dollars, cents];
+        if ([minimumPrice.text isEqualToString:@"$0.00"]) {
+            minimumPrice.text = @"";
+            _minPriceInCents = nil;
+            minimumPrice.placeholder = @"$0.00";
+        }
     }
     if ([textField isEqual: maximumPrice]) {
         NSString *cents;
@@ -223,6 +243,9 @@
         }
         if (dollars == nil) {
             dollars = maximumPrice.text;
+            if ([dollars isEqualToString:@""]) {
+                dollars = @"0";
+            }
         }
         if (cents == nil) {
             cents = @".00";
@@ -237,6 +260,11 @@
         _maxPriceInCents = (NSInteger *)finalPriceInCents;
         NSLog(@"%zd", _maxPriceInCents);
         maximumPrice.text = [NSString stringWithFormat:@"$%@.%@", dollars, cents];
+        if ([maximumPrice.text isEqualToString:@"$0.00"]) {
+            maximumPrice.text = @"";
+            _maxPriceInCents = nil;
+            maximumPrice.placeholder = @"$0.00";
+        }
     }
     [textField resignFirstResponder];
     [self.view endEditing:YES];

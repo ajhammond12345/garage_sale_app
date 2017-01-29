@@ -28,7 +28,7 @@ NSArray *conditionOptionsDonate;
     IBOutlet UITextView *descriptionTextView;
     IBOutlet UIButton *imageView;
     IBOutlet UIButton *cameraButton;
-    
+    IBOutlet UILabel *tmpLabel;
 }
 
 @property (strong, nonatomic) UIPickerView *conditionPicker;

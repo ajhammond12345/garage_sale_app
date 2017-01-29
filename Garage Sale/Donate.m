@@ -167,7 +167,25 @@
 
 //for the text fields that are directly edited (name and price)
 -(void)textFieldDidEndEditing:(UITextField *)textField {
-    name = nameTextField.text;
+    if ([textField isEqual: nameTextField]) {
+        NSString *tmpName = nameTextField.text;
+        tmpLabel.text = tmpName;
+        tmpLabel.hidden = YES;
+        [tmpLabel sizeToFit];
+        NSLog(@"%f", tmpLabel.frame.size.width);
+        if (tmpLabel.frame.size.width < 180) {
+            name = tmpName;
+        }
+        else {
+            nameTextField.text = @"";
+            name = @"";
+            nameTextField.placeholder = @"Name of Item";
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Invalid Name\n" message:@"Please use a shorter name" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+            [alert addAction:defaultAction];
+            [self presentViewController:alert animated:YES completion:nil];
+        }
+    }
     if ([textField isEqual: priceTextField]) {
         NSString *cents;
         NSString *dollars;
@@ -183,6 +201,9 @@
         }
         if (dollars == nil) {
             dollars = priceTextField.text;
+            if ([dollars isEqualToString:@""]) {
+                dollars = @"0";
+            }
         }
         if (cents == nil) {
             cents = @".00";
@@ -200,6 +221,11 @@
         priceInCents = (NSInteger *)finalPriceInCents;
         NSLog(@"%zd", priceInCents);
         priceTextField.text = [NSString stringWithFormat:@"$%@.%@", dollars, cents];
+        if ([priceTextField.text isEqualToString:@"$0.00"]) {
+            priceTextField.text = @"";
+            priceInCents = nil;
+            priceTextField.placeholder = @"$0.00";
+        }
     }
     [textField resignFirstResponder];
     [self.view endEditing:YES];
@@ -245,6 +271,11 @@
         conditionInt = (NSInteger *)rowTmp;
         condition = conditionOptionsDonate[row];
     }
+    else {
+        conditionTextField.text = @"";
+        conditionTextField.placeholder = @"Condition";
+        condition = @"";
+    }
 }
 
 //for the description
@@ -284,6 +315,7 @@
     conditionTextField.delegate = self;
     descriptionTextView.delegate = self;
     priceTextField.delegate = self;
+    tmpLabel.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning {
