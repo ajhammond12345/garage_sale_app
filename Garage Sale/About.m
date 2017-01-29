@@ -8,7 +8,7 @@
 
 #import "About.h"
 
-@interface About ()
+@interface About () <NSURLSessionDelegate>
 
 @end
 
@@ -42,11 +42,11 @@
     setDaysUntil
  */
 -(void)setProgressBarWidth {
-    int barWidth = (_amountRaisedInCents * totalBar.frame.size.width)/_goalInCents;
-    NSLog(@"Bar Width: %i", barWidth);
+        int barWidth = (_amountRaisedInCents * totalBar.frame.size.width)/_goalInCents;
+        NSLog(@"Bar Width: %i", barWidth);
 
-    progressBarWidth.constant = barWidth;
-    progressBar.hidden = NO;
+        progressBarWidth.constant = barWidth;
+        progressBar.hidden = NO;
     
 }
 -(void)setPercentRaised {
@@ -72,8 +72,28 @@
 
 //Methods that load data update stored fields
 -(void)loadAmountRaised {
-    _amountRaisedInCents = 70000;
+    _amountRaisedInCents = 0;
     //insert code to load amountRaised
+    NSString *jsonUrlString = [NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/total.json"];
+    NSURL *url = [NSURL URLWithString:jsonUrlString];
+    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url];
+    [dataTask resume];
+}
+
+- (void)URLSession:(NSURLSession *)session
+          dataTask:(NSURLSessionDataTask *)dataTask
+    didReceiveData:(NSData *)data {
+    NSError *error;
+    NSString *totalRaised = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+    _amountRaisedInCents = [totalRaised intValue];
+    [self setProgressBarWidth];
+    //updates the text
+    [self setAmountRaisedText];
+    [self setPercentRaised];
+    [session invalidateAndCancel];
+    
 }
 
 -(void)loadDaysRemaining {

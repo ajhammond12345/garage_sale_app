@@ -15,7 +15,7 @@
 }
 
 @property NSString *name;
-@property NSString *condition;
+@property NSInteger *condition;
 @property NSString *itemDescription;
 @property NSInteger *priceInCents;
 @property UIImage *image;
@@ -24,13 +24,15 @@
 @property bool liked;
 @property NSDictionary *localDictionary;
 @property NSNumber *itemPurchaseState;
+@property NSString *url;
+@property bool imageLoadAttempted;
 
 
 
 //some simpler get statements (default set statements adequate)
 -(NSString *)getName;
 
--(NSString *)getCondition;
+-(NSInteger *)getCondition;
 
 -(NSString *)getItemDescription;
 

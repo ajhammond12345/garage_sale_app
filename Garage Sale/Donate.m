@@ -8,6 +8,8 @@
 
 #import "Donate.h"
 #import "Item.h"
+#import "AFNetworking.h"
+
 
 @interface Donate () <UITextViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -52,6 +54,8 @@
 
 
 -(IBAction)done:(id)sender {
+    [self.view endEditing:YES];
+
     //first need to check that all fields have data
     if ([name isEqualToString:@""] || [condition isEqualToString:@""] || [description isEqualToString:@""] || priceInCents == 0 || [image isEqual:nil]) {
         //shows error message for missing information
@@ -66,7 +70,7 @@
         Item *newItem = [[Item alloc] init];
         newItem.name = name;
         newItem.image = image;
-        newItem.condition = condition;
+        newItem.condition = conditionInt;
         newItem.priceInCents = priceInCents;
         NSLog(@"%zd", newItem.priceInCents);
         newItem.itemDescription = description;
@@ -90,15 +94,20 @@
         [tmpDic removeObjectForKey:@"liked"];
         [tmpDic removeObjectForKey:@"id"];
         [tmpDic removeObjectForKey:@"item_image"];
-        NSString *priceString = [tmpDic objectForKey:@"item_price_in_cents"];
-        NSLog(@"%@", priceString);
+        NSData *imageData = UIImageJPEGRepresentation(image, .6);
+        NSString *imageBase64 = [imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
+        //NSLog(@"Upload Data: %@", imageBase64);
+        [tmpDic setObject:imageBase64 forKey:@"va_image_data"];
+        [tmpDic setObject:[NSString stringWithFormat:@"%i", 0] forKey:@"item_purchase_state"];
+
+ //JSON Upload - does not upload the image
         //converts the dictionary to json
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
         //logs the data to check if it is created successfully
         //NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
         
         //creates url for the request
-        NSURL *url = [NSURL URLWithString:@"http://localhost:3001/items.json"];
+        NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/items.json"];
 
         //creates a URL request
         NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
@@ -110,80 +119,27 @@
         [uploadRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
         [uploadRequest setHTTPBody: jsonData];
         
-        //
+        //create some type of waiting image here
         NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
         
         [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
             NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-            NSLog(@"requestReply: %@", requestReply);
+                NSLog(@"requestReply: %@", [[requestReply class] description]);
+                if ([[[requestReply class] description] isEqualToString:@"__NSCFConstantString"]) {
+                    //alert for failing to upload
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Connection\n" message:@"Could not donate the item. Please check your internet connection and try again." preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+                    [alert addAction:defaultAction];
+                    [self presentViewController:alert animated:YES completion:nil];
+                }
+                else {
+                    [self performSegueWithIdentifier:@"showDonationThankYou" sender:(self)];
+                }
+            });
         }] resume];
-        /*
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-        
-        //Set Params
-        [request setHTTPShouldHandleCookies:NO];
-        [request setTimeoutInterval:60];
-        [request setHTTPMethod:@"POST"];
-        
-        //Create boundary, it can be anything
-        NSString *boundary = @"------VohpleBoundary4QuqLuM1cE5lMwCy";
-        
-        // set Content-Type in HTTP header
-        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
-        [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-        
-        // post body
-        NSMutableData *body = [NSMutableData data];
-        
-        //Populate a dictionary with all the regular values you would like to send.
-        NSMutableDictionary *parameters = tmpDic;
-        
-        // add params (all params are strings)
-        for (NSString *param in parameters) {
-            [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
-            [body appendData:[[NSString stringWithFormat:@"%@\r\n", [parameters objectForKey:param]] dataUsingEncoding:NSUTF8StringEncoding]];
-        }
-        
-        NSString *FileParamConstant = @"item_image";
-        
-        NSData *imageData = UIImageJPEGRepresentation(image, 1);
-        
-        //Assuming data is not nil we add this to the multipart form
-        if (imageData)
-        {
-            [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"image.jpg\"\r\n", FileParamConstant] dataUsingEncoding:NSUTF8StringEncoding]];
-            [body appendData:[@"Content-Type:image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-            [body appendData:imageData];
-            [body appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-        }
-        
-        //Close off the request with the boundary
-        [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        // setting the body of the post to the request
-        [request setHTTPBody:body];
-        
-        // set URL
-        [request setURL:[NSURL URLWithString:@"http://localhost:3001/items"]];
-        
-        [NSURLConnection sendAsynchronousRequest:request
-                                           queue:[NSOperationQueue mainQueue]
-                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                                   
-                                   NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
-                                   
-                                   if ([httpResponse statusCode] == 200) {
-         
-                                       NSLog(@"success");
-                                   }
-                                   
-                               }];
-         */
-        
-        //perform segue to thank you screen
-         [self performSegueWithIdentifier:@"showDonationThankYou" sender:(self)];
+                           
+  
     }
 }
 
@@ -233,6 +189,9 @@
         }
         NSCharacterSet *mySet = [NSCharacterSet characterSetWithCharactersInString:@"."];
         cents = [cents stringByTrimmingCharactersInSet:mySet];
+        if (cents.length == 1) {
+            [cents stringByAppendingString:@"0"];
+        }
         priceCents = (int)[cents integerValue];
         dollars = [dollars stringByTrimmingCharactersInSet:mySet];
         priceDollars = (int)[dollars integerValue];
@@ -240,7 +199,7 @@
         finalPriceInCents = (priceDollars * 100) + priceCents;
         priceInCents = (NSInteger *)finalPriceInCents;
         NSLog(@"%zd", priceInCents);
-        priceTextField.text = [NSString stringWithFormat:@"%@.%@", dollars, cents];
+        priceTextField.text = [NSString stringWithFormat:@"$%@.%@", dollars, cents];
     }
     [textField resignFirstResponder];
     [self.view endEditing:YES];
@@ -268,21 +227,24 @@
 // The number of rows of data
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return conditionOptions.count;
+    return conditionOptionsDonate.count;
 }
 
 // The data to return for the row and component (column) that's being passed in
 - (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return conditionOptions[row];
+    return conditionOptionsDonate[row];
 }
 
 
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    
-    conditionTextField.text = conditionOptions[row];
-    condition = conditionOptions[row];
+    if (row != 0) {
+        conditionTextField.text = conditionOptionsDonate[row];
+        long rowTmp = row;
+        conditionInt = (NSInteger *)rowTmp;
+        condition = conditionOptionsDonate[row];
+    }
 }
 
 //for the description
@@ -304,6 +266,10 @@
     }
 }
 
+-(IBAction)dismissKeyBoards:(id)sender {
+    [self.view endEditing:YES];
+}
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -312,8 +278,7 @@
     condition = @"";
     priceInCents = 0;
     description = @"";
-    
-    conditionOptions = [NSArray arrayWithObjects:@"Brand New", @"Exceptional", @"Great Condition", @"Used", @"Falling Apart", @"Broken", nil];
+    conditionOptionsDonate = [[NSUserDefaults standardUserDefaults] objectForKey:@"conditions"];
     
     nameTextField.delegate = self;
     conditionTextField.delegate = self;

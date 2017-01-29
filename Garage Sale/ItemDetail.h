@@ -10,6 +10,7 @@
 #import "Item.h"
 #import "Comments.h"
 
+
 @interface ItemDetail : UIViewController <UITextViewDelegate> {
     
     
@@ -20,6 +21,7 @@
     IBOutlet UIButton *displayLikeButton;
     IBOutlet UIImageView *displayImage;
     IBOutlet UIButton *comment;
+    IBOutlet UIImageView *purchased;
     
 }
 

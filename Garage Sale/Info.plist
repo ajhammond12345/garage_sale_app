@@ -54,6 +54,8 @@
 	</dict>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Upload images of items you will donate.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Take pictures of items you are donating.</string>
 	<key>NSAllowLocalNetworking</key>
 	<true/>
 </dict>

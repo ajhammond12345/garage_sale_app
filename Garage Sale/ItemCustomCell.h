@@ -19,6 +19,7 @@
 @property IBOutlet UILabel *price;
 @property IBOutlet UIButton *likeButton;
 @property IBOutlet UIImageView *image;
+@property IBOutlet UIImageView *purchased;
 
 -(void)updateCell;
 

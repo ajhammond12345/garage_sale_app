@@ -14,10 +14,19 @@
 
 
 -(void)updateCell {
-    
+    //hides purchased during loading sequence
+    _purchased.hidden = YES;
+    NSArray *conditionOptionsCustom = [[NSUserDefaults standardUserDefaults] objectForKey:@"conditions"];
     _name.text = _item.name;
-    _condition.text = _item.condition;
+    int tmpInt = (int)_item.condition;
+    _condition.text = conditionOptionsCustom[tmpInt];
     _price.text = [_item getPriceString];
+    if ([_item.itemPurchaseState intValue] == 1) {
+        _purchased.hidden = NO;
+    }
+    else {
+        _purchased.hidden = YES;
+    }
     
     if (_item.liked) {
         [_likeButton setImage:[UIImage imageNamed:@"Instagram-Heart-Solid@3x.png"] forState:UIControlStateNormal];
@@ -29,7 +38,12 @@
         _image.image = _item.image;
     }
     else {
-        _image.image = [UIImage imageNamed:@"default.png"];
+        if (_item.imageLoadAttempted == true) {
+            _image.image = [UIImage imageNamed:@"missing.png"];
+        }
+        else {
+            _image.image = [UIImage imageNamed:@"default.png"];
+        }
     }
     
 }

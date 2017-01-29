@@ -37,7 +37,7 @@
     //NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
     
     //creates url for the request
-    NSURL *url = [NSURL URLWithString:@"http://localhost:3001/comments.json"];
+    NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/comments.json"];
     
     //creates a URL request
     NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
@@ -53,8 +53,10 @@
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     
     [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
         NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
         NSLog(@"requestReply: %@", requestReply);
+        });
     }] resume];
     //add the comment to the server
 }
@@ -68,7 +70,7 @@
 }
 
 
--(NSString *)getCondition {
+-(NSInteger *)getCondition {
     return _condition;
 }
 
@@ -144,28 +146,33 @@
 }
 
 -(void)setItemDictionary {
-    NSData *imageData = UIImagePNGRepresentation(_image);
-    if (imageData == nil)
-        imageData = [imageData init];
+    NSData *imageData = UIImageJPEGRepresentation(_image, .6);
     NSNumber *likedData = [NSNumber numberWithBool:_liked];
     NSArray *commentsCopy = [_comments copy];
-    NSLog(@"%@", commentsCopy);
+    NSNumber *purchaseState = _itemPurchaseState;
+    //NSLog(@"Purchase State: %@", purchaseState);
+    if (imageData == nil)
+        imageData = [[NSData alloc] init];
     if (commentsCopy == nil) {
         commentsCopy = [[NSArray alloc] init];
     }
     if (likedData == nil) {
         likedData = [NSNumber numberWithBool:true];
     }
+    if (purchaseState == nil) {
+        purchaseState = [[NSNumber alloc] initWithInt:-1];
+    }
+    //NSLog(@"These Can't Be NULL: %@, %@, %@", imageData, commentsCopy, likedData);
     _localDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:
     _name, @"item_name",
-    _condition, @"item_condition",
+    [NSString stringWithFormat:@"%zd", _condition], @"item_condition",
     _itemDescription, @"item_description",
     [NSString stringWithFormat:@"%zd", _priceInCents], @"item_price_in_cents",
     likedData, @"liked",
     [NSString stringWithFormat:@"%zd", _itemID], @"id",
     imageData, @"item_image",
     commentsCopy, @"item_comments",
-    _itemPurchaseState, @"item_purchase_state",
+    purchaseState, @"item_purchase_state",
     
                         nil];
 }

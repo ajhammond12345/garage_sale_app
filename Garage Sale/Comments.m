@@ -18,7 +18,7 @@
 -(void)downloadComments {
     //sets whatever it gets from server (with its ID) to comments array
     
-    NSString *jsonUrlString = [NSString stringWithFormat:@"http://localhost:3001/items/%zd.json", _item.itemID];
+    NSString *jsonUrlString = [NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/items/%zd.json", _item.itemID];
     //NSLog(@"URL Request: %@", jsonUrlString);
     NSURL *url = [NSURL URLWithString:jsonUrlString];
     NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -63,14 +63,17 @@
 }
 
 -(IBAction)postComment:(id)sender {
-    NSString *tmp = [inputComment.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *tmp = inputComment.text;
     if ([tmp isEqual: @""] || [tmp isEqual: @"Type comment here"]) {
         inputComment.text = [NSString stringWithFormat:@"Type comment here"];
         //show error for "please type comment"
     }
     else {
-        _userComment = tmp;
+        NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+        NSLog(@"%@", username);
+        _userComment = [NSString stringWithFormat:@"%@:%@", username, tmp];
     }
+    
     if (_userComment != nil) {
         [_item uploadComment:_userComment];
         [self showComments];
@@ -92,7 +95,18 @@
     //NSLog(@"Item has comments: %@", _item.comments);
     NSString *commentsOnThisItem = @"";
     for (int i = 0; i < _item.comments.count; i++) {
-        commentsOnThisItem = [NSString stringWithFormat:@"%@\n\n%@", commentsOnThisItem, [_item commentWithIndex:i]];
+        NSString *username;
+        NSString *text;
+        NSString *full = [_item commentWithIndex:i];
+        for (int i = 0; i < (full.length-1); i++) {
+            if ([@":" isEqualToString:[[full substringFromIndex:i] substringToIndex:1]]) {
+                username = [full substringToIndex:i];
+                text = [full substringFromIndex:i+1];
+                break;
+            }
+        }
+        //does not use appendString b/c that failed in testing
+        commentsOnThisItem = [NSString stringWithFormat:@"%@%@:\n\t%@\n\n", commentsOnThisItem, username, text];
     }
     //NSLog(@"%@\n%@", commentsOnThisItem, _item.comments);
     otherComments.text = commentsOnThisItem;

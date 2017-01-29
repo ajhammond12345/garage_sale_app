@@ -10,12 +10,13 @@
 #import "Item.h"
 
 NSString *name;
+NSInteger *conditionInt;
 NSString *condition;
 NSInteger *priceInCents;
 NSString *description;
 UIImage *image;
 
-NSArray *conditionOptions;
+NSArray *conditionOptionsDonate;
 
 
 
@@ -31,6 +32,7 @@ NSArray *conditionOptions;
 }
 
 @property (strong, nonatomic) UIPickerView *conditionPicker;
+
 
 -(IBAction)done:(id)sender;
 -(IBAction)selectImage:(id)sender;

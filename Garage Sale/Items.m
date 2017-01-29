@@ -8,6 +8,7 @@
 
 #import "Items.h"
 #import "ItemDetail.h"
+#import "Filters.h"
 
 @interface Items () <UITableViewDelegate, UITableViewDataSource, NSURLSessionDelegate>
 
@@ -18,32 +19,40 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     ItemCustomCell *tmpCell = [itemsView cellForRowAtIndexPath:indexPath];
-    itemToSend = tmpCell.item;
+    _itemToSend = tmpCell.item;
     [self performSegueWithIdentifier:@"showItem" sender:indexPath];
 }
 
+-(IBAction)filters:(id)sender {
+    [self performSegueWithIdentifier:@"toFilters" sender:self];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if (1==1) {
-        
-        
-    }
     if ([segue.identifier isEqualToString:@"showItem"]) {
         ItemDetail *destViewController = segue.destinationViewController;
-        destViewController.itemOnDisplay = itemToSend;
+        destViewController.itemOnDisplay = _itemToSend;
         [destViewController updateView];
+    }
+    if ([segue.identifier isEqualToString:@"toFilters"]) {
+        Filters *destination = segue.destinationViewController;
+        destination.filtersInPlace = _filters;
     }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     ItemCustomCell *cell = (ItemCustomCell *)[tableView dequeueReusableCellWithIdentifier:@"ItemCell" forIndexPath:indexPath];
-    if (!showAll) {
+    if (!_showAll) {
         //loads item from array of liked items if set to not show all
         cell.item = [_likedItems objectAtIndex:indexPath.row];
     }
     else {
         //loads item from array of all items if set to show all
-        cell.item = [_items objectAtIndex:indexPath.row];
+        if (_showFiltered) {
+            cell.item = [_filteredItems objectAtIndex:indexPath.row];
+        }
+        else {
+            cell.item = [_items objectAtIndex:indexPath.row];
+        }
     }
     cell.parentTable = itemsView;
     
@@ -54,24 +63,29 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (!showAll) {
+    if (!_showAll) {
         return _likedItems.count;
     }
     else {
+        if (_showFiltered) {
+            return _filteredItems.count;
+        }
         return _items.count;
     }
 }
 
 
 -(void)viewSwitched {
-    if (showAll) {
-        showAll = false;
+    if (_showAll) {
+        _showAll = false;
         [self loadLikedItems];
         [itemsView reloadData];
     }
     else {
-        showAll = true;
-        [self loadAllItems];
+        _showAll = true;
+        //no point in reloading data from the server here
+        [itemsView reloadData];
+        //[self loadAllItems];
         //loadAllItems already calles reloadData
     }
 }
@@ -84,49 +98,16 @@
 
 
 -(void)loadAllItems {
-    //creates some test Items
-    //test code for itemView
-    /*Item *testItem0 = [[Item alloc] init];
-    [testItem0 setName:@"TestName"];
-    [testItem0 setLiked:false];
-    [testItem0 setItemDescription:@"This is a test item"];
-    [testItem0 setThePriceInCents:12345];
-    testItem0.image = [UIImage imageNamed:@"TestImage.png"];
-    [testItem0 setTheItemID:1];
-    [testItem0 setCondition:@"Crappy"];
-    testItem0.comments = [[NSArray arrayWithObjects:@"Comment number one", @"Test comment for testing purposes", @"A really long comment meant for testing purposes, hopefully it will work", nil] mutableCopy];
-    
-    
-    Item *testItem1 = [[Item alloc] init];
-    [testItem1 setName:@"NameTest1"];
-    [testItem1 setLiked:false];
-    [testItem1 setItemDescription:@"This is the second test item"];
-    [testItem1 setThePriceInCents:54321];
-    [testItem1 setImage:[UIImage imageNamed:@"TestImage.png"]];
-    [testItem1 setCondition:@"Usable"];
-    [testItem1 setTheItemID:2];
-    
-    
-    
-    Item *testItem2 = [[Item alloc] init];
-    [testItem2 setName:@"Test2"];
-    [testItem2 setLiked:false];
-    [testItem2 setItemDescription:@"This is the second test item"];
-    [testItem2 setThePriceInCents:54321];
-    [testItem2 setImage:[UIImage imageNamed:@"TestImage1.png"]];
-    [testItem2 setCondition:@"Acceptable"];
-    [testItem2 setTheItemID:4];
     
     
     
     
-    _items = [NSMutableArray arrayWithObjects:testItem0, testItem1, testItem2, nil];
-    */
+    
     //-- Make URL request with server
     if (_items != nil) {
         [itemsView reloadData];
     }
-    NSString *jsonUrlString = [NSString stringWithFormat:@"http://localhost:3001/items.json"];
+    NSString *jsonUrlString = [NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/items.json"];
     NSURL *url = [NSURL URLWithString:jsonUrlString];
     NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:[NSOperationQueue mainQueue]];
@@ -145,8 +126,12 @@
     for (int i = 0; i < _result.count; i++) {
         NSDictionary *tmpDic = [_result objectAtIndex:i];
         //NSLog(@"Dictionary %@", tmpDic);
+        Item *loadItem = [self itemFromDictionaryExternal:tmpDic];
+        [self loadItemImage:loadItem];
+        [tmpItemArray addObject:loadItem];
+    }
+    for (int i = 0; i <tmpItemArray.count; i++) {
         
-        [tmpItemArray addObject:[self itemFromDictionaryExternal:tmpDic]];
     }
     
     [self loadLikedItems];
@@ -162,6 +147,7 @@
     if (tmpItemArray != nil) {
         _items = tmpItemArray;
     }
+    
     else {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Connection\n" message:@"Could not load items" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
@@ -198,10 +184,39 @@
     _likedItems = [tmpLikedItems copy];
 }
 
+-(void)loadFilteredItems {
+    NSMutableArray *tmpItemArray = [[NSMutableArray alloc] init];
+    for (int i = 0; i < _filteredResults.count; i++) {
+        NSDictionary *tmpDic = [_filteredResults objectAtIndex:i];
+        //NSLog(@"Dictionary %@", tmpDic);
+        Item *tmpItem = [self itemFromDictionaryExternal:tmpDic];
+        [self loadItemImage:tmpItem];
+        [tmpItemArray addObject:tmpItem];
+    }
+    _filteredItems = tmpItemArray;
+}
+
+-(void)loadItemImage:(Item *)item {
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        // No explicit autorelease pool needed here.
+        // The code runs in background, not strangling
+        // the main run loop.
+        item.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:item.url]]];
+        item.imageLoadAttempted = true;
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            // This will be called on the main thread, so that
+            // you can update the UI, for example.
+            [itemsView reloadData];
+        });
+    });
+    
+}
+
 -(Item *)itemFromDictionaryInternal:(NSDictionary *) dictionary {
     Item *tmpItem = [[Item alloc] init];
     tmpItem.name = [dictionary objectForKey:@"item_name"];
-    tmpItem.condition = [dictionary objectForKey:@"item_condition"];
+    tmpItem.condition = (NSInteger *)[[dictionary objectForKey:@"item_condition"] integerValue];
     tmpItem.itemDescription = [dictionary objectForKey:@"item_description"];
     NSData *imageData = [dictionary objectForKey:@"item_image"];
     if (imageData != nil) {
@@ -227,15 +242,23 @@
 -(Item *)itemFromDictionaryExternal:(NSDictionary *) dictionary {
     Item *tmpItem = [[Item alloc] init];
     tmpItem.name = [dictionary objectForKey:@"item_name"];
-    tmpItem.condition = [dictionary objectForKey:@"item_condition"];
+    tmpItem.condition = (NSInteger *)[[dictionary objectForKey:@"item_condition"] integerValue];
     tmpItem.itemDescription = [dictionary objectForKey:@"item_description"];
     NSDictionary *jsonImageFilepath = [dictionary objectForKey:@"item_image"];
     
     NSString *imageFilepath = [jsonImageFilepath objectForKey:@"url"];
-    NSString *imageURLString = [NSString stringWithFormat:@"http://localhost:3001%@", imageFilepath];
-    _tmpImage = [[UIImage alloc] init];
+    tmpItem.url = [NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com%@", imageFilepath];
+    
+    
+    /*
    
-    tmpItem.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURLString]]];
+    tmpItem.image= [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURLString]]];
+     */
+    /*NSString *imageBase64 = [dictionary objectForKey:@"item_image_base_64"];
+    NSLog(@"\n\nDownload Data:\n\n%@", imageBase64);
+    NSData *imageData = [imageBase64 dataUsingEncoding:NSDataBase64EncodingEndLineWithLineFeed];
+    tmpItem.image = [UIImage imageWithData:imageData];
+    */
     NSArray *fullComments =  [dictionary objectForKey:@"comments"];
     //NSLog(@"All comments:\n%@", fullComments);
     tmpItem.comments = [[NSMutableArray alloc] init];
@@ -284,14 +307,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view.
     _items = [[NSMutableArray alloc] init];
     _likedItems = [[NSArray alloc] init];
     
     [self loadAllItems];
     [self loadLikedItems];
+    [self loadFilteredItems];
     //show all items not liked items
-    showAll = true;
+    _showAll = true;
     itemsView.delegate = self;
     itemsView.dataSource = self;
     [itemListType addTarget:self

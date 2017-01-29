@@ -11,8 +11,7 @@
 #import "ItemCustomCell.h"
 
 
-bool showAll;
-Item *itemToSend;
+
 
 @interface Items : UIViewController <UITableViewDelegate, UITableViewDataSource, NSURLSessionDelegate>{
     
@@ -29,13 +28,20 @@ Item *itemToSend;
 
 @property NSMutableArray *items;
 @property NSArray *likedItems;
+//if fails make NSMutableArray
+@property NSArray *filteredResults;
+@property NSMutableArray *filteredItems;
 @property NSArray *result;
-@property UIImage *tmpImage;
-
+@property bool showFiltered;
+@property bool showAll;
+@property Item *itemToSend;
+@property NSDictionary *filters;
 
 
 -(void)loadAllItems;
 -(void)loadLikedItems;
+
+-(Item *)itemFromDictionaryExternal:(NSDictionary *)dictionary;
 
 
 @end

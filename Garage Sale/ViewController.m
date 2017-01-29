@@ -182,8 +182,24 @@
         Condition (int)
         Comments (String)
         Sold/Not Sold (boolean)
+ 
  */
 
+
+/* Views that load data from the server (need loading thing)
+    ItemDetail (for Buy)
+    Filters (when sending filter and waiting on data)
+    Comments (when loading comments)
+    Items (when downloading items and downloading image for item from URL)
+    Item (when uploading comments)
+    Donate (when uploading the item)
+    About (when loading the amount raised) (also needs error message)
+ 
+ */
+
+
+///dictionary with key data with object dictionary
+    //second dictionary must have condition_min, condition_max, price_min, price_max
 
 
 
@@ -197,8 +213,38 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     // Do any additional setup after loading the view, typically from a nib.
 }
+
+-(void)viewDidAppear:(BOOL)animated {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    _username = [defaults objectForKey:@"username"];
+    NSLog(@"%@", _username);
+    UIAlertController *usernameInput = [UIAlertController alertControllerWithTitle:@"Input Username" message:@"Please input a username that will appear when you comment on items" preferredStyle:UIAlertControllerStyleAlert];
+    [usernameInput addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+     textField.placeholder = NSLocalizedString(@"username", @"Username");
+     }];
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        _username = usernameInput.textFields.firstObject.text;
+        [defaults setObject:_username forKey:@"username"];
+        NSLog(@"%@", [defaults objectForKey:@"username"]);
+    }];
+    [usernameInput addAction:defaultAction];
+    if (_username == nil) {
+        
+        [self presentViewController:usernameInput animated:YES completion:nil];
+    }
+
+    NSArray *conditionOptions = [defaults objectForKey:@"conditions"];
+    if (conditionOptions == nil) {
+    
+        [defaults setObject:[NSArray arrayWithObjects:@"--Select--", @"Unopened", @"Brand New", @"Exceptional", @"Great Condition", @"Used", @"Falling Apart", @"Broken", nil] forKey:@"conditions"];
+    }
+}
+
+
 
 
 - (void)didReceiveMemoryWarning {

@@ -12,6 +12,8 @@
     
 }
 
+@property NSString *username;
+
 
 @end
 
