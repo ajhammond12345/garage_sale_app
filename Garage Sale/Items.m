@@ -282,7 +282,8 @@
     NSDictionary *jsonImageFilepath = [dictionary objectForKey:@"item_image"];
     
     NSString *imageFilepath = [jsonImageFilepath objectForKey:@"url"];
-    tmpItem.url = [NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com%@", imageFilepath];
+    tmpItem.url = [NSString stringWithFormat:@"%@", imageFilepath];
+    NSLog(@"%@", tmpItem.url);
     
     
     /*

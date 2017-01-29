@@ -8,11 +8,58 @@
 
 #import "ItemDetail.h"
 
-@interface ItemDetail () <UITextViewDelegate>
+@interface ItemDetail () <UITextViewDelegate, PKPaymentAuthorizationViewControllerDelegate>
 
 @end
 
 @implementation ItemDetail
+
+-(void)paymentAuthorizationViewControllerDidFinish:(PKPaymentAuthorizationViewController *)controller {
+    [controller dismissViewControllerAnimated:YES completion:NULL];
+}
+
+-(void)paymentAuthorizationViewController:(PKPaymentAuthorizationViewController *)controller
+didAuthorizePayment:(PKPayment *)payment
+completion:(void (^)(PKPaymentAuthorizationStatus status))completion {
+    //would insert code to pass this on to a payment company if this were real
+    
+    //instead will load to the server that the item was purchased
+    
+    //this only reached if item has not been purchased, so assigning the
+    NSMutableDictionary *tmpDic = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat: @"%i", 1], @"item_purchase_state", nil];
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
+    
+    //creates url for the request
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/items/%zd.json", _itemOnDisplay.itemID]];
+    //NSLog(@"%@", url);
+    
+    //creates a URL request
+    NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    
+    //specifics for the request (it is a post request with json content)
+    [uploadRequest setHTTPMethod:@"PATCH"];
+    [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [uploadRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
+    [uploadRequest setHTTPBody: jsonData];
+    
+    //
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    
+    [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+      {
+          dispatch_async(dispatch_get_main_queue(), ^{
+              NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+              NSLog(@"requestReply: %@", requestReply);
+              
+              [self performSegueWithIdentifier:@"toPurchaseThankYou"  sender:self];
+          });
+      }] resume];
+
+}
+
+
 
 -(IBAction)comments:(id)sender {
     [self performSegueWithIdentifier:@"toComments" sender:self];
@@ -69,38 +116,22 @@
     NSInteger *check = (NSInteger *)[[tmpDic objectForKey:@"item_purchase_state"] integerValue];
     NSLog(@"Check: %zd",check);
     if (check == 0) {
-        check = (long *)1;
-        [tmpDic setObject:[NSString stringWithFormat: @"%zd", check] forKey:@"item_purchase_state"];
-        NSError *error;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
-    
-        //creates url for the request
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/items/%zd.json", _itemOnDisplay.itemID]];
-        //NSLog(@"%@", url);
-    
-    //creates a URL request
-        NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-    
-    //specifics for the request (it is a post request with json content)
-        [uploadRequest setHTTPMethod:@"PATCH"];
-        [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-        [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        [uploadRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
-        [uploadRequest setHTTPBody: jsonData];
-    
-    //
-        NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    
-        [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-        {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-                NSLog(@"requestReply: %@", requestReply);
-            
-                [self performSegueWithIdentifier:@"toPurchaseThankYou"  sender:self];
-                });
-        }] resume];
-                           
+        
+        //sets up the apple pay request
+        PKPaymentRequest *request = [PKPaymentRequest new];
+        request.merchantIdentifier = @"merchant.hammond.alexander.fbla.app";
+        request.supportedNetworks = @[PKPaymentNetworkAmex, PKPaymentNetworkMasterCard, PKPaymentNetworkVisa, PKPaymentNetworkDiscover];
+        request.merchantCapabilities = PKMerchantCapability3DS;
+        request.countryCode = @"US";
+        request.currencyCode = @"USD";
+        NSDecimalNumber *totalAmount = [NSDecimalNumber decimalNumberWithString:[_itemOnDisplay getPriceString]];
+        PKPaymentSummaryItem *final_price = [PKPaymentSummaryItem summaryItemWithLabel:@"Total" amount:totalAmount];
+        request.paymentSummaryItems = @[final_price];
+        
+        //presents the apple pay view controller
+        PKPaymentAuthorizationViewController *vc = [[PKPaymentAuthorizationViewController alloc] initWithPaymentRequest:request];
+        vc.delegate = self;
+        [self presentViewController:vc animated:YES completion:nil];
     }
     else if (check == (NSInteger *)1){
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Cannot Purchase" message:@"Someone has already purchased this item" preferredStyle:UIAlertControllerStyleAlert];

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Item.h"
 #import "Comments.h"
+#import <PassKit/PassKit.h>
 
 
 @interface ItemDetail : UIViewController <UITextViewDelegate> {

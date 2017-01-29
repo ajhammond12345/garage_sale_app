@@ -8,7 +8,6 @@
 
 #import "Donate.h"
 #import "Item.h"
-#import "AFNetworking.h"
 
 
 @interface Donate () <UITextViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
