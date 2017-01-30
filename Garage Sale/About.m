@@ -122,7 +122,10 @@
     // Do any additional setup after loading the view.
     
     //hides the text and progress bar until they are loaded (they are revealed within the update methods through the set methods)
-    _goalInCents = 100000;
+    //             10000.00
+    //             10000 00
+    //             1000000
+    _goalInCents = 1000000;
     _amountRaisedInCents = 0;
     amountRaisedText.hidden = TRUE;
     daysUntilNLC.hidden = TRUE;
