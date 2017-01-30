@@ -40,6 +40,20 @@
 		70A923E41E3DA8CA00B4B942 /* lightPB@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A923E11E3DA8CA00B4B942 /* lightPB@3x.png */; };
 		70A923E61E3DD3CC00B4B942 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A923E51E3DD3CC00B4B942 /* PassKit.framework */; };
 		70A923EB1E3EC2AA00B4B942 /* NavigationBarColor.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A923EA1E3EC2AA00B4B942 /* NavigationBarColor.png */; };
+		70A923F81E3F058F00B4B942 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A923F41E3F058F00B4B942 /* 1.png */; };
+		70A923F91E3F058F00B4B942 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A923F51E3F058F00B4B942 /* 2.png */; };
+		70A923FA1E3F058F00B4B942 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A923F61E3F058F00B4B942 /* 3.png */; };
+		70A923FB1E3F058F00B4B942 /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A923F71E3F058F00B4B942 /* 4.png */; };
+		70A924001E3F0BF100B4B942 /* large1.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A923FC1E3F0BF100B4B942 /* large1.png */; };
+		70A924011E3F0BF100B4B942 /* large2.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A923FD1E3F0BF100B4B942 /* large2.png */; };
+		70A924021E3F0BF100B4B942 /* large3.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A923FE1E3F0BF100B4B942 /* large3.png */; };
+		70A924031E3F0BF100B4B942 /* large4.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A923FF1E3F0BF100B4B942 /* large4.png */; };
+		70A924071E3F0E2D00B4B942 /* bb.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A924041E3F0E2D00B4B942 /* bb.png */; };
+		70A924081E3F0E2D00B4B942 /* bb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A924051E3F0E2D00B4B942 /* bb@2x.png */; };
+		70A924091E3F0E2D00B4B942 /* bb@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A924061E3F0E2D00B4B942 /* bb@3x.png */; };
+		70A9240D1E3F115500B4B942 /* comments.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A9240A1E3F115500B4B942 /* comments.png */; };
+		70A9240E1E3F115500B4B942 /* comments@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A9240B1E3F115500B4B942 /* comments@2x.png */; };
+		70A9240F1E3F115500B4B942 /* comments@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A9240C1E3F115500B4B942 /* comments@3x.png */; };
 		70D2BE511E38930300F39435 /* Artboard 2@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D2BE2B1E38930300F39435 /* Artboard 2@1x.png */; };
 		70D2BE521E38930300F39435 /* Artboard 2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D2BE2C1E38930300F39435 /* Artboard 2@2x.png */; };
 		70D2BE531E38930300F39435 /* Artboard 2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D2BE2D1E38930300F39435 /* Artboard 2@3x.png */; };
@@ -147,6 +161,20 @@
 		70A923E51E3DD3CC00B4B942 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		70A923E71E3DDA5B00B4B942 /* Garage Sale.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Garage Sale.entitlements"; sourceTree = "<group>"; };
 		70A923EA1E3EC2AA00B4B942 /* NavigationBarColor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NavigationBarColor.png; path = ../Images/NavigationBarColor.png; sourceTree = "<group>"; };
+		70A923F41E3F058F00B4B942 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		70A923F51E3F058F00B4B942 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		70A923F61E3F058F00B4B942 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
+		70A923F71E3F058F00B4B942 /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
+		70A923FC1E3F0BF100B4B942 /* large1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = large1.png; sourceTree = "<group>"; };
+		70A923FD1E3F0BF100B4B942 /* large2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = large2.png; sourceTree = "<group>"; };
+		70A923FE1E3F0BF100B4B942 /* large3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = large3.png; sourceTree = "<group>"; };
+		70A923FF1E3F0BF100B4B942 /* large4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = large4.png; sourceTree = "<group>"; };
+		70A924041E3F0E2D00B4B942 /* bb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bb.png; sourceTree = "<group>"; };
+		70A924051E3F0E2D00B4B942 /* bb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bb@2x.png"; sourceTree = "<group>"; };
+		70A924061E3F0E2D00B4B942 /* bb@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bb@3x.png"; sourceTree = "<group>"; };
+		70A9240A1E3F115500B4B942 /* comments.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comments.png; sourceTree = "<group>"; };
+		70A9240B1E3F115500B4B942 /* comments@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comments@2x.png"; sourceTree = "<group>"; };
+		70A9240C1E3F115500B4B942 /* comments@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comments@3x.png"; sourceTree = "<group>"; };
 		70D2BE2B1E38930300F39435 /* Artboard 2@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Artboard 2@1x.png"; sourceTree = "<group>"; };
 		70D2BE2C1E38930300F39435 /* Artboard 2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Artboard 2@2x.png"; sourceTree = "<group>"; };
 		70D2BE2D1E38930300F39435 /* Artboard 2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Artboard 2@3x.png"; sourceTree = "<group>"; };
@@ -293,6 +321,20 @@
 		70DC6CBA1E01F6DB00CE6953 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				70A9240A1E3F115500B4B942 /* comments.png */,
+				70A9240B1E3F115500B4B942 /* comments@2x.png */,
+				70A9240C1E3F115500B4B942 /* comments@3x.png */,
+				70A924041E3F0E2D00B4B942 /* bb.png */,
+				70A924051E3F0E2D00B4B942 /* bb@2x.png */,
+				70A924061E3F0E2D00B4B942 /* bb@3x.png */,
+				70A923FC1E3F0BF100B4B942 /* large1.png */,
+				70A923FD1E3F0BF100B4B942 /* large2.png */,
+				70A923FE1E3F0BF100B4B942 /* large3.png */,
+				70A923FF1E3F0BF100B4B942 /* large4.png */,
+				70A923F41E3F058F00B4B942 /* 1.png */,
+				70A923F51E3F058F00B4B942 /* 2.png */,
+				70A923F61E3F058F00B4B942 /* 3.png */,
+				70A923F71E3F058F00B4B942 /* 4.png */,
 				70A923EA1E3EC2AA00B4B942 /* NavigationBarColor.png */,
 				70A923DF1E3DA8CA00B4B942 /* lightPB.png */,
 				70A923E01E3DA8CA00B4B942 /* lightPB@2x.png */,
@@ -497,7 +539,9 @@
 				70D2BE5D1E38930300F39435 /* cameraIcon.png in Resources */,
 				70D2BE731E38930300F39435 /* TestImage.png in Resources */,
 				70D2BE5E1E38930300F39435 /* cameraIcon@2x.png in Resources */,
+				70A923F81E3F058F00B4B942 /* 1.png in Resources */,
 				70A923DE1E3DA87D00B4B942 /* box@3x.png in Resources */,
+				70A924021E3F0BF100B4B942 /* large3.png in Resources */,
 				70D2BE751E38930300F39435 /* ThankYou@2x.png in Resources */,
 				70D2BE651E38930300F39435 /* Instagram-Heart-Transparent@3x.png in Resources */,
 				70A923D21E3DA87000B4B942 /* LB@3x.png in Resources */,
@@ -507,9 +551,11 @@
 				70D2BE591E38930300F39435 /* Artboard@3x.png in Resources */,
 				70A923EB1E3EC2AA00B4B942 /* NavigationBarColor.png in Resources */,
 				70A923BA1E3D504400B4B942 /* yellow.png in Resources */,
+				70A9240D1E3F115500B4B942 /* comments.png in Resources */,
 				70A923BE1E3D8BA100B4B942 /* default.png in Resources */,
 				70D2BE5B1E38930300F39435 /* buy@2x.png in Resources */,
 				70A923CA1E3DA80D00B4B942 /* 100ProgressBar.png in Resources */,
+				70A924081E3F0E2D00B4B942 /* bb@2x.png in Resources */,
 				70D2BE5C1E38930300F39435 /* buy@3x.png in Resources */,
 				70A923C31E3D8E8C00B4B942 /* purchased@2x.png in Resources */,
 				70A923DA1E3DA87D00B4B942 /* BlueTag@2x.png in Resources */,
@@ -520,6 +566,7 @@
 				70A923DD1E3DA87D00B4B942 /* box@2x.png in Resources */,
 				70D2BE671E38930300F39435 /* plain_red_heart_shape@1x.png in Resources */,
 				70D2BE711E38930300F39435 /* Screen Shot 2017-01-13 at 3.43.15 PM.png in Resources */,
+				70A923FA1E3F058F00B4B942 /* 3.png in Resources */,
 				70A923D11E3DA87000B4B942 /* LB@2x.png in Resources */,
 				70D2BE6A1E38930300F39435 /* ProgressBar@2x.png in Resources */,
 				70DC6CC71E01F6DB00CE6953 /* Assets.xcassets in Resources */,
@@ -530,26 +577,35 @@
 				70D2BE701E38930300F39435 /* Screen Shot 2017-01-13 at 3.43.03 PM.png in Resources */,
 				70A923C41E3D8E8C00B4B942 /* purchased@3x.png in Resources */,
 				70A923C61E3D933300B4B942 /* backgroundcolor.png in Resources */,
+				70A924011E3F0BF100B4B942 /* large2.png in Resources */,
 				70D2BE511E38930300F39435 /* Artboard 2@1x.png in Resources */,
 				70D2BE6B1E38930300F39435 /* ProgressBar@3x.png in Resources */,
 				70D2BE6D1E38930300F39435 /* Rectangle 3@2x.png in Resources */,
 				70A923D91E3DA87D00B4B942 /* BlueTag.png in Resources */,
 				70A923C21E3D8E8C00B4B942 /* purchased.png in Resources */,
 				70D2BE531E38930300F39435 /* Artboard 2@3x.png in Resources */,
+				70A9240E1E3F115500B4B942 /* comments@2x.png in Resources */,
 				70D2BE621E38930300F39435 /* Instagram-Heart-Solid@3x.png in Resources */,
 				70A923E41E3DA8CA00B4B942 /* lightPB@3x.png in Resources */,
+				70A923FB1E3F058F00B4B942 /* 4.png in Resources */,
 				70D2BE5A1E38930300F39435 /* buy@1x.png in Resources */,
+				70A923F91E3F058F00B4B942 /* 2.png in Resources */,
 				70D2BE681E38930300F39435 /* plain_red_heart_shape@2x.png in Resources */,
+				70A9240F1E3F115500B4B942 /* comments@3x.png in Resources */,
 				70D2BE721E38930300F39435 /* Screen Shot 2017-01-17 at 11.19.21 AM.png in Resources */,
 				70D2BE761E38930300F39435 /* ThankYou@3x.png in Resources */,
+				70A924091E3F0E2D00B4B942 /* bb@3x.png in Resources */,
 				70D2BE6E1E38930300F39435 /* Rectangle 3@3x.png in Resources */,
+				70A924071E3F0E2D00B4B942 /* bb.png in Resources */,
 				70A923CC1E3DA80D00B4B942 /* 100ProgressBar@3x.png in Resources */,
 				70D2BE5F1E38930300F39435 /* cameraIcon@3x.png in Resources */,
 				70D2BE6C1E38930300F39435 /* Rectangle 3.png in Resources */,
 				70D2BE6F1E38930300F39435 /* Screen Shot 2017-01-13 at 3.34.10 PM.png in Resources */,
 				705E89191E37BE4F00FA4625 /* Main.storyboard in Resources */,
 				70D2BE581E38930300F39435 /* Artboard@2x.png in Resources */,
+				70A924001E3F0BF100B4B942 /* large1.png in Resources */,
 				70A923D01E3DA87000B4B942 /* LB.png in Resources */,
+				70A924031E3F0BF100B4B942 /* large4.png in Resources */,
 				70A923E31E3DA8CA00B4B942 /* lightPB@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

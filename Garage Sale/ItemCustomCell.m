@@ -34,6 +34,9 @@
     else {
         [_likeButton setImage:[UIImage imageNamed:@"Instagram-Heart-Transparent.png"] forState:UIControlStateNormal];
     }
+    if ([_image isAnimating]) {
+        [_image stopAnimating];
+    }
     if (_item.image != nil) {
         _image.image = _item.image;
     }
@@ -42,6 +45,14 @@
             _image.image = [UIImage imageNamed:@"missing.png"];
         }
         else {
+            UIImage *image1 = [UIImage imageNamed:@"large1.png"];
+            UIImage *image2 = [UIImage imageNamed:@"large2.png"];
+            UIImage *image3 = [UIImage imageNamed:@"large3.png"];
+            UIImage *image4 = [UIImage imageNamed:@"large4.png"];
+            _image.animationImages = @[image1, image2, image3, image4];
+            _image.animationDuration = 1;
+            _image.animationRepeatCount = 0;
+            [_image startAnimating];
             _image.image = [UIImage imageNamed:@"default.png"];
         }
     }
