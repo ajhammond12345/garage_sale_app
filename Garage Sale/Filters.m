@@ -177,17 +177,14 @@
         
         worstCondition.inputView = _conditionPicker;
         textField.inputView = _conditionPicker;
-        worstCondition.inputAccessoryView = _toolBar;
-        textField.inputAccessoryView = _toolBar;
         _conditionFieldBeingEdited = 1;
     }
     if ([textField isEqual:bestCondition]) {
         bestCondition.inputView = _conditionPicker;
         textField.inputView = _conditionPicker;
-        bestCondition.inputAccessoryView = _toolBar;
-        textField.inputAccessoryView = _toolBar;
         _conditionFieldBeingEdited = 2;
     }
+    textField.inputAccessoryView = _toolBar;
     return YES;
     
 }

@@ -721,6 +721,16 @@
                                                 <segue destination="APH-YF-xmz" kind="show" id="iQh-vv-TH0"/>
                                             </connections>
                                         </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" id="hai-MC-JEp">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2zm-dQ-2kT">
+                                                <rect key="frame" x="329" y="7" width="30" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="Buy"/>
+                                                <connections>
+                                                    <action selector="buyWithoutApplePay:" destination="aWM-kn-DrQ" eventType="touchUpInside" id="fZt-jv-KGZ"/>
+                                                </connections>
+                                            </button>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -780,14 +790,14 @@
                             <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="purchased.png" translatesAutoresizingMaskIntoConstraints="NO" id="Y9g-fj-j98">
                                 <rect key="frame" x="95" y="247" width="184" height="53"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HxH-jc-oyt" customClass="PKPaymentButton">
+                            <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HxH-jc-oyt" customClass="PKPaymentButton">
                                 <rect key="frame" x="129" y="605" width="118" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="dCx-E7-oH0"/>
                                 </constraints>
                                 <state key="normal" title="Apple Pay Button"/>
                                 <connections>
-                                    <action selector="buy:" destination="aWM-kn-DrQ" eventType="touchUpInside" id="AD0-gi-reS"/>
+                                    <action selector="buyWithApplePay:" destination="aWM-kn-DrQ" eventType="touchUpInside" id="4av-RJ-bIZ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -889,16 +899,16 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="donating!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6V5-uW-Bd9">
-                                <rect key="frame" x="105" y="350" width="164" height="48"/>
-                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="35"/>
-                                <color key="textColor" red="0.90516322849999997" green="0.7174140215" blue="0.295075804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="for" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ylU-IZ-koe">
                                 <rect key="frame" x="170" y="310" width="34" height="48"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="35"/>
                                 <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="purchasing!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6V5-uW-Bd9">
+                                <rect key="frame" x="99" y="350" width="177" height="48"/>
+                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="35"/>
+                                <color key="textColor" red="0.90516322849999997" green="0.7174140215" blue="0.295075804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -909,7 +919,7 @@
                             <constraint firstItem="ylU-IZ-koe" firstAttribute="centerX" secondItem="fql-Fl-G6W" secondAttribute="centerX" id="EVO-cJ-Keu"/>
                             <constraint firstItem="1Xf-H3-UC9" firstAttribute="centerX" secondItem="ylU-IZ-koe" secondAttribute="centerX" id="MMB-kX-CTo"/>
                             <constraint firstItem="1Xf-H3-UC9" firstAttribute="centerX" secondItem="6V5-uW-Bd9" secondAttribute="centerX" id="VdH-PF-GRL"/>
-                            <constraint firstItem="6V5-uW-Bd9" firstAttribute="width" secondItem="1Xf-H3-UC9" secondAttribute="width" id="Zlr-dr-jo0"/>
+                            <constraint firstItem="6V5-uW-Bd9" firstAttribute="width" secondItem="1Xf-H3-UC9" secondAttribute="width" multiplier="177:164" id="Zlr-dr-jo0"/>
                             <constraint firstItem="6V5-uW-Bd9" firstAttribute="top" secondItem="1Xf-H3-UC9" secondAttribute="bottom" constant="28" id="d9d-LY-HEr"/>
                             <constraint firstItem="ylU-IZ-koe" firstAttribute="centerY" secondItem="fql-Fl-G6W" secondAttribute="centerY" id="iFZ-nc-IcJ"/>
                             <constraint firstAttribute="trailing" secondItem="gyR-ji-7wn" secondAttribute="trailing" id="kz8-IA-TVs"/>
@@ -923,7 +933,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r0w-yY-4G6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3293.5999999999999" y="148.87556221889056"/>
+            <point key="canvasLocation" x="3293.5" y="148.5"/>
         </scene>
         <!--Comments-->
         <scene sceneID="Igf-cP-ze7">
@@ -1221,6 +1231,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="n1j-hZ-ISZ"/>
         <segue reference="evc-38-6St"/>
-        <segue reference="yJq-aO-deK"/>
+        <segue reference="Edl-q4-j66"/>
     </inferredMetricsTieBreakers>
 </document>

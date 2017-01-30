@@ -30,7 +30,6 @@
 
 @property Item *itemOnDisplay;
 
--(IBAction)buy:(id)sender;
 -(IBAction)like:(id)sender;
 -(IBAction)comments:(id)sender;
 -(void)updateView;

@@ -262,18 +262,10 @@
         textField.inputView = _conditionPicker;
         UIButton *doneButton = [[UIButton alloc] init];
         [doneButton setTitle:@"Done" forState:UIControlStateNormal];
-        
-        
-        UIToolbar *toolBar = [[UIToolbar alloc] init];
-        toolBar.barStyle = UIBarStyleDefault;
-        toolBar.translucent = true;
-        [toolBar sizeToFit];
-        
-        UIBarButtonItem *finished = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(clearPickerView)];
-        
-        [toolBar setItems:@[finished] animated: false];
-        toolBar.userInteractionEnabled = true;
-        textField.inputAccessoryView = toolBar;
+        textField.inputAccessoryView = _toolBar;
+    }
+    if ([textField isEqual: priceTextField]) {
+        textField.inputAccessoryView = _toolBar;
     }
     return YES;
     
@@ -336,6 +328,15 @@
 }
 
 - (void)viewDidLoad {
+    _toolBar = [[UIToolbar alloc] init];
+    _toolBar.barStyle = UIBarStyleDefault;
+    _toolBar.translucent = true;
+    [_toolBar sizeToFit];
+    
+    UIBarButtonItem *finished = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(clearPickerView)];
+    
+    [_toolBar setItems:@[finished] animated: false];
+    _toolBar.userInteractionEnabled = true;
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.

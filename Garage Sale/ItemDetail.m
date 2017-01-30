@@ -106,7 +106,7 @@ completion:(void (^)(PKPaymentAuthorizationStatus status))completion {
     }
 }
 
--(IBAction)buy:(id)sender {
+-(IBAction)buyWithApplePay:(id)sender {
     NSLog(@"%@", _itemOnDisplay.localDictionary);
     [_itemOnDisplay setItemDictionary];
     NSLog(@"local Dictionary\n%@", _itemOnDisplay.localDictionary);
@@ -142,6 +142,55 @@ completion:(void (^)(PKPaymentAuthorizationStatus status))completion {
         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
         [alert addAction:defaultAction];
         [self presentViewController:alert animated:YES completion:nil];
+    }
+    else {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Load Error" message:@"Cannot load item for purchase" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+}
+
+-(IBAction)buyWithoutApplePay:(id)sender {
+    NSLog(@"%@", _itemOnDisplay.localDictionary);
+    [_itemOnDisplay setItemDictionary];
+    NSLog(@"local Dictionary\n%@", _itemOnDisplay.localDictionary);
+    
+    NSMutableDictionary *tmpDic = [NSMutableDictionary dictionaryWithObject:[_itemOnDisplay.localDictionary objectForKey:@"item_purchase_state"] forKey:@"item_purchase_state"];
+    NSLog(@"TmpDic%@", tmpDic);
+    NSInteger *check = (NSInteger *)[[tmpDic objectForKey:@"item_purchase_state"] integerValue];
+    NSLog(@"Check: %zd",check);
+    if (check == 0){
+        NSMutableDictionary *tmpDic = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat: @"%i", 1], @"item_purchase_state", nil];
+        NSError *error;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
+        
+        //creates url for the request
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/items/%zd.json", _itemOnDisplay.itemID]];
+        //NSLog(@"%@", url);
+        
+        //creates a URL request
+        NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+        
+        //specifics for the request (it is a post request with json content)
+        [uploadRequest setHTTPMethod:@"PATCH"];
+        [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        [uploadRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
+        [uploadRequest setHTTPBody: jsonData];
+        
+        //
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+        
+        [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+          {
+              dispatch_async(dispatch_get_main_queue(), ^{
+                  NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+                  NSLog(@"requestReply: %@", requestReply);
+                  
+                  [self performSegueWithIdentifier:@"toPurchaseThankYou"  sender:self];
+              });
+          }] resume];
     }
     else {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Load Error" message:@"Cannot load item for purchase" preferredStyle:UIAlertControllerStyleAlert];

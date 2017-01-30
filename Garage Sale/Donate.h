@@ -33,7 +33,7 @@ NSArray *conditionOptionsDonate;
 }
 
 @property (strong, nonatomic) UIPickerView *conditionPicker;
-
+@property UIToolbar *toolBar;
 
 -(IBAction)done:(id)sender;
 -(IBAction)selectImage:(id)sender;
