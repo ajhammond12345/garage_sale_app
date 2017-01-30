@@ -177,11 +177,15 @@
         
         worstCondition.inputView = _conditionPicker;
         textField.inputView = _conditionPicker;
+        worstCondition.inputAccessoryView = _toolBar;
+        textField.inputAccessoryView = _toolBar;
         _conditionFieldBeingEdited = 1;
     }
     if ([textField isEqual:bestCondition]) {
         bestCondition.inputView = _conditionPicker;
         textField.inputView = _conditionPicker;
+        bestCondition.inputAccessoryView = _toolBar;
+        textField.inputAccessoryView = _toolBar;
         _conditionFieldBeingEdited = 2;
     }
     return YES;
@@ -270,9 +274,20 @@
     [self.view endEditing:YES];
 }
 
-
+-(void)clearPickerView {
+    [self.view endEditing:YES];
+}
 
 - (void)viewDidLoad {
+    _toolBar = [[UIToolbar alloc] init];
+    _toolBar.barStyle = UIBarStyleDefault;
+    _toolBar.translucent = true;
+    [_toolBar sizeToFit];
+    
+    UIBarButtonItem *finished = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(clearPickerView)];
+    
+    [_toolBar setItems:@[finished] animated: false];
+    _toolBar.userInteractionEnabled = true;
     _conditionOptionsFilter = [[NSUserDefaults standardUserDefaults] objectForKey:@"conditions"];
     _conditionPicker = [[UIPickerView alloc] init];
     _conditionPicker.dataSource = self;

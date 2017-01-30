@@ -222,7 +222,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     _username = [defaults objectForKey:@"username"];
     NSLog(@"%@", _username);
-    UIAlertController *usernameInput = [UIAlertController alertControllerWithTitle:@"Input Username" message:@"Please input a username that will appear when you comment on items" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *usernameInput = [UIAlertController alertControllerWithTitle:@"Input Username" message:@"Please create a username." preferredStyle:UIAlertControllerStyleAlert];
     [usernameInput addTextFieldWithConfigurationHandler:^(UITextField *textField) {
      textField.placeholder = NSLocalizedString(@"username", @"Username");
      }];

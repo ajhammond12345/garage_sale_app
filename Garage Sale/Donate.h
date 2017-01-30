@@ -15,6 +15,7 @@ NSString *condition;
 NSInteger *priceInCents;
 NSString *description;
 UIImage *image;
+bool imageUploaded;
 
 NSArray *conditionOptionsDonate;
 

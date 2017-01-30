@@ -124,9 +124,13 @@ completion:(void (^)(PKPaymentAuthorizationStatus status))completion {
         request.merchantCapabilities = PKMerchantCapability3DS;
         request.countryCode = @"US";
         request.currencyCode = @"USD";
-        NSDecimalNumber *totalAmount = [NSDecimalNumber decimalNumberWithString:[_itemOnDisplay getPriceString]];
+        //first step to convert to format needed for payment
+        NSUInteger *tmp = (NSUInteger *)_itemOnDisplay.priceInCents;
+        //converts to format needed for payment
+        unsigned long long priceInCents = (unsigned long long)tmp;
+        NSDecimalNumber *totalAmount = [NSDecimalNumber decimalNumberWithMantissa:priceInCents exponent:-2 isNegative:false];
         PKPaymentSummaryItem *final_price = [PKPaymentSummaryItem summaryItemWithLabel:@"Total" amount:totalAmount];
-        request.paymentSummaryItems = @[final_price];
+        request.paymentSummaryItems = [[NSArray alloc] initWithObjects:final_price, nil];
         
         //presents the apple pay view controller
         PKPaymentAuthorizationViewController *vc = [[PKPaymentAuthorizationViewController alloc] initWithPaymentRequest:request];
@@ -163,6 +167,14 @@ completion:(void (^)(PKPaymentAuthorizationStatus status))completion {
     
     [self updateView];
     displayDescription.delegate = self;
+    if ([PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:@[PKPaymentNetworkVisa, PKPaymentNetworkMasterCard, PKPaymentNetworkAmex]]) {
+        buyButton = [PKPaymentButton buttonWithType:PKPaymentButtonTypeBuy style:PKPaymentButtonStyleBlack];
+    }
+    else {
+        buyButton = [PKPaymentButton buttonWithType:PKPaymentButtonTypeSetUp style:PKPaymentButtonStyleBlack];
+    }
+    
+    //insert apple pay image code
 }
 
 - (void)didReceiveMemoryWarning {

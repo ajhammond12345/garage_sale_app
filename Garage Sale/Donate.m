@@ -41,6 +41,7 @@
     //saves the selected image to the image field
     UIImage *tmpImage = info[UIImagePickerControllerEditedImage];
     image = tmpImage;
+    imageUploaded = true;
     [imageView setBackgroundImage:image forState:UIControlStateNormal];
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
@@ -56,9 +57,25 @@
     [self.view endEditing:YES];
 
     //first need to check that all fields have data
-    if ([name isEqualToString:@""] || [condition isEqualToString:@""] || [description isEqualToString:@""] || priceInCents == 0 || [image isEqual:nil]) {
+    if ([name isEqualToString:@""] || [condition isEqualToString:@""] || [description isEqualToString:@""] || priceInCents == 0 || !imageUploaded) {
+        NSString *errorMessage;
+        if ([name isEqualToString:@""]) {
+            errorMessage = @"Please put in a name for the item";
+        }
+        else if ([condition isEqualToString:@""]) {
+            errorMessage = @"Please select a condition for this item";
+        }
+        else if ([description isEqualToString:@""]) {
+            errorMessage = [NSString stringWithFormat: @"Please provide a brief description of your item"];
+        }
+        else if (priceInCents == 0) {
+            errorMessage = @"Please suggest a price";
+        }
+        else if (!imageUploaded) {
+            errorMessage = @"Please take a picture of this item by selecting the camera button.";
+        }
         //shows error message for missing information
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Missing Information" message:@"Please fill out all of the required information." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Missing Information" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
         [alert addAction:defaultAction];
         [self presentViewController:alert animated:YES completion:nil];
@@ -230,6 +247,10 @@
     [self.view endEditing:YES];
 }
 
+-(void)clearPickerView {
+    [conditionTextField resignFirstResponder];
+}
+
 //for condition (not directly edited, uses a picker instead)
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     if (textField.tag == 2 || [textField isEqual:conditionTextField]) {
@@ -239,6 +260,20 @@
         _conditionPicker.showsSelectionIndicator = YES;
         conditionTextField.inputView = _conditionPicker;
         textField.inputView = _conditionPicker;
+        UIButton *doneButton = [[UIButton alloc] init];
+        [doneButton setTitle:@"Done" forState:UIControlStateNormal];
+        
+        
+        UIToolbar *toolBar = [[UIToolbar alloc] init];
+        toolBar.barStyle = UIBarStyleDefault;
+        toolBar.translucent = true;
+        [toolBar sizeToFit];
+        
+        UIBarButtonItem *finished = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(clearPickerView)];
+        
+        [toolBar setItems:@[finished] animated: false];
+        toolBar.userInteractionEnabled = true;
+        textField.inputAccessoryView = toolBar;
     }
     return YES;
     
@@ -315,6 +350,7 @@
     descriptionTextView.delegate = self;
     priceTextField.delegate = self;
     tmpLabel.hidden = YES;
+    imageUploaded = false;
 }
 
 - (void)didReceiveMemoryWarning {

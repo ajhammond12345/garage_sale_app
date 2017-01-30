@@ -23,6 +23,8 @@
     IBOutlet UIImageView *displayImage;
     IBOutlet UIButton *comment;
     IBOutlet UIImageView *purchased;
+    IBOutlet UIButton *buyButton;
+    
     
 }
 

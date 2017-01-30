@@ -39,6 +39,7 @@
 		70A923E31E3DA8CA00B4B942 /* lightPB@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A923E01E3DA8CA00B4B942 /* lightPB@2x.png */; };
 		70A923E41E3DA8CA00B4B942 /* lightPB@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A923E11E3DA8CA00B4B942 /* lightPB@3x.png */; };
 		70A923E61E3DD3CC00B4B942 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A923E51E3DD3CC00B4B942 /* PassKit.framework */; };
+		70A923EB1E3EC2AA00B4B942 /* NavigationBarColor.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A923EA1E3EC2AA00B4B942 /* NavigationBarColor.png */; };
 		70D2BE511E38930300F39435 /* Artboard 2@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D2BE2B1E38930300F39435 /* Artboard 2@1x.png */; };
 		70D2BE521E38930300F39435 /* Artboard 2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D2BE2C1E38930300F39435 /* Artboard 2@2x.png */; };
 		70D2BE531E38930300F39435 /* Artboard 2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D2BE2D1E38930300F39435 /* Artboard 2@3x.png */; };
@@ -145,6 +146,7 @@
 		70A923E11E3DA8CA00B4B942 /* lightPB@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lightPB@3x.png"; sourceTree = "<group>"; };
 		70A923E51E3DD3CC00B4B942 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		70A923E71E3DDA5B00B4B942 /* Garage Sale.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Garage Sale.entitlements"; sourceTree = "<group>"; };
+		70A923EA1E3EC2AA00B4B942 /* NavigationBarColor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NavigationBarColor.png; path = ../Images/NavigationBarColor.png; sourceTree = "<group>"; };
 		70D2BE2B1E38930300F39435 /* Artboard 2@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Artboard 2@1x.png"; sourceTree = "<group>"; };
 		70D2BE2C1E38930300F39435 /* Artboard 2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Artboard 2@2x.png"; sourceTree = "<group>"; };
 		70D2BE2D1E38930300F39435 /* Artboard 2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Artboard 2@3x.png"; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 		70DC6CBA1E01F6DB00CE6953 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				70A923EA1E3EC2AA00B4B942 /* NavigationBarColor.png */,
 				70A923DF1E3DA8CA00B4B942 /* lightPB.png */,
 				70A923E01E3DA8CA00B4B942 /* lightPB@2x.png */,
 				70A923E11E3DA8CA00B4B942 /* lightPB@3x.png */,
@@ -502,6 +505,7 @@
 				70A923CB1E3DA80D00B4B942 /* 100ProgressBar@2x.png in Resources */,
 				70D2BE521E38930300F39435 /* Artboard 2@2x.png in Resources */,
 				70D2BE591E38930300F39435 /* Artboard@3x.png in Resources */,
+				70A923EB1E3EC2AA00B4B942 /* NavigationBarColor.png in Resources */,
 				70A923BA1E3D504400B4B942 /* yellow.png in Resources */,
 				70A923BE1E3D8BA100B4B942 /* default.png in Resources */,
 				70D2BE5B1E38930300F39435 /* buy@2x.png in Resources */,

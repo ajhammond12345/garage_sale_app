@@ -24,6 +24,7 @@
 
 
 @property (strong, nonatomic) UIPickerView *conditionPicker;
+@property UIToolbar *toolBar;
 @property NSArray *requestResult;
 //1 for worst, 2 for best (is a property so it can be accessed in delegate)
 @property int conditionFieldBeingEdited;
