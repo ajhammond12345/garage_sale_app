@@ -11,6 +11,7 @@
 		70223CDB1E2D7AA4001E3724 /* Donate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70223CDA1E2D7AA4001E3724 /* Donate.m */; };
 		70223CDE1E2D7AB5001E3724 /* About.m in Sources */ = {isa = PBXBuildFile; fileRef = 70223CDD1E2D7AB5001E3724 /* About.m */; };
 		70223D1D1E3184CD001E3724 /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = 70223D1C1E3184CD001E3724 /* Item.m */; };
+		702CADCC1E41A3EA00FAC241 /* PurchaseThankYou.m in Sources */ = {isa = PBXBuildFile; fileRef = 702CADCB1E41A3EA00FAC241 /* PurchaseThankYou.m */; };
 		7043094E1E343E680059B736 /* ItemCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7043094D1E343E680059B736 /* ItemCustomCell.m */; };
 		7043099D1E3478DC0059B736 /* ItemDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 7043099C1E3478DC0059B736 /* ItemDetail.m */; };
 		705E89141E35E04300FA4625 /* Comments.m in Sources */ = {isa = PBXBuildFile; fileRef = 705E89131E35E04300FA4625 /* Comments.m */; };
@@ -126,6 +127,8 @@
 		70223CDD1E2D7AB5001E3724 /* About.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = About.m; sourceTree = "<group>"; };
 		70223D1B1E3184CD001E3724 /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
 		70223D1C1E3184CD001E3724 /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
+		702CADCA1E41A3EA00FAC241 /* PurchaseThankYou.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseThankYou.h; sourceTree = "<group>"; };
+		702CADCB1E41A3EA00FAC241 /* PurchaseThankYou.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseThankYou.m; sourceTree = "<group>"; };
 		7043094C1E343E680059B736 /* ItemCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemCustomCell.h; sourceTree = "<group>"; };
 		7043094D1E343E680059B736 /* ItemCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemCustomCell.m; sourceTree = "<group>"; };
 		704309961E3463160059B736 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -295,6 +298,8 @@
 				70DC6CC11E01F6DB00CE6953 /* ViewController.m */,
 				7043099B1E3478DC0059B736 /* ItemDetail.h */,
 				7043099C1E3478DC0059B736 /* ItemDetail.m */,
+				702CADCA1E41A3EA00FAC241 /* PurchaseThankYou.h */,
+				702CADCB1E41A3EA00FAC241 /* PurchaseThankYou.m */,
 				70A923B61E3BF39300B4B942 /* Filters.h */,
 				70A923B71E3BF39300B4B942 /* Filters.m */,
 				705E89121E35E04300FA4625 /* Comments.h */,
@@ -634,6 +639,7 @@
 				7043099D1E3478DC0059B736 /* ItemDetail.m in Sources */,
 				70A923B81E3BF39300B4B942 /* Filters.m in Sources */,
 				70223CDB1E2D7AA4001E3724 /* Donate.m in Sources */,
+				702CADCC1E41A3EA00FAC241 /* PurchaseThankYou.m in Sources */,
 				70223CD81E2D7A75001E3724 /* Items.m in Sources */,
 				705E89141E35E04300FA4625 /* Comments.m in Sources */,
 				70DC6CC21E01F6DB00CE6953 /* ViewController.m in Sources */,
@@ -795,6 +801,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Garage Sale/Garage Sale.entitlements";
 				DEVELOPMENT_TEAM = KAEW2AKT6X;
 				INFOPLIST_FILE = "Garage Sale/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "aa.Garage-Sale";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -808,6 +815,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Garage Sale/Garage Sale.entitlements";
 				DEVELOPMENT_TEAM = KAEW2AKT6X;
 				INFOPLIST_FILE = "Garage Sale/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "aa.Garage-Sale";
 				PRODUCT_NAME = "$(TARGET_NAME)";

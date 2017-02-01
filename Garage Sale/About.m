@@ -44,8 +44,12 @@
 -(void)setProgressBarWidth {
         int barWidth = (_amountRaisedInCents * totalBar.frame.size.width)/_goalInCents;
         NSLog(@"Bar Width: %i", barWidth);
-
+    if (barWidth > totalBar.frame.size.width) {
+        progressBarWidth.constant = totalBar.frame.size.width;
+    }
+    else {
         progressBarWidth.constant = barWidth;
+    }
         progressBar.hidden = NO;
     
 }

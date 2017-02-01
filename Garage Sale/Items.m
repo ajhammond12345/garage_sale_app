@@ -209,6 +209,59 @@
         [tmpLikedItems addObject:[self itemFromDictionaryInternal:tmpDic]];
     }
     _likedItems = [tmpLikedItems copy];
+    for (int i = 0; i < _likedItems.count; i++) {
+        Item *tmpItem = [_likedItems objectAtIndex:i];
+        if ([tmpItem.itemPurchaseState intValue] != 1) {
+            [self checkPurchased:[_likedItems objectAtIndex:i]];
+        }
+    }
+}
+
+-(void)checkPurchased:(Item *)item {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        // No explicit autorelease pool needed here.
+        // The code runs in background, not strangling
+        // the main run loop.
+       
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/items/%zd.json", item.itemID]];
+        //NSLog(@"%@", url);
+
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+        NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (![[[data class] description] isEqualToString:@"__NSCFConstantString"]) {
+                NSDictionary *tmpDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+                NSNumber *tmpNum = [tmpDic objectForKey:@"item_purchase_state"];
+                if ([tmpNum intValue] == 1) {
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    NSArray *likedArray = [defaults objectForKey:@"LikedItems"];
+                    NSMutableArray *tmpLikedItems = [[NSMutableArray alloc] init];
+                    NSMutableArray *tmpDicArray = [[NSMutableArray alloc] init];
+
+                    for (int i = 0; i < likedArray.count; i++) {
+                        NSDictionary *tmpDic = [likedArray objectAtIndex:i];
+                        [tmpLikedItems addObject:[self itemFromDictionaryInternal:tmpDic]];
+                        [tmpDicArray addObject:tmpDic];
+                    }
+                    for (int i = 0; i < tmpLikedItems.count; i++) {
+                        Item *tmpItem = [tmpLikedItems objectAtIndex:i];
+                        if (tmpItem.itemID == item.itemID) {
+                            tmpItem.itemPurchaseState = [NSNumber numberWithInt:1];
+                            [tmpItem setItemDictionary];
+                            
+                            [tmpLikedItems replaceObjectAtIndex:i withObject:tmpItem];
+                            
+                            [tmpDicArray replaceObjectAtIndex:i withObject:tmpItem.localDictionary];
+                        }
+                        
+                    }
+                    [defaults setObject:[tmpDicArray copy] forKey:@"LikedItems"];
+                }
+                [itemsView reloadData];
+            }
+        }];
+        [dataTask resume];
+    });
+
 }
 
 -(void)loadFilteredItems {
