@@ -264,6 +264,42 @@
 
 }
 
+-(IBAction)reload:(id)sender {
+    [self loadLikedItems];
+    [self loadAllItems];
+        //refreshes the liked list in case a user disliked an item while viewing the liked items list
+        NSMutableArray *tmpItemArray = [_items mutableCopy];
+        for (int i = 0; i < tmpItemArray.count; i++) {
+            //must reevaluate every single item in case it was liked while filtered
+            [[tmpItemArray objectAtIndex:i] setLiked:false];
+            for (int j = 0; j < _likedItems.count; j++) {
+                if ([[tmpItemArray objectAtIndex:i] getItemID] == [[_likedItems objectAtIndex:j] getItemID]) {
+                    [[tmpItemArray objectAtIndex:i] setLiked:true];
+                }
+            }
+        }
+        _items = tmpItemArray;
+        //assign a new memory address to prevent accidental copies
+        tmpItemArray = [[NSMutableArray alloc] init];
+        tmpItemArray = [_filteredItems mutableCopy];
+        for (int i = 0; i < tmpItemArray.count; i++) {
+            //must reevaluate every single item in case it was liked while filtered
+            [[tmpItemArray objectAtIndex:i] setLiked:false];
+            for (int j = 0; j < _likedItems.count; j++) {
+                if ([[tmpItemArray objectAtIndex:i] getItemID] == [[_likedItems objectAtIndex:j] getItemID]) {
+                    [[tmpItemArray objectAtIndex:i] setLiked:true];
+                }
+            }
+        }
+        _filteredItems = tmpItemArray;
+        
+        //no point in reloading data from the server here
+        [itemsView reloadData];
+        //[self loadAllItems];
+        //loadAllItems already calles reloadData
+    
+}
+
 -(void)loadFilteredItems {
     NSMutableArray *tmpItemArray = [[NSMutableArray alloc] init];
     for (int i = 0; i < _filteredResults.count; i++) {

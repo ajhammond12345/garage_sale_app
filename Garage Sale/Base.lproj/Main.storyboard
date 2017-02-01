@@ -37,6 +37,16 @@
                                     <constraint firstAttribute="width" constant="171" id="0e7-zD-4td"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Money Raised" textAlignment="right" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWj-ID-UIu">
+                                <rect key="frame" x="177" y="332" width="182" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="41" id="nOf-yD-j4X"/>
+                                    <constraint firstAttribute="width" constant="182" id="uXV-GL-FKe"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="32"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Purpose:" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Lu-N4-LnG">
                                 <rect key="frame" x="24" y="86" width="130" height="50"/>
                                 <constraints>
@@ -118,16 +128,6 @@
                                     <constraint firstAttribute="height" constant="28" id="NOV-jO-siL"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Money Raised" textAlignment="right" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWj-ID-UIu">
-                                <rect key="frame" x="177" y="332" width="182" height="41"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="41" id="nOf-yD-j4X"/>
-                                    <constraint firstAttribute="width" constant="182" id="uXV-GL-FKe"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="32"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.96782583" green="0.96032434700000002" blue="0.94576591249999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -555,7 +555,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="285"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gPU-b3-8Wy" id="i45-p3-fd5">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="284.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="284"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WKh-5A-S7d">
@@ -678,6 +678,16 @@
                                 </segments>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5sU-lc-Goc">
+                                <rect key="frame" x="289" y="583" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="5sU-lc-Goc" secondAttribute="height" multiplier="1:1" id="SzA-Kp-J5b"/>
+                                </constraints>
+                                <state key="normal" image="RB2.png"/>
+                                <connections>
+                                    <action selector="reload:" destination="APH-YF-xmz" eventType="touchUpInside" id="wfC-q9-Bfi"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.96782583" green="0.96032434700000002" blue="0.94576591249999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -688,10 +698,13 @@
                             <constraint firstItem="TAu-E8-MZ1" firstAttribute="width" secondItem="roy-Jq-irt" secondAttribute="width" id="8Yg-TY-PC5"/>
                             <constraint firstAttribute="trailing" secondItem="3cs-gn-gmY" secondAttribute="trailing" id="E0l-AY-gtT"/>
                             <constraint firstItem="TAu-E8-MZ1" firstAttribute="top" secondItem="TRx-0H-FCY" secondAttribute="bottom" constant="8" id="Kb6-BS-dlZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="5sU-lc-Goc" secondAttribute="trailing" constant="10" id="Lcy-eg-IVS"/>
                             <constraint firstItem="3cs-gn-gmY" firstAttribute="top" secondItem="roy-Jq-irt" secondAttribute="top" id="LiH-s7-yAE"/>
                             <constraint firstItem="qJ2-OC-vSJ" firstAttribute="leading" secondItem="roy-Jq-irt" secondAttribute="leadingMargin" constant="-16" id="SYS-XZ-wH1"/>
                             <constraint firstItem="TAu-E8-MZ1" firstAttribute="centerX" secondItem="roy-Jq-irt" secondAttribute="centerX" id="Uni-aK-pMT"/>
                             <constraint firstItem="qJ2-OC-vSJ" firstAttribute="leading" secondItem="roy-Jq-irt" secondAttribute="leading" id="VNT-Vm-gCY"/>
+                            <constraint firstItem="eHe-Su-WfH" firstAttribute="top" secondItem="5sU-lc-Goc" secondAttribute="bottom" constant="24" id="VQV-a3-nTU"/>
+                            <constraint firstItem="5sU-lc-Goc" firstAttribute="height" secondItem="roy-Jq-irt" secondAttribute="height" multiplier="60:667" id="XPa-GO-kV5"/>
                             <constraint firstItem="3cs-gn-gmY" firstAttribute="leading" secondItem="roy-Jq-irt" secondAttribute="leading" id="aI2-We-HPe"/>
                             <constraint firstAttribute="trailingMargin" secondItem="TRx-0H-FCY" secondAttribute="trailing" constant="-16" id="abK-VS-6G2"/>
                             <constraint firstItem="TRx-0H-FCY" firstAttribute="top" secondItem="qJ2-OC-vSJ" secondAttribute="bottom" id="lFy-Q3-PsS"/>
@@ -710,7 +723,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="1446" y="181"/>
+            <point key="canvasLocation" x="1445.5999999999999" y="180.35982008995504"/>
         </scene>
         <!--itemSpecific-->
         <scene sceneID="WlO-zf-Xre">
@@ -1257,6 +1270,7 @@
         <image name="Instagram-Heart-Transparent.png" width="37" height="32"/>
         <image name="LB.png" width="320" height="512"/>
         <image name="NavigationBarColor.png" width="144" height="54"/>
+        <image name="RB2.png" width="82" height="81"/>
         <image name="Screen Shot 2017-01-17 at 11.19.21 AM.png" width="42" height="52"/>
         <image name="backgroundcolor.png" width="212" height="138"/>
         <image name="bb.png" width="57" height="22"/>
@@ -1268,8 +1282,8 @@
         <image name="purchased.png" width="349" height="111"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="n1j-hZ-ISZ"/>
+        <segue reference="tsN-tD-BU3"/>
         <segue reference="Nyl-ft-tfW"/>
-        <segue reference="sLi-CX-hcV"/>
+        <segue reference="TsY-k4-Fxp"/>
     </inferredMetricsTieBreakers>
 </document>
