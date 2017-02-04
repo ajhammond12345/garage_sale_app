@@ -95,111 +95,7 @@
  */
 
 
-/*
- Create a mobile application that would allow a platform for a digital yard sale to raise funds to
- attend NLC. The app should allow for the donation of items, including picture, suggested price,
- and a rating for the condition of the item. The app should allow for interaction/comments on
- the items. Code should be error free.
- 
- Required Functionality:
- Donation of items
- Items must have:
-    Picture
-    Suggested Price
-    Rating
-    Interact/Comments on the items
- 
- UI:
-    //All screens except home should have a back button in the top left corner (whether <- or x depends on the screen)
- 
-    Home Screen
-        See local garage sales
-        Create garage sale
-        Manage sale
-        //user either sees create or manage, never both - depends on whether they have an active sale (should be determined both by server and locally)
- 
-    See yard sales
-        //tbd
- 
-    Details
-        Header
-            Shows garage sale name at top
-            Beneath it shows:
-                Funds raised -> if clicked on shows the list of items that have been sold
-                goal
-                End date
-        ScrollView
-            Shows list of items available for sale (rating name price) -> if item clicked on it is shown
-        Add button
-            Lets them add an item (Item entry screen)
- 
-    List of Items that have been sold
-        Displays item rating name price
- 
-    Display Item
-        //pulled up whenever item for sale or item sold is viewed
-        Shows rating, name, price at the top
-        Shows image in the middle
-        //if item sold:
-        Says SOLD at the bottom
-        //if item not sold
-        BUY button at the bottom
- 
-    Add Item
-        Input:
-            Name
-            Suggested Price
-            Rating
- 
-    Checkout (pulled up when BUY is clicked)
-        //TBD
- 
- 
-    Create garage sale
-        Input:
-            name (String - entered with text field)
-            end date (Date thing)
-            fundraising goal (float - entered with text field)
-        Create (button)
-            //sets the start date
- 
- 
- 
- 
- Classes:
-    GarageSale 
-        User sets:
-            Name
-            End Date (NSDate or String tbd)
-            Goal (float)
-        Computer controls:
-            Start Date (NSDate or String tbd) //set to when it is created
-            Funds Raised (float)
-            MutableArray of Items (NSMutableArray)
-    Items
-        Image (File)
-        SuggestedPrice (float)
-        Condition (int)
-        Comments (String)
-        Sold/Not Sold (boolean)
- 
- */
 
-
-/* Views that load data from the server (need loading thing)
-    ItemDetail (for Buy)
-    Filters (when sending filter and waiting on data)
-    Comments (when loading comments)
-    Items (when downloading items and downloading image for item from URL)
-    Item (when uploading comments)
-    Donate (when uploading the item)
-    About (when loading the amount raised) (also needs error message)
- 
- */
-
-
-///dictionary with key data with object dictionary
-    //second dictionary must have condition_min, condition_max, price_min, price_max
 
 
 
@@ -218,28 +114,46 @@
     // Do any additional setup after loading the view, typically from a nib.
 }
 
+//run when the view has appeared (so that alerts can pop up)
 -(void)viewDidAppear:(BOOL)animated {
+    //loads an instance of UserDefaults to check for username
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    //loads username
     _username = [defaults objectForKey:@"username"];
-    NSLog(@"%@", _username);
+    //NSLog(@"%@", _username);
+    //creates alert controller for the username
     UIAlertController *usernameInput = [UIAlertController alertControllerWithTitle:@"Input Username" message:@"Please create a username." preferredStyle:UIAlertControllerStyleAlert];
+    
+    //adds a textfield to the alert controller for username to be typed in
     [usernameInput addTextFieldWithConfigurationHandler:^(UITextField *textField) {
      textField.placeholder = NSLocalizedString(@"username", @"Username");
      }];
+    
+    //adds an OK button for the user to finalize their username
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        
+        //when ok pressed it saves the input username and writes it to defaults
         _username = usernameInput.textFields.firstObject.text;
         [defaults setObject:_username forKey:@"username"];
         NSLog(@"%@", [defaults objectForKey:@"username"]);
     }];
+    
+    //adds the ok button to the controller
     [usernameInput addAction:defaultAction];
+    
+    //if no username loaded from defaults (first time user has used the app or first time reusing after deleting the app) then it shows the controller to get a username
     if (_username == nil) {
-        
+        //code to show alert controller
         [self presentViewController:usernameInput animated:YES completion:nil];
     }
 
+    //loads the options for conditions
     NSArray *conditionOptions = [defaults objectForKey:@"conditions"];
+    
+    //if no options set, writes the options below (first time app is loaded)
     if (conditionOptions == nil) {
     
+        //options available for item condition
         [defaults setObject:[NSArray arrayWithObjects:@"--Select--", @"Unopened", @"Brand New", @"Exceptional", @"Great Condition", @"Used", @"Falling Apart", @"Broken", nil] forKey:@"conditions"];
     }
 }

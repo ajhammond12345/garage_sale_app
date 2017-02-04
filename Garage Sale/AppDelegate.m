@@ -40,8 +40,11 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    //creates instance of user defaults (used for storage on device)
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    //creates liked array from stored data
     NSArray *likedArray = [defaults objectForKey:@"LikedItems"];
+    //if liked array is nil, initializes the array and reassigns - to ensure that no nil value will be accessed when processing elsewhere in the app, only relevant for the first time the app boots
     if (likedArray == nil) {
         likedArray = [likedArray init];
         [defaults setObject:likedArray forKey:@"LikedItems"];

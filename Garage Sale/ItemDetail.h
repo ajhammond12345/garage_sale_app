@@ -7,15 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+
+//imports all of the header files it will use
 #import "Item.h"
 #import "Comments.h"
-#import <PassKit/PassKit.h>
+//#import <PassKit/PassKit.h>
 #import "Items.h"
 
 
 @interface ItemDetail : UIViewController <UITextViewDelegate> {
     
-    
+    //declares all of the UI elements
     IBOutlet UILabel *displayName;
     IBOutlet UILabel *displayCondition;
     IBOutlet UILabel *displayPrice;
@@ -28,6 +30,8 @@
     
     
 }
+
+//declares the properties, actions, and publicly accessible methods
 
 @property Item *itemOnDisplay;
 

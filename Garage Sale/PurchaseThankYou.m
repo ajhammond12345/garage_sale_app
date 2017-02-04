@@ -14,10 +14,12 @@
 
 @implementation PurchaseThankYou
 
+//programatically called segue so that the prepare for segue method will be called
 -(IBAction)back:(id)sender {
     [self performSegueWithIdentifier:@"returnToItemPage" sender:self];
 }
 
+//sends the stored item back to the ItemDetail view to use to update its UI
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     ItemDetail *dest = segue.destinationViewController;
     dest.itemOnDisplay = _itemStorage;

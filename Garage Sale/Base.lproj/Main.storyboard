@@ -860,9 +860,6 @@
                                     <constraint firstAttribute="height" constant="42" id="dCx-E7-oH0"/>
                                 </constraints>
                                 <state key="normal" title="Apple Pay Button"/>
-                                <connections>
-                                    <action selector="buyWithApplePay:" destination="aWM-kn-DrQ" eventType="touchUpInside" id="4av-RJ-bIZ"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D4n-ZA-UHn">
                                 <rect key="frame" x="127" y="567" width="121" height="30"/>
@@ -1317,7 +1314,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="wqe-qP-Q92"/>
-        <segue reference="Nyl-ft-tfW"/>
+        <segue reference="iQh-vv-TH0"/>
         <segue reference="TsY-k4-Fxp"/>
     </inferredMetricsTieBreakers>
 </document>

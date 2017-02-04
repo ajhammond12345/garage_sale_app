@@ -12,6 +12,7 @@
     
 }
 
+//defines username property - used to check if user has username and to store one if they don't
 @property NSString *username;
 
 
