@@ -186,6 +186,11 @@
 }
 
 
+//adds a comment
+-(void)addComment:(NSString *)comment {
+    [_comments addObject:comment];
+}
+
 //included in case need, should not be needed
 -(void)changeComment:(NSString *)oldComment toComment:(NSString *)newComment {
     for (int i = 0; i < _comments.count; i++) {
@@ -194,7 +199,12 @@
         }
     }
 }
-
-
+-(void)removeComment:(NSString *)comment {
+    for (int i = 0; i < _comments.count; i++) {
+        if ([[_comments objectAtIndex:i] isEqualToString:comment]) {
+            [_comments removeObjectAtIndex:i];
+        }
+    }
+}
 
 @end

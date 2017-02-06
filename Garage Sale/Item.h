@@ -52,6 +52,7 @@
 
 -(void)changeComment:(NSString *)oldComment toComment:(NSString *)newComment;
 
+-(void)addComment:(NSString *)comment;
 -(void)uploadComment:(NSString *)comment;
 -(NSString *)commentWithIndex:(int)index;
 
