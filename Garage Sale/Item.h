@@ -14,6 +14,7 @@
     
 }
 
+//defines properties
 @property NSString *name;
 @property NSInteger *condition;
 @property NSString *itemDescription;
@@ -49,11 +50,8 @@
 
 -(void)changeLiked;
 
--(void)addComment:(NSString *)comment;
 -(void)changeComment:(NSString *)oldComment toComment:(NSString *)newComment;
--(void)removeComment:(NSString *)comment;
 
--(Item *)createItemFromJson;
 -(void)uploadComment:(NSString *)comment;
 -(NSString *)commentWithIndex:(int)index;
 

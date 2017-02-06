@@ -28,19 +28,14 @@
     [self setPercentRaised];
 }
 
+//updates the data then the view
 -(void)updateDaysRemaining {
     [self loadDaysRemaining];
     [self setDaysRemaining];
 }
 
 
-
-
-/*Methods that control the page
-    setProgressBarWidth
-    setAmountRaisedText
-    setDaysUntil
- */
+//sets the width of the progress bar based on the amount raised and goal
 -(void)setProgressBarWidth {
         int barWidth = (_amountRaisedInCents * totalBar.frame.size.width)/_goalInCents;
         NSLog(@"Bar Width: %i", barWidth);
@@ -53,11 +48,15 @@
         progressBar.hidden = NO;
     
 }
+
+//sets percent raised (class variable to reduce processing time and code repetition)
 -(void)setPercentRaised {
     int percentRaisedInt = (100*_amountRaisedInCents)/_goalInCents;
     percentRaised.text = [NSString stringWithFormat:@"%i%%", percentRaisedInt];
 }
 
+
+//updates the UI with the amount raised
 -(void)setAmountRaisedText {
     int centsRaised = _amountRaisedInCents % 100;
     int centsRaisedTens = centsRaised / 10;
@@ -67,6 +66,7 @@
     amountRaisedText.hidden = FALSE;
 }
 
+//udates the UI with the days remaining
 -(void)setDaysRemaining {
     daysUntilNLC.text = [NSString stringWithFormat:@"%i Days Until", _daysRemaining];
     daysUntilNLC.hidden = FALSE;
@@ -74,10 +74,11 @@
 
 
 
-//Methods that load data update stored fields
+//loads the amount that has been raised from the server, if failure to connect it leaves it as 0
 -(void)loadAmountRaised {
+    //sets to default of 0
     _amountRaisedInCents = 0;
-    //insert code to load amountRaised
+    //creates url session to load amount raised
     NSString *jsonUrlString = [NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/total.json"];
     NSURL *url = [NSURL URLWithString:jsonUrlString];
     NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -86,6 +87,7 @@
     [dataTask resume];
 }
 
+//if data comes back from url session (only session in here is to load amount raised) then it updates the amount raised (the view and the data)
 - (void)URLSession:(NSURLSession *)session
           dataTask:(NSURLSessionDataTask *)dataTask
     didReceiveData:(NSData *)data {
@@ -100,6 +102,7 @@
     
 }
 
+//calculates the number of days remaining and updates the variable _daysRemaining
 -(void)loadDaysRemaining {
     //creates NSDate for today
     NSDate *today = [NSDate date];
@@ -121,6 +124,7 @@
     
 }
 
+//startup code - here is where goal is set and the updates for the UI are called
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -143,14 +147,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

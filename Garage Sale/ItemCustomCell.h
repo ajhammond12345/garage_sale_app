@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "Item.h"
 
+
+//class declarations
 @interface ItemCustomCell : UITableViewCell
 
 @property Item *item;

@@ -8,19 +8,7 @@
 
 #import "Item.h"
 
-@implementation Item 
-
--(Item *)createItemFromJson {
-    Item *tmpItem = [[Item alloc] init];
-    return tmpItem;
-}
-
-
-
- 
-
-
-
+@implementation Item
 
 
 -(void)uploadComment:(NSString *)comment {
@@ -61,10 +49,12 @@
     //add the comment to the server
 }
 
+//quick helper method to return specific comments
 -(NSString *)commentWithIndex:(int)index {
     return [_comments objectAtIndex:index];
 }
 
+//some short getter methods
 -(NSString *)getName {
     return _name;
 }
@@ -83,6 +73,21 @@
 -(NSInteger *)getPriceInCents {
     return _priceInCents;
 }
+
+-(UIImage *)getImage {
+    return _image;
+}
+
+-(NSInteger *)getItemID {
+    return _itemID;
+}
+
+-(bool)getLiked {
+    return _liked;
+}
+
+
+//this method converts the item's price into a formatted string to display
 -(NSString *)getPriceString {
     int tmpPriceInCents = (int)_priceInCents;
     //NSLog(@"Price in cents: %zd\nPriceInCents %i", _priceInCents, tmpPriceInCents);
@@ -95,38 +100,39 @@
     return priceString;
 }
 
+//helper to set the price for item with int instead of NSInteger
 -(void)setThePriceInCents:(int)price {
     long tmpPrice = price;
     _priceInCents = (NSInteger *)tmpPrice;
 }
 
-
--(UIImage *)getImage {
-    return _image;
-}
-
--(NSInteger *)getItemID {
-    return _itemID;
-}
+//sets the id for the item with an int
 -(void)setTheItemID:(int)ID {
     long tmpID = ID;
     _itemID = (NSInteger *)tmpID;
 }
 
+//changes the liked status of the item
 -(void)changeLiked {
+    //loads array of liked items
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *likedArray = [defaults objectForKey:@"LikedItems"];
     
+    //creates a copy to edit (all objects loaded from defaults are immutable so mutableCopy command does not work)
     NSMutableArray *likedArrayMutable = [[NSMutableArray alloc] init];
+    //copies all of the items from the liked array into the mutable array
     for (int i = 0; i < likedArray.count; i++) {
         [likedArrayMutable addObject: [likedArray objectAtIndex:i]];
     }
+    
+    //if the item was not liked, sets liked to true and adds the item to the array
     if (_liked == false) {
         _liked = true;
         [self setItemDictionary];
         [likedArrayMutable addObject:_localDictionary];
     
     }
+    //if the item was liked, sets to false and removes it from the array
     else {
         _liked = false;
         for (int i = 0; i < likedArrayMutable.count; i++) {
@@ -139,12 +145,14 @@
             }
         }
     }
-    
+    //creates a non-mutable copy of the updated array (cannot save mutable arrays to user defaults)
     NSArray *newLikedArray = [likedArrayMutable copy];
+    //saves the updated array
     [defaults setObject:newLikedArray forKey:@"LikedItems"];
     [defaults synchronize];
 }
 
+//updates the internal dictionary of the item (helps when editing items from other classes)
 -(void)setItemDictionary {
     NSData *imageData = UIImageJPEGRepresentation(_image, .6);
     NSNumber *likedData = [NSNumber numberWithBool:_liked];
@@ -178,19 +186,6 @@
 }
 
 
-
--(void)setItemWithDictionary:(NSDictionary *) dictionary{
-    
-}
-
--(bool)getLiked {
-    return _liked;
-}
-
--(void)addComment:(NSString *)comment {
-    [_comments addObject:comment];
-}
-
 //included in case need, should not be needed
 -(void)changeComment:(NSString *)oldComment toComment:(NSString *)newComment {
     for (int i = 0; i < _comments.count; i++) {
@@ -199,12 +194,7 @@
         }
     }
 }
--(void)removeComment:(NSString *)comment {
-    for (int i = 0; i < _comments.count; i++) {
-        if ([[_comments objectAtIndex:i] isEqualToString:comment]) {
-            [_comments removeObjectAtIndex:i];
-        }
-    }
-}
+
+
 
 @end

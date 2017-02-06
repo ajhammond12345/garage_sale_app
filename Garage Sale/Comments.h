@@ -6,10 +6,12 @@
 //  Copyright © 2017 TripleA. All rights reserved.
 //
 
+//imports
 #import <UIKit/UIKit.h>
 #import "Item.h"
 #import "ItemDetail.h"
 
+//declarig interface outlets
 @interface Comments : UIViewController <UITextViewDelegate, NSURLSessionDelegate> {
     IBOutlet UITextView *otherComments;
     IBOutlet UITextView *inputComment;
@@ -17,6 +19,7 @@
     IBOutlet UIImageView *purchased;
 }
 
+//class properties
 @property Item *item;
 @property NSString *userComment;
 

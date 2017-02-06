@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Item.h"
 
+//variable declarations
 NSString *name;
 NSInteger *conditionInt;
 NSString *condition;
@@ -22,7 +23,7 @@ NSArray *conditionOptionsDonate;
 
 
 @interface Donate : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UITextViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
-    
+    //outlet declarations (UI elements)
     IBOutlet UITextField *nameTextField;
     IBOutlet UITextField *conditionTextField;
     IBOutlet UITextField *priceTextField;
@@ -32,9 +33,11 @@ NSArray *conditionOptionsDonate;
     IBOutlet UILabel *tmpLabel;
 }
 
+//class properties
 @property (strong, nonatomic) UIPickerView *conditionPicker;
 @property UIToolbar *toolBar;
 
+//Action methods (actions are linked to UI events)
 -(IBAction)done:(id)sender;
 -(IBAction)selectImage:(id)sender;
 

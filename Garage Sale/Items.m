@@ -16,17 +16,19 @@
 
 @implementation Items 
 
-
+//when an item clicked in the table view it passes on the item info and shows the item
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     ItemCustomCell *tmpCell = [itemsView cellForRowAtIndexPath:indexPath];
     _itemToSend = tmpCell.item;
     [self performSegueWithIdentifier:@"showItem" sender:indexPath];
 }
 
+//goes to the filters page
 -(IBAction)filters:(id)sender {
     [self performSegueWithIdentifier:@"toFilters" sender:self];
 }
 
+//passes on information based on which segue is performed
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"showItem"]) {
         ItemDetail *destViewController = segue.destinationViewController;
@@ -39,6 +41,7 @@
     }
 }
 
+//delegate method used to load table view
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ItemCustomCell *cell = (ItemCustomCell *)[tableView dequeueReusableCellWithIdentifier:@"ItemCell" forIndexPath:indexPath];
     if (!_showAll) {
@@ -62,6 +65,7 @@
     return cell;
 }
 
+//provides the number of rows that will be in table view (just a count of the array)
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (!_showAll) {
         return _likedItems.count;
@@ -74,7 +78,7 @@
     }
 }
 
-
+//run when the segmented control switched - switches between liked and all (and when all decides between filtered and all)
 -(void)viewSwitched {
     if (_showAll) {
         _showAll = false;
@@ -123,14 +127,10 @@
 
 
 
-
+//loads all of the items
 -(void)loadAllItems {
     
-    
-    
-    
-    
-    //-- Make URL request with server
+    //-- Make URL request with server to load all of the items
     if (_items != nil) {
         [itemsView reloadData];
     }
@@ -142,6 +142,8 @@
     [dataTask resume];
 }
 
+
+//loads all of the items when the data task is complete
 - (void)URLSession:(NSURLSession *)session
           dataTask:(NSURLSessionDataTask *)dataTask
     didReceiveData:(NSData *)data {
@@ -149,6 +151,7 @@
     NSError *error;
     _result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     //NSLog(@"Result (Length: %zd) = %@",_result.count, _result);
+    //this interprets the data received a creates a bunch of items from it
     NSMutableArray *tmpItemArray = [[NSMutableArray alloc] init];
     for (int i = 0; i < _result.count; i++) {
         NSDictionary *tmpDic = [_result objectAtIndex:i];
@@ -161,6 +164,7 @@
         
     }
     
+    //updates the liked items list to load which of the new items the user has liked
     [self loadLikedItems];
      
     //sets the 'liked' value of the loaded items
@@ -171,11 +175,13 @@
             }
         }
     }
+    //if data receieved it saves the interpreted data to the local array
     if (tmpItemArray != nil) {
         _items = tmpItemArray;
     }
     
     else {
+        //if no data received it provides this alert
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Connection\n" message:@"Could not load items" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
         [alert addAction:defaultAction];
@@ -184,19 +190,6 @@
     [itemsView reloadData];
     [session invalidateAndCancel];
 
-}
-
-
-
-
-
-
--(Item *)ItemFromJSON:(NSDictionary *)jsonDictionary {
-    Item *tmpItem = [[Item alloc] init];
-    
-    
-    
-    return tmpItem;
 }
 
 -(void)loadLikedItems {
@@ -217,21 +210,25 @@
     }
 }
 
+//checks to see if item has been purchased - this runs in the background separately from downloading all of the data - used for updating whether or not to show the purchased image on items loaded locally (liked items)
 -(void)checkPurchased:(Item *)item {
+    //creates bacground queue
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        // No explicit autorelease pool needed here.
-        // The code runs in background, not strangling
-        // the main run loop.
-       
+        
+       //initiates a urlsession to check the purchase stat
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/items/%zd.json", item.itemID]];
         //NSLog(@"%@", url);
 
         NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
         NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             if (![[[data class] description] isEqualToString:@"__NSCFConstantString"]) {
+                
+                //interprets the received data to check the purchase state
                 NSDictionary *tmpDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
                 NSNumber *tmpNum = [tmpDic objectForKey:@"item_purchase_state"];
+                //if purchased it updates the saved object for the key LikedItems (where the liked list is stored) to update the purchase state of the item
                 if ([tmpNum intValue] == 1) {
+                    //creates instance of defaults to access locally saved objects
                     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                     NSArray *likedArray = [defaults objectForKey:@"LikedItems"];
                     NSMutableArray *tmpLikedItems = [[NSMutableArray alloc] init];
@@ -264,6 +261,7 @@
 
 }
 
+//reloads all of the items (for the reload button specifically)
 -(IBAction)reload:(id)sender {
     [self loadLikedItems];
     [self loadAllItems];
@@ -319,24 +317,23 @@
     _filteredItems = tmpItemArray;
 }
 
+//loads the images for an item (assumes item has saved url)
 -(void)loadItemImage:(Item *)item {
-    
+    //creates an asynchronous queue so that loading the item will not interfer with the main queue (main queue remains open for ui updates)
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        // No explicit autorelease pool needed here.
-        // The code runs in background, not strangling
-        // the main run loop.
         NSLog(@"Item Url:\n%@", item.url);
         item.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:item.url]]];
         item.imageLoadAttempted = true;
+        //runs commands in the main queue once the loading is finished
         dispatch_sync(dispatch_get_main_queue(), ^{
-            // This will be called on the main thread, so that
-            // you can update the UI, for example.
+            //reloads the tableView now that images have been saved
             [itemsView reloadData];
         });
     });
     
 }
 
+//reloads items saved to the phone (only difference is that loading images is done locally not from a URL
 -(Item *)itemFromDictionaryInternal:(NSDictionary *) dictionary {
     Item *tmpItem = [[Item alloc] init];
     tmpItem.name = [dictionary objectForKey:@"item_name"];
@@ -362,7 +359,7 @@
     return tmpItem;
 }
 
-//differnt method for handling different image data transfer
+//Loads items from the dictionary passed by the server (uses URL for image grab)
 -(Item *)itemFromDictionaryExternal:(NSDictionary *) dictionary {
     Item *tmpItem = [[Item alloc] init];
     tmpItem.name = [dictionary objectForKey:@"item_name"];
@@ -374,16 +371,6 @@
     tmpItem.url = [NSString stringWithFormat:@"%@", imageFilepath];
     NSLog(@"%@", tmpItem.url);
     
-    
-    /*
-   
-    tmpItem.image= [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURLString]]];
-     */
-    /*NSString *imageBase64 = [dictionary objectForKey:@"item_image_base_64"];
-    NSLog(@"\n\nDownload Data:\n\n%@", imageBase64);
-    NSData *imageData = [imageBase64 dataUsingEncoding:NSDataBase64EncodingEndLineWithLineFeed];
-    tmpItem.image = [UIImage imageWithData:imageData];
-    */
     NSArray *fullComments =  [dictionary objectForKey:@"comments"];
     //NSLog(@"All comments:\n%@", fullComments);
     tmpItem.comments = [[NSMutableArray alloc] init];
@@ -396,11 +383,8 @@
         //NSLog(@"Comment Text in comments: %@", tmpItem.comments);
     }
     //NSLog(@"Item Comments: %@", tmpItem.comments);
-    //[downloadPhotoTask resume];
      
      
-    
-    //[self setItemImageFromServerWithURL:imageURL item:tmpItem];
     tmpItem.priceInCents = (NSInteger*)[[dictionary objectForKey:@"item_price_in_cents"] integerValue];
     
     tmpItem.liked = [[dictionary objectForKey:@"liked"] boolValue];
@@ -413,23 +397,7 @@
     return tmpItem;
 }
 
-
-/*-(void)setItemImageFromServerWithURL:(NSURL *)imageURL item:(Item *)item {
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-    dispatch_async(queue, ^{
-        NSError *error;
-        NSData *data = [NSData dataWithContentsOfURL:imageURL options:NSDataReadingUncached error:&error];
-       // NSLog(@"Image data: %@", data);
-        UIImage *image = [UIImage imageWithData:data];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            item.image = image;
-        });  
-    });
-}*/
-
-
-
-
+//setup coe for the view - initiates loading the items arrays and sets the delegates for the necessary views to the view controller
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -458,15 +426,5 @@
 }
 
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

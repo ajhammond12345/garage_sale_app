@@ -12,6 +12,7 @@
 
 
 @interface About : UIViewController {
+    //interface outlets
     IBOutlet UILabel *amountRaisedText;
     IBOutlet UIImageView *progressBar;
     IBOutlet UIImageView *totalBar;
@@ -22,6 +23,7 @@
     
 }
 
+//class properties
 @property int amountRaisedInCents;
 @property int goalInCents;
 @property int daysRemaining;

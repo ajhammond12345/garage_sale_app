@@ -6,13 +6,14 @@
 //  Copyright © 2017 TripleA. All rights reserved.
 //
 
+//imports
 #import <UIKit/UIKit.h>
 #import "Item.h"
 #import "ItemCustomCell.h"
 
 
 
-
+//declaring interface outlets
 @interface Items : UIViewController <UITableViewDelegate, UITableViewDataSource, NSURLSessionDelegate>{
     
      //needs to be saved to the device
@@ -26,6 +27,7 @@
     
 }
 
+//declaring properties
 @property NSMutableArray *items;
 @property NSArray *likedItems;
 //if fails make NSMutableArray
@@ -38,6 +40,7 @@
 @property NSDictionary *filters;
 
 
+//methods that can be accessed when importing this header file
 -(void)loadAllItems;
 -(void)loadLikedItems;
 

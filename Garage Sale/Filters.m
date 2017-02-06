@@ -210,6 +210,7 @@
 
 
 -(void)textFieldDidEndEditing:(UITextField *)textField {
+    //all of the code in this is simply checks on the validity of the input for each textField then saving the input for each textField to it's respective variable
     if ([textField isEqual: minimumPrice]) {
         NSString *cents;
         NSString *dollars;
@@ -286,15 +287,18 @@
             maximumPrice.placeholder = @"$0.00";
         }
     }
+    //hides all keyboards
     [textField resignFirstResponder];
     [self.view endEditing:YES];
 }
 
+//hides picker view (and other keyboards)
 -(void)clearPickerView {
     [self.view endEditing:YES];
 }
 
 - (void)viewDidLoad {
+    //creates a toolbar with a done button to end editing for all keyboards
     _toolBar = [[UIToolbar alloc] init];
     _toolBar.barStyle = UIBarStyleDefault;
     _toolBar.translucent = true;
@@ -306,6 +310,8 @@
     _toolBar.userInteractionEnabled = true;
     _conditionOptionsFilter = [[NSUserDefaults standardUserDefaults] objectForKey:@"conditions"];
     _conditionPicker = [[UIPickerView alloc] init];
+    
+    //sets the view controller as the delegate and dataSource for the textFields and pickerView (allows use of delegate methods to manage the control of these objects)
     _conditionPicker.dataSource = self;
     _conditionPicker.delegate = self;
     _conditionPicker.showsSelectionIndicator = YES;
@@ -337,7 +343,7 @@
     }
 }
 
-
+//helper method to convert an int with price in cents to a string the user will understand
 -(NSString *)getPriceString:(NSInteger *)priceInCents {
     int tmpPriceInCents = (int)priceInCents;
     //NSLog(@"Price in cents: %zd\nPriceInCents %i", _priceInCents, tmpPriceInCents);
