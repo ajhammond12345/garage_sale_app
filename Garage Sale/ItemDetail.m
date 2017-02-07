@@ -15,52 +15,6 @@
 
 @implementation ItemDetail
 
-/* apple pay stuff
- -(void)paymentAuthorizationViewControllerDidFinish:(PKPaymentAuthorizationViewController *)controller {
-    [controller dismissViewControllerAnimated:YES completion:NULL];
-}
-
--(void)paymentAuthorizationViewController:(PKPaymentAuthorizationViewController *)controller
-didAuthorizePayment:(PKPayment *)payment
-completion:(void (^)(PKPaymentAuthorizationStatus status))completion {
-    //would insert code to pass this on to a payment company if this were real
-    
-    //instead will load to the server that the item was purchased
-    
-    //this only reached if item has not been purchased, so assigning the
-    NSMutableDictionary *tmpDic = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat: @"%i", 1], @"item_purchase_state", nil];
-    NSError *error;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
-    
-    //creates url for the request
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/items/%zd.json", _itemOnDisplay.itemID]];
-    //NSLog(@"%@", url);
-    
-    //creates a URL request
-    NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-    
-    //specifics for the request (it is a post request with json content)
-    [uploadRequest setHTTPMethod:@"PATCH"];
-    [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [uploadRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
-    [uploadRequest setHTTPBody: jsonData];
-    
-    //
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    
-    [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-      {
-          dispatch_async(dispatch_get_main_queue(), ^{
-              NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-              NSLog(@"requestReply: %@", requestReply);
-              
-              [self performSegueWithIdentifier:@"toPurchaseThankYou"  sender:self];
-          });
-      }] resume];
-
-}*/
-
 
 //loads the comments page when the comments button is pressed
 -(IBAction)comments:(id)sender {
@@ -140,51 +94,6 @@ completion:(void (^)(PKPaymentAuthorizationStatus status))completion {
     }
 }
 
-/*apple pay stuff
- -(IBAction)buyWithApplePay:(id)sender {
-    NSLog(@"%@", _itemOnDisplay.localDictionary);
-    [_itemOnDisplay setItemDictionary];
-    NSLog(@"local Dictionary\n%@", _itemOnDisplay.localDictionary);
-   
-    NSMutableDictionary *tmpDic = [NSMutableDictionary dictionaryWithObject:[_itemOnDisplay.localDictionary objectForKey:@"item_purchase_state"] forKey:@"item_purchase_state"];
-    NSLog(@"TmpDic%@", tmpDic);
-    NSInteger *check = (NSInteger *)[[tmpDic objectForKey:@"item_purchase_state"] integerValue];
-    NSLog(@"Check: %zd",check);
-    if (check == 0) {
-        
-        //sets up the apple pay request
-        PKPaymentRequest *request = [PKPaymentRequest new];
-        request.merchantIdentifier = @"merchant.hammond.alexander.fbla.app";
-        request.supportedNetworks = @[PKPaymentNetworkAmex, PKPaymentNetworkMasterCard, PKPaymentNetworkVisa, PKPaymentNetworkDiscover];
-        request.merchantCapabilities = PKMerchantCapability3DS;
-        request.countryCode = @"US";
-        request.currencyCode = @"USD";
-        //first step to convert to format needed for payment
-        NSUInteger *tmp = (NSUInteger *)_itemOnDisplay.priceInCents;
-        //converts to format needed for payment
-        unsigned long long priceInCents = (unsigned long long)tmp;
-        NSDecimalNumber *totalAmount = [NSDecimalNumber decimalNumberWithMantissa:priceInCents exponent:-2 isNegative:false];
-        PKPaymentSummaryItem *final_price = [PKPaymentSummaryItem summaryItemWithLabel:@"Total" amount:totalAmount];
-        request.paymentSummaryItems = [[NSArray alloc] initWithObjects:final_price, nil];
-        
-        //presents the apple pay view controller
-        PKPaymentAuthorizationViewController *vc = [[PKPaymentAuthorizationViewController alloc] initWithPaymentRequest:request];
-        vc.delegate = self;
-        [self presentViewController:vc animated:YES completion:nil];
-    }
-    else if (check == (NSInteger *)1){
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Cannot Purchase" message:@"Someone has already purchased this item" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
-        [alert addAction:defaultAction];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
-    else {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Load Error" message:@"Cannot load item for purchase" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
-        [alert addAction:defaultAction];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
-}*/
 
 -(IBAction)buyWithoutApplePay:(id)sender {
 
@@ -294,14 +203,7 @@ completion:(void (^)(PKPaymentAuthorizationStatus status))completion {
     
     //sets the delegate for the text view (allows above delegate method to ensure users can't interact with it)
     displayDescription.delegate = self;
-    /*
-     apple pay stuff
-    if ([PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:@[PKPaymentNetworkVisa, PKPaymentNetworkMasterCard, PKPaymentNetworkAmex]]) {
-        buyButton = [PKPaymentButton buttonWithType:PKPaymentButtonTypeBuy style:PKPaymentButtonStyleBlack];
-    }
-    else {
-        buyButton = [PKPaymentButton buttonWithType:PKPaymentButtonTypeSetUp style:PKPaymentButtonStyleBlack];
-    }*/
+    
     
 }
 
