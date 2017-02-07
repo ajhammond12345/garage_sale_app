@@ -11,3 +11,4 @@ To run this app:
   7) A window will pop-up asking to generate a device profile - click generate  
   8) The app should proceed to build on your phone. It will take a minute the first time.  
   In some cases you may need to click the play button again after step 7  
+To see the code for the server, check out https://github.com/ajhammond12345/fbla_server_garage_sale  
