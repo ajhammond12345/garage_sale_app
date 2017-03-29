@@ -960,7 +960,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FoQ-iO-JIp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1553" y="149"/>
+            <point key="canvasLocation" x="1552.8" y="148.87556221889056"/>
         </scene>
         <!--itemSpecific-->
         <scene sceneID="WlO-zf-Xre">
@@ -1549,7 +1549,7 @@
         <image name="TopBar.png" width="219" height="64"/>
         <image name="WhiteBackground.png" width="375" height="667"/>
         <image name="aboutBulb.png" width="51" height="82"/>
-        <image name="bBar.png" width="360" height="106"/>
+        <image name="bBar.png" width="317" height="64"/>
         <image name="bb.png" width="57" height="22"/>
         <image name="cameraIcon.png" width="110" height="82"/>
         <image name="comments.png" width="89" height="38"/>
