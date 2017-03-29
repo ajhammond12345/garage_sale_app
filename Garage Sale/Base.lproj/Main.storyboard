@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12100" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Bno-fB-t7A">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16E192b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Bno-fB-t7A">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12072"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -282,7 +282,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qOS-fL-hCU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1086" y="149"/>
+            <point key="canvasLocation" x="-239" y="855"/>
         </scene>
         <!--login-->
         <scene sceneID="6ar-sc-vrG">
@@ -337,6 +337,9 @@
                                 <state key="normal" title="New member? Sign up!">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="WLz-Pp-qg6" kind="show" identifier="toSignUp" id="oYi-45-SPh"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -493,6 +496,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="mja-F7-5Yq"/>
+                    <connections>
+                        <segue destination="tAR-wC-pKa" kind="presentation" identifier="toLogin" id="qxU-em-jdH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="amU-RY-Awq" sceneMemberID="firstResponder"/>
             </objects>
@@ -784,7 +790,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="285"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gPU-b3-8Wy" id="i45-p3-fd5">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="285"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="284"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WKh-5A-S7d">
@@ -1022,7 +1028,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z8g-Oq-wGD">
-                                <rect key="frame" x="164.5" y="123" width="46.5" height="21"/>
+                                <rect key="frame" x="164" y="123" width="47" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="5fv-fg-RMW"/>
                                 </constraints>
@@ -1031,19 +1037,19 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Condition" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZBK-hC-7zf">
-                                <rect key="frame" x="63" y="395" width="59" height="23.5"/>
+                                <rect key="frame" x="63" y="395" width="59" height="24"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$00.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ob-3y-ZLC">
-                                <rect key="frame" x="260.5" y="395" width="51.5" height="27.5"/>
+                                <rect key="frame" x="260" y="395" width="52" height="28"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Description" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Dhx-NQ-R1S">
-                                <rect key="frame" x="63" y="438.5" width="249" height="108.5"/>
+                                <rect key="frame" x="63" y="439" width="249" height="108"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -1053,15 +1059,18 @@
                                     <constraint firstAttribute="width" secondItem="Y9g-fj-j98" secondAttribute="height" multiplier="184:53" id="hE4-Yr-61J"/>
                                 </constraints>
                             </imageView>
-                            <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HxH-jc-oyt" customClass="PKPaymentButton">
-                                <rect key="frame" x="128.5" y="605" width="118" height="42"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HxH-jc-oyt" customClass="PKPaymentButton">
+                                <rect key="frame" x="128" y="605" width="118" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="dCx-E7-oH0"/>
                                 </constraints>
                                 <state key="normal" title="Apple Pay Button"/>
+                                <connections>
+                                    <action selector="buyWithApplePay:" destination="aWM-kn-DrQ" eventType="touchUpInside" id="Hda-Mq-X4v"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D4n-ZA-UHn">
-                                <rect key="frame" x="128" y="567" width="121" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D4n-ZA-UHn">
+                                <rect key="frame" x="127" y="567" width="121" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="121" id="GUm-Ns-Y9y"/>
                                     <constraint firstAttribute="height" constant="30" id="GkS-Ib-oUr"/>
@@ -1540,7 +1549,7 @@
         <image name="TopBar.png" width="219" height="64"/>
         <image name="WhiteBackground.png" width="375" height="667"/>
         <image name="aboutBulb.png" width="51" height="82"/>
-        <image name="bBar.png" width="317" height="64"/>
+        <image name="bBar.png" width="360" height="106"/>
         <image name="bb.png" width="57" height="22"/>
         <image name="cameraIcon.png" width="110" height="82"/>
         <image name="comments.png" width="89" height="38"/>
@@ -1551,8 +1560,8 @@
         <image name="purchased.png" width="349" height="111"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="evc-38-6St"/>
-        <segue reference="iQh-vv-TH0"/>
-        <segue reference="wqe-qP-Q92"/>
+        <segue reference="tsN-tD-BU3"/>
+        <segue reference="Nyl-ft-tfW"/>
+        <segue reference="TsY-k4-Fxp"/>
     </inferredMetricsTieBreakers>
 </document>

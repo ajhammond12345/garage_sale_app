@@ -163,6 +163,18 @@
                     [self presentViewController:alert animated:YES completion:nil];
                 }
                 else {
+                    //opens user defaults to save data locally
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    NSArray *donatedArray = [defaults objectForKey:@"DonatedItems"];
+                    NSMutableArray *tmpDonatedItems = [[NSMutableArray alloc] init];
+                    //creates array with all of the saved items
+                    for (int i = 0; i < donatedArray.count; i++) {
+                        NSDictionary *tmpDic = [donatedArray objectAtIndex:i];
+                        [tmpDonatedItems addObject:[self itemFromDictionaryInternal:tmpDic]];
+                    }
+                    //adds the new item to the donated list
+                    [tmpDonatedItems addObject:[self itemFromDictionaryInternal:newItem.localDictionary]];
+                    //transitions to the thank you page
                     [self performSegueWithIdentifier:@"showDonationThankYou" sender:(self)];
                 }
             });
@@ -170,6 +182,31 @@
                            
   
     }
+}
+
+-(Item *)itemFromDictionaryInternal:(NSDictionary *) dictionary {
+    Item *tmpItem = [[Item alloc] init];
+    tmpItem.name = [dictionary objectForKey:@"item_name"];
+    tmpItem.condition = (NSInteger *)[[dictionary objectForKey:@"item_condition"] integerValue];
+    tmpItem.itemDescription = [dictionary objectForKey:@"item_description"];
+    NSData *imageData = [dictionary objectForKey:@"item_image"];
+    if (imageData != nil) {
+        tmpItem.image = [UIImage imageWithData:imageData];
+    }
+    tmpItem.priceInCents = (NSInteger*)[[dictionary objectForKey:@"item_price_in_cents"] integerValue];
+    //NSLog(@"%@", [dictionary objectForKey:@"item_description"]);
+    tmpItem.liked = [[dictionary objectForKey:@"liked"] boolValue];
+    NSInteger *tmpID = (NSInteger*)[[dictionary objectForKey:@"id"] integerValue];
+    //NSLog(@"%@", [dictionary objectForKey:@"id"]);
+    //NSLog(@"%zd", tmpID);
+    tmpItem.itemID = tmpID;
+    tmpItem.itemPurchaseState = (NSNumber *)[dictionary objectForKey:@"item_purchase_state"];
+    NSArray *tmpComments = [dictionary objectForKey:@"item_comments"];
+    [tmpItem.comments removeAllObjects];
+    for (int i = 0; i < tmpComments.count; i++) {
+        [tmpItem.comments addObject:[tmpComments objectAtIndex:i]];
+    }
+    return tmpItem;
 }
 
 // Control methods for each text/image view
@@ -204,7 +241,9 @@
         [tmpLabel sizeToFit];
         NSLog(@"%f", tmpLabel.frame.size.width);
         if (tmpLabel.frame.size.width < 180) {
+            tmpName = [NSString stringWithFormat:@"%@%@",[[tmpName substringToIndex:1] uppercaseString],[tmpName substringFromIndex:1] ];
             name = tmpName;
+            nameTextField.text = tmpName;
         }
         else {
             nameTextField.text = @"";
@@ -334,7 +373,8 @@
         descriptionTextView.text = [NSString stringWithFormat:@"Insert description here"];
     }
     else {
-        description = descriptionTextView.text;
+        description = [NSString stringWithFormat:@"%@%@",[[descriptionTextView.text substringToIndex:1] uppercaseString],[descriptionTextView.text substringFromIndex:1] ];
+        descriptionTextView.text = description;
     }
     //closes keyboard
     [textView resignFirstResponder];

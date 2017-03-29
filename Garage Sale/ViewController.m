@@ -121,6 +121,8 @@
     //loads username
     _username = [defaults objectForKey:@"username"];
     //NSLog(@"%@", _username);
+    
+    /* old way of doing username
     //creates alert controller for the username
     UIAlertController *usernameInput = [UIAlertController alertControllerWithTitle:@"Input Username" message:@"Please create a username." preferredStyle:UIAlertControllerStyleAlert];
     
@@ -131,20 +133,26 @@
     
     //adds an OK button for the user to finalize their username
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        
         //when ok pressed it saves the input username and writes it to defaults
         _username = usernameInput.textFields.firstObject.text;
         [defaults setObject:_username forKey:@"username"];
         NSLog(@"%@", [defaults objectForKey:@"username"]);
     }];
     
+    
     //adds the ok button to the controller
     [usernameInput addAction:defaultAction];
+    */
+    
     
     //if no username loaded from defaults (first time user has used the app or first time reusing after deleting the app) then it shows the controller to get a username
     if (_username == nil) {
+        [self performSegueWithIdentifier:@"toLogin" sender:self];
+        
+        /*old way of doing username
         //code to show alert controller
         [self presentViewController:usernameInput animated:YES completion:nil];
+         */
     }
 
     //loads the options for conditions

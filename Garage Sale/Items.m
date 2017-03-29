@@ -67,6 +67,7 @@
 
 //provides the number of rows that will be in table view (just a count of the array)
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    [self loadLikedItems];
     if (!_showAll) {
         return _likedItems.count;
     }

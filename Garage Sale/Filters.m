@@ -21,7 +21,7 @@
     
     //creates an empty dictionary for data to be added
     NSMutableDictionary *dataDic = [[NSMutableDictionary alloc] init];
-    
+    bool madeThroughFilters = false;
     //goes through every field, if it is not empty it adds it to the dictionary (empty fields are handled by the database with default values)
     if (_worstConditionInt != nil) {
         NSString *condition_max = [NSString stringWithFormat:@"%zd", _worstConditionInt];
@@ -39,76 +39,111 @@
         NSString *price_max = [NSString stringWithFormat:@"%zd", _maxPriceInCents];
         [dataDic setObject:price_max forKey:@"price_max"];
     }
+    if (_worstConditionInt < _bestConditionInt) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Impossible Filter" message:@"Cannot filter with given conditions." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    else if (_maxPriceInCents < _minPriceInCents) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Impossible Filter" message:@"Cannot filter with given price range." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    else {
+        madeThroughFilters = true;
+    }
     //creates a string from all of the fields to be put into an array that will go to the main items view controller to store the currently loaded filters
-    NSString *worstConditionString = [NSString stringWithFormat:@"%zd", _worstConditionInt];
-    NSString *bestConditionString = [NSString stringWithFormat:@"%zd", _bestConditionInt];
-    NSString *minPriceString = [NSString stringWithFormat:@"%zd", _minPriceInCents];
-    NSString *maxPriceString = [NSString stringWithFormat:@"%zd", _maxPriceInCents];
-    //stores the current filters to be sent to items page and saved for when filters page reloads
-    _filtersInPlace = [NSDictionary dictionaryWithObjectsAndKeys:worstConditionString, @"worst_condition", bestConditionString, @"best_condition", minPriceString, @"min_price", maxPriceString, @"max_price", nil];
-    //creates a dictionary for sending the request - puts it under the data heading to match what the database expects
-    NSMutableDictionary *tmpDic = [NSMutableDictionary dictionaryWithObject:dataDic forKey:@"data"];
-    //NSLog(@"%@", tmpDic);
+    if (madeThroughFilters) {
+        NSString *worstConditionString = [NSString stringWithFormat:@"%zd", _worstConditionInt];
+        NSString *bestConditionString = [NSString stringWithFormat:@"%zd", _bestConditionInt];
+        NSString *minPriceString = [NSString stringWithFormat:@"%zd", _minPriceInCents];
+        NSString *maxPriceString = [NSString stringWithFormat:@"%zd", _maxPriceInCents];
+        //stores the current filters to be sent to items page and saved for when filters page reloads
+        _filtersInPlace = [NSDictionary dictionaryWithObjectsAndKeys:worstConditionString, @"worst_condition", bestConditionString, @"best_condition", minPriceString, @"min_price", maxPriceString, @"max_price", nil];
+        //creates a dictionary for sending the request - puts it under the data heading to match what the database expects
+        NSMutableDictionary *tmpDic = [NSMutableDictionary dictionaryWithObject:dataDic forKey:@"data"];
+        //NSLog(@"%@", tmpDic);
     
-    //error handler
-    NSError *error;
-    
-    //creates the json data for the url request
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
-    
-    //creates url for request
-    NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/items/filtered_list.json"];
-    
-    //creates a URL request
-    NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-    
-    //specifics for the request (it is a post request with json content)
-    [uploadRequest setHTTPMethod:@"POST"];
-    [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [uploadRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
-    [uploadRequest setHTTPBody: jsonData];
-    
-    //creates the URLSession to start the request
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    
-    //sets the boolean to false to indicate the download has not yet finished
-    _downloadSuccessful = false;
-    //creates empty array to store the response from the server
-    _requestResult = [[NSArray alloc] init];
-    
-    //initiates the url session with a handler that processes the data returned from the server
-    [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSLog(@"Error: %@", error);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //if the data is empty it will report an error, if not it will process the list of items returned by the filter parameters
-            if (data != nil) {
-                //error handler
-                NSError *jsonError;
-                //stores the response
-                _requestResult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
-                
-                //NSLog(@"requestReply: %@", _requestResult);
-                //NSLog(@"%@", [[_requestResult class] description]);
-                
-                //if the response is the valid type it indicates the download is successful and proceeds with the segue back to the main page, if unsuccessful it proceeds while leaving the downloadSuccessful as false (the segue delegate method uses this to determine what data to pass to the Items view controller
-                if ([[[_requestResult class] description] isEqualToString:@"__NSArrayM"]) {
-                    _downloadSuccessful = true;
-                    [self performSegueWithIdentifier:@"loadItemsWithFilters" sender:self];
-                }
-                else {
-                    //server error, do some output
-                    [self performSegueWithIdentifier:@"loadItemsWithFilters" sender:self];
-                }
-            }
-            //logs if data is nil and the phone did not connect to a server
-            else {
-                NSLog(@"NO DATA RECEIVED FROM FILTER REQUEST");
-                [self performSegueWithIdentifier:@"loadItemsWithFilters" sender:self];
-            }
-        });
+        //error handler
+        NSError *error;
         
-    }] resume];
+        //creates the json data for the url request
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
+    
+        //creates url for request
+        NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/items/filtered_list.json"];
+    
+        //creates a URL request
+        NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    
+        //specifics for the request (it is a post request with json content)
+        [uploadRequest setHTTPMethod:@"POST"];
+        [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        [uploadRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
+        [uploadRequest setHTTPBody: jsonData];
+    
+        //creates the URLSession to start the request
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    
+        //sets the boolean to false to indicate the download has not yet finished
+        _downloadSuccessful = false;
+        //creates empty array to store the response from the server
+        _requestResult = [[NSArray alloc] init];
+    
+        //initiates the url session with a handler that processes the data returned from the server
+        [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            NSLog(@"Error: %@", error);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //if the data is empty it will report an error, if not it will process the list of items returned by the filter parameters
+                if (data != nil) {
+                    //error handler
+                    NSError *jsonError;
+                    //stores the response
+                    _requestResult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
+                    //NSLog(@"requestReply: %@", _requestResult);
+                    //NSLog(@"%@", [[_requestResult class] description]);
+                
+                    //if the response is the valid type it indicates the download is successful and proceeds with the segue back to the main page, if unsuccessful it proceeds while leaving the downloadSuccessful as false (the segue delegate method uses this to determine what data to pass to the Items view controller
+                    if ([[[_requestResult class] description] isEqualToString:@"__NSArrayM"]) {
+                        _downloadSuccessful = true;
+                        if (_requestResult.count < 1) {
+                            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Items Found" message:@"No items fit within those filters. Please search again." preferredStyle:UIAlertControllerStyleAlert];
+                            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+                            [alert addAction:defaultAction];
+                            [self presentViewController:alert animated:YES completion:nil];
+                        }
+                        else {
+                            [self performSegueWithIdentifier:@"loadItemsWithFilters" sender:self];
+                        }
+                    }
+                    else {
+                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Server Error" message:@"Unable to process your request at this moment." preferredStyle:UIAlertControllerStyleAlert];
+                        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action)
+                                                        {
+                                                            [self performSegueWithIdentifier:@"loadItemsWithFilters" sender:self];
+                                                        }];
+                        [alert addAction:defaultAction];
+                        [self presentViewController:alert animated:YES completion:nil];
+                    }
+                }
+                //logs if data is nil and the phone did not connect to a server
+                else {
+                    NSLog(@"NO DATA RECEIVED FROM FILTER REQUEST");
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Connection Error" message:@"Could not load filtered list." preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action)
+                    {
+                        [self performSegueWithIdentifier:@"loadItemsWithFilters" sender:self];
+                    }];
+                    [alert addAction:defaultAction];
+                    [self presentViewController:alert animated:YES completion:nil];
+                    
+                }
+            });
+        }] resume];
+    }
 }
 
 //hanldes segue back to main view controller based on whether or not the filtered items were successfully downloaded
