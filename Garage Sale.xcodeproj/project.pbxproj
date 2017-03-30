@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A455ED61E8D45CA00A41266 /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A455ED41E8D45C900A41266 /* comment.png */; };
+		5A455ED71E8D45CA00A41266 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A455ED51E8D45C900A41266 /* share.png */; };
+		5A455ED91E8D5DDD00A41266 /* sideBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A455ED81E8D5DDD00A41266 /* sideBar.png */; };
+		5A455EDB1E8D6E5F00A41266 /* testingLike.icns in Resources */ = {isa = PBXBuildFile; fileRef = 5A455EDA1E8D6E5F00A41266 /* testingLike.icns */; };
 		5AF3C3F31E7B859B00990AA2 /* navBarColor.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AF3C3F21E7B859B00990AA2 /* navBarColor.png */; };
 		5AF3C3F51E7B863300990AA2 /* listButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AF3C3F41E7B863300990AA2 /* listButton.png */; };
 		5AF3C3F71E7B871400990AA2 /* WhiteBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AF3C3F61E7B871400990AA2 /* WhiteBackground.png */; };
@@ -89,6 +93,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A455ED41E8D45C900A41266 /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comment.png; sourceTree = "<group>"; };
+		5A455ED51E8D45C900A41266 /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
+		5A455ED81E8D5DDD00A41266 /* sideBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sideBar.png; sourceTree = "<group>"; };
+		5A455EDA1E8D6E5F00A41266 /* testingLike.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = testingLike.icns; sourceTree = "<group>"; };
 		5AF3C3F21E7B859B00990AA2 /* navBarColor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navBarColor.png; sourceTree = "<group>"; };
 		5AF3C3F41E7B863300990AA2 /* listButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = listButton.png; sourceTree = "<group>"; };
 		5AF3C3F61E7B871400990AA2 /* WhiteBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WhiteBackground.png; sourceTree = "<group>"; };
@@ -266,6 +274,10 @@
 		70DC6CBA1E01F6DB00CE6953 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5A455EDA1E8D6E5F00A41266 /* testingLike.icns */,
+				5A455ED81E8D5DDD00A41266 /* sideBar.png */,
+				5A455ED41E8D45C900A41266 /* comment.png */,
+				5A455ED51E8D45C900A41266 /* share.png */,
 				5AF3C40E1E7C5FB700990AA2 /* comments.png */,
 				5AF3C40C1E7C5DE600990AA2 /* SettingsButton.png */,
 				5AF3C4081E7C526500990AA2 /* SignInButton.png */,
@@ -446,6 +458,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				70D2BE641E38930300F39435 /* Instagram-Heart-Transparent@2x.png in Resources */,
+				5A455EDB1E8D6E5F00A41266 /* testingLike.icns in Resources */,
+				5A455ED61E8D45CA00A41266 /* comment.png in Resources */,
 				5AF3C40D1E7C5DE600990AA2 /* SettingsButton.png in Resources */,
 				70A923BC1E3D8A5D00B4B942 /* missing.png in Resources */,
 				70D2BE5D1E38930300F39435 /* cameraIcon.png in Resources */,
@@ -454,6 +468,7 @@
 				70A923F81E3F058F00B4B942 /* 1.png in Resources */,
 				70A924021E3F0BF100B4B942 /* large3.png in Resources */,
 				70D2BE651E38930300F39435 /* Instagram-Heart-Transparent@3x.png in Resources */,
+				5A455ED91E8D5DDD00A41266 /* sideBar.png in Resources */,
 				5AF3C3F51E7B863300990AA2 /* listButton.png in Resources */,
 				5AF3C3FF1E7B8A5600990AA2 /* aboutBulb.png in Resources */,
 				5AF3C4011E7B8B7300990AA2 /* TopBar.png in Resources */,
@@ -482,6 +497,7 @@
 				5AF3C3F91E7B87BE00990AA2 /* RefreshG.png in Resources */,
 				70A923FB1E3F058F00B4B942 /* 4.png in Resources */,
 				70A923F91E3F058F00B4B942 /* 2.png in Resources */,
+				5A455ED71E8D45CA00A41266 /* share.png in Resources */,
 				702CADCE1E42576E00FAC241 /* itunesartwork_2x_720.png in Resources */,
 				5AF3C4091E7C526500990AA2 /* SignInButton.png in Resources */,
 				70D2BE721E38930300F39435 /* Screen Shot 2017-01-17 at 11.19.21 AM.png in Resources */,
