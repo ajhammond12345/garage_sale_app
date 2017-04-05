@@ -14,6 +14,18 @@
 
 @implementation Login
 
+-(IBAction)signIn:(id)sender {
+    NSString *email = emailTextField.text;
+    NSString *password = passwordTextField.text;
+    //improve by running checks against the input (for @ symbol and such)
+    if (email != nil && password != nil) {
+        //sends url request to login - just needs to store UserID in the defaults
+    }
+    else {
+        //error prompting user to put in email and password
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

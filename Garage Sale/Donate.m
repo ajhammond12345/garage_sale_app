@@ -121,20 +121,27 @@
         //removes extra keys (item_image is replaced with a different key for the image data)
         [tmpDic removeObjectForKey:@"id"];
         [tmpDic removeObjectForKey:@"item_image"];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSNumber *userID = [defaults objectForKey:@"user_id"];
+        [tmpDic setObject:userID forKey:@"user_id"];
         NSData *imageData = UIImageJPEGRepresentation(image, .6);
         NSString *imageBase64 = [imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
         //NSLog(@"Upload Data: %@", imageBase64);
-        [tmpDic setObject:imageBase64 forKey:@"va_image_data"];
+        //NEED TO ADD BACK[tmpDic setObject:imageBase64 forKey:@"va_image_data"];
         [tmpDic setObject:[NSString stringWithFormat:@"%i", 0] forKey:@"item_purchase_state"];
 
         //JSON Upload - does not upload the image
         //converts the dictionary to json
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
         //logs the data to check if it is created successfully
-        //NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+        NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
         
         //creates url for the request
-        NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/items.json"];
+        
+        //production url
+        //NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/items.json"];
+        //testing url
+        NSURL *url = [NSURL URLWithString:@"http://localhost:3001/items.json"];
 
         //creates a URL request
         NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];

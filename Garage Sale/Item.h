@@ -27,6 +27,7 @@
 @property NSNumber *itemPurchaseState;
 @property NSString *url;
 @property bool imageLoadAttempted;
+@property NSInteger *userID;
 
 
 

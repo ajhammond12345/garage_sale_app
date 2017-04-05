@@ -8,6 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SignUp : UIViewController
+@interface SignUp : UIViewController {
+    IBOutlet UITextField *usernameTextField;
+    IBOutlet UITextField *emailTextField;
+    IBOutlet UITextField *passwordTextField;
+}
+
+@property NSArray *requestResult;
+@property bool usernameDataDownloadSuccessful;
+@property bool emailDataDownloadSuccessful;
+@property bool usernameUnique;
+@property bool emailUnique;
+
+@property NSDictionary *result;
+
+
+-(IBAction)signUp:(id)sender;
 
 @end

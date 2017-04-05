@@ -15,6 +15,18 @@
 
 @implementation ItemDetail
 
+-(IBAction)share:(id)sender {
+    NSString *text = [NSString stringWithFormat:@"I found this cool %@ on FUNDonation! Check it out on the app and help the fundraiser.", _itemOnDisplay.name];
+    NSURL *url = [NSURL URLWithString:@"https://itunes.apple.com/us/app/fundonation/id1200352853"];
+    UIImage *image = _itemOnDisplay.image; //[UIImage imageNamed:@"itunesartwork_2x_720.png"];
+    NSArray *itemsToShare = @[text, url, image];
+    
+    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
+    controller.excludedActivityTypes = @[UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypeOpenInIBooks, UIActivityTypePostToFlickr, UIActivityTypePostToTencentWeibo, UIActivityTypePostToVimeo, UIActivityTypePostToWeibo, UIActivityTypePrint];
+    
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
 -(IBAction)buyWithApplePay:(id)sender {
     NSLog(@"%@", _itemOnDisplay.localDictionary);
     [_itemOnDisplay setItemDictionary];

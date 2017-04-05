@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface Login : UIViewController
+@interface Login : UIViewController {
+    IBOutlet UITextField *emailTextField;
+    IBOutlet UITextField *passwordTextField;
+    IBOutlet UIButton *signInButton;
+    IBOutlet UIButton *signUpButton;
+}
+
+-(IBAction)signIn:(id)sender;
 
 @end
