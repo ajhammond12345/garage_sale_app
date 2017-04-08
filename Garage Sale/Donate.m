@@ -121,20 +121,27 @@
         //removes extra keys (item_image is replaced with a different key for the image data)
         [tmpDic removeObjectForKey:@"id"];
         [tmpDic removeObjectForKey:@"item_image"];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSNumber *userID = [defaults objectForKey:@"user_id"];
+        [tmpDic setObject:userID forKey:@"user_id"];
         NSData *imageData = UIImageJPEGRepresentation(image, .6);
         NSString *imageBase64 = [imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
         //NSLog(@"Upload Data: %@", imageBase64);
-        [tmpDic setObject:imageBase64 forKey:@"va_image_data"];
+        //NEED TO ADD BACK[tmpDic setObject:imageBase64 forKey:@"va_image_data"];
         [tmpDic setObject:[NSString stringWithFormat:@"%i", 0] forKey:@"item_purchase_state"];
 
         //JSON Upload - does not upload the image
         //converts the dictionary to json
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
         //logs the data to check if it is created successfully
-        //NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+        NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
         
         //creates url for the request
-        NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/items.json"];
+        
+        //production url
+        //NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/items.json"];
+        //testing url
+        NSURL *url = [NSURL URLWithString:@"http://localhost:3001/items.json"];
 
         //creates a URL request
         NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
@@ -163,6 +170,18 @@
                     [self presentViewController:alert animated:YES completion:nil];
                 }
                 else {
+                    //opens user defaults to save data locally
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    NSArray *donatedArray = [defaults objectForKey:@"DonatedItems"];
+                    NSMutableArray *tmpDonatedItems = [[NSMutableArray alloc] init];
+                    //creates array with all of the saved items
+                    for (int i = 0; i < donatedArray.count; i++) {
+                        NSDictionary *tmpDic = [donatedArray objectAtIndex:i];
+                        [tmpDonatedItems addObject:[self itemFromDictionaryInternal:tmpDic]];
+                    }
+                    //adds the new item to the donated list
+                    [tmpDonatedItems addObject:[self itemFromDictionaryInternal:newItem.localDictionary]];
+                    //transitions to the thank you page
                     [self performSegueWithIdentifier:@"showDonationThankYou" sender:(self)];
                 }
             });
@@ -170,6 +189,31 @@
                            
   
     }
+}
+
+-(Item *)itemFromDictionaryInternal:(NSDictionary *) dictionary {
+    Item *tmpItem = [[Item alloc] init];
+    tmpItem.name = [dictionary objectForKey:@"item_name"];
+    tmpItem.condition = (NSInteger *)[[dictionary objectForKey:@"item_condition"] integerValue];
+    tmpItem.itemDescription = [dictionary objectForKey:@"item_description"];
+    NSData *imageData = [dictionary objectForKey:@"item_image"];
+    if (imageData != nil) {
+        tmpItem.image = [UIImage imageWithData:imageData];
+    }
+    tmpItem.priceInCents = (NSInteger*)[[dictionary objectForKey:@"item_price_in_cents"] integerValue];
+    //NSLog(@"%@", [dictionary objectForKey:@"item_description"]);
+    tmpItem.liked = [[dictionary objectForKey:@"liked"] boolValue];
+    NSInteger *tmpID = (NSInteger*)[[dictionary objectForKey:@"id"] integerValue];
+    //NSLog(@"%@", [dictionary objectForKey:@"id"]);
+    //NSLog(@"%zd", tmpID);
+    tmpItem.itemID = tmpID;
+    tmpItem.itemPurchaseState = (NSNumber *)[dictionary objectForKey:@"item_purchase_state"];
+    NSArray *tmpComments = [dictionary objectForKey:@"item_comments"];
+    [tmpItem.comments removeAllObjects];
+    for (int i = 0; i < tmpComments.count; i++) {
+        [tmpItem.comments addObject:[tmpComments objectAtIndex:i]];
+    }
+    return tmpItem;
 }
 
 // Control methods for each text/image view
@@ -204,7 +248,9 @@
         [tmpLabel sizeToFit];
         NSLog(@"%f", tmpLabel.frame.size.width);
         if (tmpLabel.frame.size.width < 180) {
+            tmpName = [NSString stringWithFormat:@"%@%@",[[tmpName substringToIndex:1] uppercaseString],[tmpName substringFromIndex:1] ];
             name = tmpName;
+            nameTextField.text = tmpName;
         }
         else {
             nameTextField.text = @"";
@@ -334,7 +380,8 @@
         descriptionTextView.text = [NSString stringWithFormat:@"Insert description here"];
     }
     else {
-        description = descriptionTextView.text;
+        description = [NSString stringWithFormat:@"%@%@",[[descriptionTextView.text substringToIndex:1] uppercaseString],[descriptionTextView.text substringFromIndex:1] ];
+        descriptionTextView.text = description;
     }
     //closes keyboard
     [textView resignFirstResponder];

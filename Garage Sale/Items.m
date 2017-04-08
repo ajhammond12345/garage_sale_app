@@ -67,6 +67,7 @@
 
 //provides the number of rows that will be in table view (just a count of the array)
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    [self loadLikedItems];
     if (!_showAll) {
         return _likedItems.count;
     }
@@ -347,6 +348,7 @@
     //NSLog(@"%@", [dictionary objectForKey:@"item_description"]);
     tmpItem.liked = [[dictionary objectForKey:@"liked"] boolValue];
     NSInteger *tmpID = (NSInteger*)[[dictionary objectForKey:@"id"] integerValue];
+    tmpItem.userID = (NSInteger*)[[dictionary objectForKey:@"user_id"] integerValue];
     //NSLog(@"%@", [dictionary objectForKey:@"id"]);
     //NSLog(@"%zd", tmpID);
     tmpItem.itemID = tmpID;
@@ -388,6 +390,7 @@
     tmpItem.priceInCents = (NSInteger*)[[dictionary objectForKey:@"item_price_in_cents"] integerValue];
     
     tmpItem.liked = [[dictionary objectForKey:@"liked"] boolValue];
+    tmpItem.userID = (NSInteger*)[[dictionary objectForKey:@"user_id"] integerValue];
     NSInteger *tmpID = (NSInteger*)[[dictionary objectForKey:@"id"] integerValue];
     //NSLog(@"%@", [dictionary objectForKey:@"id"]);
     //NSLog(@"%zd", tmpID);

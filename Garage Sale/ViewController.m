@@ -107,45 +107,36 @@
 
 @implementation ViewController
 
+-(IBAction)donate:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *isLoggedIn = [defaults objectForKey:@"logged_in"];
+    _loggedOn = [isLoggedIn boolValue];
+    if (_loggedOn) {
+        [self performSegueWithIdentifier:@"toDonate" sender:self];
+    }
+    else {
+        [self performSegueWithIdentifier:@"toLogin" sender:self];
+    }
+    
+}
+
+-(IBAction)logOut:(id)sender {
+     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *isLoggedIn = [NSNumber numberWithBool:false];
+    [defaults setObject:isLoggedIn forKey:@"logged_in"];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     
     // Do any additional setup after loading the view, typically from a nib.
 }
 
-//run when the view has appeared (so that alerts can pop up)
+//run when the view has appeared (so that alerts can pop up if ever needed)
 -(void)viewDidAppear:(BOOL)animated {
     //loads an instance of UserDefaults to check for username
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    //loads username
-    _username = [defaults objectForKey:@"username"];
-    //NSLog(@"%@", _username);
-    //creates alert controller for the username
-    UIAlertController *usernameInput = [UIAlertController alertControllerWithTitle:@"Input Username" message:@"Please create a username." preferredStyle:UIAlertControllerStyleAlert];
     
-    //adds a textfield to the alert controller for username to be typed in
-    [usernameInput addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-     textField.placeholder = NSLocalizedString(@"username", @"Username");
-     }];
-    
-    //adds an OK button for the user to finalize their username
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        
-        //when ok pressed it saves the input username and writes it to defaults
-        _username = usernameInput.textFields.firstObject.text;
-        [defaults setObject:_username forKey:@"username"];
-        NSLog(@"%@", [defaults objectForKey:@"username"]);
-    }];
-    
-    //adds the ok button to the controller
-    [usernameInput addAction:defaultAction];
-    
-    //if no username loaded from defaults (first time user has used the app or first time reusing after deleting the app) then it shows the controller to get a username
-    if (_username == nil) {
-        //code to show alert controller
-        [self presentViewController:usernameInput animated:YES completion:nil];
-    }
 
     //loads the options for conditions
     NSArray *conditionOptions = [defaults objectForKey:@"conditions"];
@@ -156,7 +147,63 @@
         //options available for item condition
         [defaults setObject:[NSArray arrayWithObjects:@"--Select--", @"Unopened", @"Brand New", @"Exceptional", @"Great Condition", @"Used", @"Falling Apart", @"Broken", nil] forKey:@"conditions"];
     }
+    NSArray *userData = [defaults objectForKey:@"user_data"];
+    
+    //if no options set, writes the options below (first time app is loaded)
+    _loggedOn = [defaults objectForKey:@"logged_in"];
+    if (_loggedOn == nil) {
+        
+        //options available for item condition
+        [defaults setObject:[NSNumber numberWithBool:FALSE] forKey:@"logged_in"];
+    }
 }
+
+
+
+
+
+
+
+
+
+/*second old way of doing username
+//loads username
+_username = [defaults objectForKey:@"username"];
+//NSLog(@"%@", _username);
+
+
+
+//if no username loaded from defaults (first time user has used the app or first time reusing after deleting the app) then it shows the controller to get a username
+if (_username == nil) {
+    [self performSegueWithIdentifier:@"toLogin" sender:self];
+    
+    //old way of doing username
+     //code to show alert controller
+    // [self presentViewController:usernameInput animated:YES completion:nil];
+ 
+} */
+
+/* old way of doing username
+ //creates alert controller for the username
+ UIAlertController *usernameInput = [UIAlertController alertControllerWithTitle:@"Input Username" message:@"Please create a username." preferredStyle:UIAlertControllerStyleAlert];
+ 
+ //adds a textfield to the alert controller for username to be typed in
+ [usernameInput addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+ textField.placeholder = NSLocalizedString(@"username", @"Username");
+ }];
+ 
+ //adds an OK button for the user to finalize their username
+ UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+ //when ok pressed it saves the input username and writes it to defaults
+ _username = usernameInput.textFields.firstObject.text;
+ [defaults setObject:_username forKey:@"username"];
+ NSLog(@"%@", [defaults objectForKey:@"username"]);
+ }];
+ 
+ 
+ //adds the ok button to the controller
+ [usernameInput addAction:defaultAction];
+ */
 
 
 

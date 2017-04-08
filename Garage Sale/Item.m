@@ -180,8 +180,7 @@
     [NSString stringWithFormat:@"%zd", _itemID], @"id",
     imageData, @"item_image",
     commentsCopy, @"item_comments",
-    purchaseState, @"item_purchase_state",
-    
+    purchaseState, @"item_purchase_state", [NSString stringWithFormat:@"%zd", _userID], @"user_id",
                         nil];
 }
 

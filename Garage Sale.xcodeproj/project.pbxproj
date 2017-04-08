@@ -27,6 +27,9 @@
 		70223CDB1E2D7AA4001E3724 /* Donate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70223CDA1E2D7AA4001E3724 /* Donate.m */; };
 		70223CDE1E2D7AB5001E3724 /* About.m in Sources */ = {isa = PBXBuildFile; fileRef = 70223CDD1E2D7AB5001E3724 /* About.m */; };
 		70223D1D1E3184CD001E3724 /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = 70223D1C1E3184CD001E3724 /* Item.m */; };
+		7026DB631E8C07B00042F6DE /* Login.m in Sources */ = {isa = PBXBuildFile; fileRef = 7026DB621E8C07B00042F6DE /* Login.m */; };
+		7026DB661E8C07C40042F6DE /* SignUp.m in Sources */ = {isa = PBXBuildFile; fileRef = 7026DB651E8C07C40042F6DE /* SignUp.m */; };
+		7026DB681E8C09600042F6DE /* bBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 7026DB671E8C09600042F6DE /* bBar.png */; };
 		702CADCC1E41A3EA00FAC241 /* PurchaseThankYou.m in Sources */ = {isa = PBXBuildFile; fileRef = 702CADCB1E41A3EA00FAC241 /* PurchaseThankYou.m */; };
 		702CADCE1E42576E00FAC241 /* itunesartwork_2x_720.png in Resources */ = {isa = PBXBuildFile; fileRef = 702CADCD1E42576E00FAC241 /* itunesartwork_2x_720.png */; };
 		7043094E1E343E680059B736 /* ItemCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7043094D1E343E680059B736 /* ItemCustomCell.m */; };
@@ -116,6 +119,11 @@
 		70223CDD1E2D7AB5001E3724 /* About.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = About.m; sourceTree = "<group>"; };
 		70223D1B1E3184CD001E3724 /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
 		70223D1C1E3184CD001E3724 /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
+		7026DB611E8C07B00042F6DE /* Login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Login.h; sourceTree = "<group>"; };
+		7026DB621E8C07B00042F6DE /* Login.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Login.m; sourceTree = "<group>"; };
+		7026DB641E8C07C40042F6DE /* SignUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUp.h; sourceTree = "<group>"; };
+		7026DB651E8C07C40042F6DE /* SignUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUp.m; sourceTree = "<group>"; };
+		7026DB671E8C09600042F6DE /* bBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bBar.png; sourceTree = "<group>"; };
 		702CADCA1E41A3EA00FAC241 /* PurchaseThankYou.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseThankYou.h; sourceTree = "<group>"; };
 		702CADCB1E41A3EA00FAC241 /* PurchaseThankYou.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseThankYou.m; sourceTree = "<group>"; };
 		702CADCD1E42576E00FAC241 /* itunesartwork_2x_720.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = itunesartwork_2x_720.png; sourceTree = "<group>"; };
@@ -258,6 +266,10 @@
 				7043094D1E343E680059B736 /* ItemCustomCell.m */,
 				70223CD91E2D7AA4001E3724 /* Donate.h */,
 				70223CDA1E2D7AA4001E3724 /* Donate.m */,
+				7026DB611E8C07B00042F6DE /* Login.h */,
+				7026DB621E8C07B00042F6DE /* Login.m */,
+				7026DB641E8C07C40042F6DE /* SignUp.h */,
+				7026DB651E8C07C40042F6DE /* SignUp.m */,
 				70223CDC1E2D7AB5001E3724 /* About.h */,
 				70223CDD1E2D7AB5001E3724 /* About.m */,
 				70DC6CC61E01F6DB00CE6953 /* Assets.xcassets */,
@@ -474,6 +486,7 @@
 				5AF3C4071E7C4F9100990AA2 /* Login page.png in Resources */,
 				70A924081E3F0E2D00B4B942 /* bb@2x.png in Resources */,
 				70A923C31E3D8E8C00B4B942 /* purchased@2x.png in Resources */,
+				7026DB681E8C09600042F6DE /* bBar.png in Resources */,
 				5AF3C40F1E7C5FB700990AA2 /* comments.png in Resources */,
 				5AF3C3F31E7B859B00990AA2 /* navBarColor.png in Resources */,
 				70D2BE631E38930300F39435 /* Instagram-Heart-Transparent@1x.png in Resources */,
@@ -530,8 +543,10 @@
 			files = (
 				7043099D1E3478DC0059B736 /* ItemDetail.m in Sources */,
 				70A923B81E3BF39300B4B942 /* Filters.m in Sources */,
+				7026DB631E8C07B00042F6DE /* Login.m in Sources */,
 				70223CDB1E2D7AA4001E3724 /* Donate.m in Sources */,
 				702CADCC1E41A3EA00FAC241 /* PurchaseThankYou.m in Sources */,
+				7026DB661E8C07C40042F6DE /* SignUp.m in Sources */,
 				70223CD81E2D7A75001E3724 /* Items.m in Sources */,
 				705E89141E35E04300FA4625 /* Comments.m in Sources */,
 				70DC6CC21E01F6DB00CE6953 /* ViewController.m in Sources */,
