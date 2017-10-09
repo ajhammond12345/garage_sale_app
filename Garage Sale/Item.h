@@ -26,7 +26,7 @@
 @property NSDictionary *localDictionary;
 @property NSNumber *itemPurchaseState;
 @property NSString *url;
-@property bool imageLoadAttempted;
+//@property bool imageLoadAttempted;
 @property NSInteger *userID;
 
 

@@ -122,6 +122,10 @@
     [self performSegueWithIdentifier:@"toComments" sender:self];
 }
 
+-(IBAction)back:(id)sender {
+    [self performSegueWithIdentifier:@"toItems" sender:self];
+}
+
 //ensures that the description text view (required to show multiple lines in a scrollable format) will not react to user interaction
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
@@ -142,6 +146,11 @@
     if ([segue.identifier isEqualToString:@"toPurchaseThankYou"]) {
         PurchaseThankYou *dest = segue.destinationViewController;
         dest.itemStorage = _itemOnDisplay;
+    }
+    
+    if ([segue.identifier isEqualToString:@"toItems"]) {
+        Items *dest = segue.destinationViewController;
+        dest.items = _items;
     }
 }
 

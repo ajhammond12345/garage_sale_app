@@ -127,7 +127,7 @@
         NSData *imageData = UIImageJPEGRepresentation(image, .6);
         NSString *imageBase64 = [imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
         //NSLog(@"Upload Data: %@", imageBase64);
-        //NEED TO ADD BACK[tmpDic setObject:imageBase64 forKey:@"va_image_data"];
+        [tmpDic setObject:imageBase64 forKey:@"va_image_data"];
         [tmpDic setObject:[NSString stringWithFormat:@"%i", 0] forKey:@"item_purchase_state"];
 
         //JSON Upload - does not upload the image
@@ -139,9 +139,9 @@
         //creates url for the request
         
         //production url
-        //NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/items.json"];
+        NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/items.json"];
         //testing url
-        NSURL *url = [NSURL URLWithString:@"http://localhost:3001/items.json"];
+        //NSURL *url = [NSURL URLWithString:@"http://localhost:3001/items.json"];
 
         //creates a URL request
         NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];

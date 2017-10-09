@@ -33,6 +33,7 @@
     if ([segue.identifier isEqualToString:@"showItem"]) {
         ItemDetail *destViewController = segue.destinationViewController;
         destViewController.itemOnDisplay = _itemToSend;
+        destViewController.items = _items;
         [destViewController updateView];
     }
     if ([segue.identifier isEqualToString:@"toFilters"]) {
@@ -58,6 +59,7 @@
         }
     }
     cell.parentTable = itemsView;
+    cell.cellPath = indexPath;
     
     //updates the views in the cell
     [cell updateCell];
@@ -141,6 +143,7 @@
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:[NSOperationQueue mainQueue]];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url];
     [dataTask resume];
+    
 }
 
 
@@ -158,12 +161,12 @@
         NSDictionary *tmpDic = [_result objectAtIndex:i];
         //NSLog(@"Dictionary %@", tmpDic);
         Item *loadItem = [self itemFromDictionaryExternal:tmpDic];
-        [self loadItemImage:loadItem];
+        //[self loadItemImage:loadItem];
         [tmpItemArray addObject:loadItem];
     }
-    for (int i = 0; i <tmpItemArray.count; i++) {
+    /*for (int i = 0; i <tmpItemArray.count; i++) {
         
-    }
+    }*/
     
     //updates the liked items list to load which of the new items the user has liked
     [self loadLikedItems];
@@ -254,7 +257,6 @@
                     }
                     [defaults setObject:[tmpDicArray copy] forKey:@"LikedItems"];
                 }
-                [itemsView reloadData];
             }
         }];
         [dataTask resume];
@@ -305,7 +307,7 @@
         NSDictionary *tmpDic = [_filteredResults objectAtIndex:i];
         //NSLog(@"Dictionary %@", tmpDic);
         Item *tmpItem = [self itemFromDictionaryExternal:tmpDic];
-        [self loadItemImage:tmpItem];
+        //[self loadItemImage:tmpItem];
         [tmpItemArray addObject:tmpItem];
     }
     for (int i = 0; i < tmpItemArray.count; i++) {
@@ -316,10 +318,11 @@
         }
     }
     _filteredItems = tmpItemArray;
+    [itemsView reloadData];
 }
 
 //loads the images for an item (assumes item has saved url)
--(void)loadItemImage:(Item *)item {
+/*-(void)loadItemImage:(Item *)item {
     //creates an asynchronous queue so that loading the item will not interfer with the main queue (main queue remains open for ui updates)
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSLog(@"Item Url:\n%@", item.url);
@@ -332,7 +335,7 @@
         });
     });
     
-}
+}*/
 
 //reloads items saved to the phone (only difference is that loading images is done locally not from a URL
 -(Item *)itemFromDictionaryInternal:(NSDictionary *) dictionary {
@@ -400,25 +403,28 @@
     return tmpItem;
 }
 
-//setup coe for the view - initiates loading the items arrays and sets the delegates for the necessary views to the view controller
+//setup code for the view - initiates loading the items arrays and sets the delegates for the necessary views to the view controller
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Do any additional setup after loading the view.
-    _items = [[NSMutableArray alloc] init];
-    _likedItems = [[NSArray alloc] init];
     
-    [self loadAllItems];
-    [self loadLikedItems];
-    [self loadFilteredItems];
-    //show all items not liked items
-    _showAll = true;
     itemsView.delegate = self;
     itemsView.dataSource = self;
     [itemListType addTarget:self
                          action:@selector(viewSwitched)
                forControlEvents:UIControlEventValueChanged];
-    
+    // Do any additional setup after loading the view.
+    if (_items == nil) {
+        _items = [[NSMutableArray alloc] init];
+        [self loadAllItems];
+    }
+    if (_filteredItems == nil) {
+        [self loadFilteredItems];
+    }
+    _likedItems = [[NSArray alloc] init];
+    [self loadLikedItems];
+    //show all items not liked items
+    _showAll = true;
     
     
 }

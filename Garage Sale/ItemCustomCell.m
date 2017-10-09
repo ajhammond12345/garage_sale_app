@@ -37,27 +37,38 @@
     if ([_image isAnimating]) {
         [_image stopAnimating];
     }
+    
+    
     if (_item.image != nil) {
         _image.image = _item.image;
     }
     else {
-        //if image failed to load, shows missing image
-        if (_item.imageLoadAttempted == true) {
-            _image.image = [UIImage imageNamed:@"missing.png"];
-        }
-        else {
-            //loading animation
-            UIImage *image1 = [UIImage imageNamed:@"large1.png"];
-            UIImage *image2 = [UIImage imageNamed:@"large2.png"];
-            UIImage *image3 = [UIImage imageNamed:@"large3.png"];
-            UIImage *image4 = [UIImage imageNamed:@"large4.png"];
-            _image.animationImages = @[image1, image2, image3, image4];
-            _image.animationDuration = 1;
-            _image.animationRepeatCount = 0;
-            [_image startAnimating];
-            _image.image = [UIImage imageNamed:@"default.png"];
-        }
+        _image.image = [UIImage imageNamed:@"default.png"];
+        UIImage *image1 = [UIImage imageNamed:@"large1.png"];
+        UIImage *image2 = [UIImage imageNamed:@"large2.png"];
+        UIImage *image3 = [UIImage imageNamed:@"large3.png"];
+        UIImage *image4 = [UIImage imageNamed:@"large4.png"];
+        _image.animationImages = @[image1, image2, image3, image4];
+        _image.animationDuration = 1;
+        _image.animationRepeatCount = 0;
+        [_image startAnimating];
+        [self loadItemImage:_item];
     }
+}
+
+-(void)loadItemImage:(Item *)item {
+    //creates an asynchronous queue so that loading the item will not interfer with the main queue (main queue remains open for ui updates)
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSLog(@"Item Url:\n%@", item.url);
+        item.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:item.url]]];
+        //runs commands in the main queue once the loading is finished
+        dispatch_sync(dispatch_get_main_queue(), ^{
+         //reloads the tableView now that images have been saved
+            [_parentTable beginUpdates];
+            [_parentTable reloadRowsAtIndexPaths:@[_cellPath] withRowAnimation:UITableViewRowAnimationNone];
+            [_parentTable endUpdates];
+         });
+    });
     
 }
 

@@ -15,6 +15,7 @@
 
 @property Item *item;
 @property UITableView *parentTable;
+@property NSIndexPath *cellPath;
 
 @property IBOutlet UILabel *name;
 @property IBOutlet UILabel *condition;

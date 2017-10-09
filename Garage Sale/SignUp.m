@@ -206,7 +206,6 @@
     NSString *password = passwordTextField.text;
     [self uniqueUsername:username];
     [self uniqueEmail:email];
-    NSLog(@"This is a weird glitch");
     if (_usernameUnique && _emailUnique) {
         [self.view endEditing:YES];
         

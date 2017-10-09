@@ -35,8 +35,12 @@
 
 @property Item *itemOnDisplay;
 
+//this is passed on to prevent needing to reload when going back to main page
+@property NSMutableArray *items;
+
 -(IBAction)like:(id)sender;
 -(IBAction)comments:(id)sender;
+-(IBAction)back:(id)sender;
 -(void)updateView;
 
 @end

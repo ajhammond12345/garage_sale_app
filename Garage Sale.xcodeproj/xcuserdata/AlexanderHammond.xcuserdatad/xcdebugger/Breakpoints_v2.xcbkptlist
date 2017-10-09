@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Garage Sale/ItemCustomCell.m"
-            timestampString = "507447672.017645"
+            timestampString = "529232414.629529"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "@implementation ItemCustomCell"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "ItemCustomCell"
             landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,23 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Garage Sale/ItemCustomCell.m"
-            timestampString = "507447672.017645"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "-likeButtonClicked:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Garage Sale/ItemCustomCell.m"
-            timestampString = "507350808.931121"
+            timestampString = "529232414.629635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "31"
@@ -58,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Garage Sale/ItemCustomCell.m"
-            timestampString = "507350808.931121"
+            timestampString = "529232414.629708"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "24"
