@@ -63,7 +63,7 @@
     //sets the boolean to false to indicate the download has not yet finished
     _loginSuccessful = false;
     //creates empty array to store the response from the server
-    _requestResult = [[NSArray alloc] init];
+    _requestResult = [[NSDictionary alloc] init];
     
     //initiates the url session with a handler that processes the data returned from the server
     [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {

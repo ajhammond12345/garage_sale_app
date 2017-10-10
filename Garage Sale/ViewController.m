@@ -109,9 +109,9 @@
 
 -(IBAction)donate:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSNumber *isLoggedIn = [defaults objectForKey:@"logged_in"];
-    _loggedOn = [isLoggedIn boolValue];
-    if (_loggedOn) {
+    _loggedOn = [defaults objectForKey:@"logged_in"];
+    bool tmp = [_loggedOn boolValue];
+    if (tmp) {
         [self performSegueWithIdentifier:@"toDonate" sender:self];
     }
     else {
@@ -147,8 +147,6 @@
         //options available for item condition
         [defaults setObject:[NSArray arrayWithObjects:@"--Select--", @"Unopened", @"Brand New", @"Exceptional", @"Great Condition", @"Used", @"Falling Apart", @"Broken", nil] forKey:@"conditions"];
     }
-    NSArray *userData = [defaults objectForKey:@"user_data"];
-    
     //if no options set, writes the options below (first time app is loaded)
     _loggedOn = [defaults objectForKey:@"logged_in"];
     if (_loggedOn == nil) {
