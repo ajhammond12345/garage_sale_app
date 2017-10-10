@@ -122,8 +122,8 @@
 
 -(IBAction)logOut:(id)sender {
      NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSNumber *isLoggedIn = [NSNumber numberWithBool:false];
-    [defaults setObject:isLoggedIn forKey:@"logged_in"];
+    NSNumber *loggedOut = [NSNumber numberWithBool:false];
+    [defaults setObject:loggedOut forKey:@"logged_in"];
 }
 
 - (void)viewDidLoad {

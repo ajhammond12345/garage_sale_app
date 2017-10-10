@@ -16,7 +16,7 @@
 
 #import "SignUp.h"
 
-@interface SignUp ()
+@interface SignUp () <UITextFieldDelegate>
 
 @end
 
@@ -25,6 +25,7 @@
 
 //assumes non-nil username given
 -(void)uniqueUsername:(NSString *)username {
+    NSLog(@"Started checking for username");
     NSMutableDictionary *dataDic = [[NSMutableDictionary alloc] init];
     //goes through every field, if it is not empty it adds it to the dictionary (empty fields are handled by the database with default values)
     [dataDic setObject:username forKey:@"username"];
@@ -77,6 +78,9 @@
                         if (_requestResult.count < 1) {
                             NSLog(@"Verified username is Unique");
                             _usernameUnique = true;
+                            if (_usernameUnique && _emailUnique) {
+                                [[NSNotificationCenter defaultCenter] postNotificationName:@"signUpVerified" object:self userInfo:nil];
+                            }
                             //SHOW USERNAME IS VALID SOMEWHERE IN UI
                         }
                         else {
@@ -84,13 +88,14 @@
                             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
                             [alert addAction:defaultAction];
                             [self presentViewController:alert animated:YES completion:nil];
+                            _usernameUnique = false;
                         }
                     }
                     else {
                         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Server Error" message:@"Unable to process your request at this moment." preferredStyle:UIAlertControllerStyleAlert];
                         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action)
                                                         {
-                                                            [self performSegueWithIdentifier:@"loadItemsWithFilters" sender:self];
+                                                            
                                                         }];
                         [alert addAction:defaultAction];
                         [self presentViewController:alert animated:YES completion:nil];
@@ -102,7 +107,7 @@
                     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Connection Error" message:@"Could not connect to create user." preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action)
                                                     {
-                                                        [self performSegueWithIdentifier:@"loadItemsWithFilters" sender:self];
+                                                        
                                                     }];
                     [alert addAction:defaultAction];
                     [self presentViewController:alert animated:YES completion:nil];
@@ -113,6 +118,7 @@
 
 //assumes non-nil and preprocessed (checked to verify actually resembles an email address) email given
 -(void)uniqueEmail:(NSString *)email {
+    NSLog(@"Started checking for email");
     NSMutableDictionary *dataDic = [[NSMutableDictionary alloc] init];
     //goes through every field, if it is not empty it adds it to the dictionary (empty fields are handled by the database with default values)
     [dataDic setObject:email forKey:@"email"];
@@ -165,20 +171,26 @@
                     if (_requestResult.count < 1) {
                         NSLog(@"Verified email is Unique");
                         _emailUnique = true;
+                        if (_usernameUnique && _emailUnique) {
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"signUpVerified"
+                                                                                object:self
+                                                                              userInfo:nil];
+                        }
                         //SHOW EMAIL IS VALID SOMEWHERE IN UI
                     }
                     else {
-                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Items Found" message:@"No items fit within those filters. Please search again." preferredStyle:UIAlertControllerStyleAlert];
+                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Email already in use" message:@"Please choose a different email" preferredStyle:UIAlertControllerStyleAlert];
                         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
                         [alert addAction:defaultAction];
                         [self presentViewController:alert animated:YES completion:nil];
+                        _emailUnique = false;
                     }
                 }
                 else {
                     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Server Error" message:@"Unable to process your request at this moment." preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action)
                                                     {
-                                                        [self performSegueWithIdentifier:@"loadItemsWithFilters" sender:self];
+                                                        
                                                     }];
                     [alert addAction:defaultAction];
                     [self presentViewController:alert animated:YES completion:nil];
@@ -190,7 +202,7 @@
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Connection Error" message:@"Could not connect to create user." preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action)
                                                 {
-                                                    [self performSegueWithIdentifier:@"loadItemsWithFilters" sender:self];
+                                                    
                                                 }];
                 [alert addAction:defaultAction];
                 [self presentViewController:alert animated:YES completion:nil];
@@ -199,80 +211,87 @@
     }] resume];
 }
 
+-(void)addAccount {
+    
+    //creates error handler
+    NSError *myError;
+    
+    //creates mutable dictionary to add keys
+    NSMutableDictionary *tmpDic = [[NSMutableDictionary alloc] init];
+    [tmpDic setObject:_email forKey:@"email_address"];
+    [tmpDic setObject:_password forKey:@"user_password"];
+    [tmpDic setObject:_username forKey:@"username"];
+    //JSON Upload
+    //converts the dictionary to json
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&myError];
+    //logs the data to check if it is created successfully
+    //NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+    
+    //creates url for the request
+    NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users.json"];
+    
+    //creates a URL request
+    NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    
+    //specifics for the request (it is a post request with json content)
+    [uploadRequest setHTTPMethod:@"POST"];
+    [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [uploadRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
+    [uploadRequest setHTTPBody: jsonData];
+    
+    //create some type of waiting image here
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    
+    //runs the data task
+    [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        //saves the data to find user id
+        _result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+            NSLog(@"requestReply: %@", [[requestReply class] description]);
+            //if the result has the class type __NSCFConstantString then the item failed to upload
+            if ([[[requestReply class] description] isEqualToString:@"__NSCFConstantString"]) {
+                //alert for failing to upload
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Connection\n" message:@"Could not create user. Please check your internet connection and try again." preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+                [alert addAction:defaultAction];
+                [self presentViewController:alert animated:YES completion:nil];
+            }
+            else {
+                //opens user defaults to save data locally
+                NSLog(@"%@", _result);
+                NSInteger *userID = (NSInteger *)[[_result objectForKey:@"id"] integerValue];
+                NSLog(@"User ID From download: %@", [NSString stringWithFormat:@"%zd", userID]);
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                [defaults setObject:[NSString stringWithFormat:@"%zd", userID] forKey:@"user_id"];
+                [defaults setObject:[NSNumber numberWithBool:true] forKey:@"logged_in"];
+                [defaults setObject:[_result objectForKey:@"username"] forKey:@"username"];
+                
+                //transitions back to page it came from (property booleans needed here
+                [self performSegueWithIdentifier:@"toHome" sender:(self)];
+            }
+        });
+    }] resume];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"signUpVerified"
+                                                  object:nil];
+}
+
 
 -(IBAction)signUp:(id)sender {
-    NSString *email = usernameTextField.text;
-    NSString *username = emailTextField.text;
-    NSString *password = passwordTextField.text;
-    [self uniqueUsername:username];
-    [self uniqueEmail:email];
-    if (_usernameUnique && _emailUnique) {
-        [self.view endEditing:YES];
-        
-        //creates error handler
-        NSError *myError;
-        
-        //creates mutable dictionary to add keys
-        NSMutableDictionary *tmpDic = [[NSMutableDictionary alloc] init];
-        [tmpDic setObject:email forKey:@"email_address"];
-        [tmpDic setObject:password forKey:@"user_password"];
-        [tmpDic setObject:username forKey:@"username"];
-        //JSON Upload
-        //converts the dictionary to json
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&myError];
-        //logs the data to check if it is created successfully
-        //NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
-        
-        //creates url for the request
-        NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users.json"];
-        
-        //creates a URL request
-        NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-        
-        //specifics for the request (it is a post request with json content)
-        [uploadRequest setHTTPMethod:@"POST"];
-        [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-        [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        [uploadRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
-        [uploadRequest setHTTPBody: jsonData];
-        
-        //create some type of waiting image here
-        NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-        
-        //runs the data task
-        [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            //saves the data to find user id
-            _result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-                NSLog(@"requestReply: %@", [[requestReply class] description]);
-                //if the result has the class type __NSCFConstantString then the item failed to upload
-                if ([[[requestReply class] description] isEqualToString:@"__NSCFConstantString"]) {
-                    //alert for failing to upload
-                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Connection\n" message:@"Could not create user. Please check your internet connection and try again." preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
-                    [alert addAction:defaultAction];
-                    [self presentViewController:alert animated:YES completion:nil];
-                }
-                else {
-                    //opens user defaults to save data locally
-                    NSLog(@"%@", _result);
-                    NSInteger *userID = (NSInteger *)[[_result objectForKey:@"id"] integerValue];
-                    NSLog(@"User ID From download: %@", [NSString stringWithFormat:@"%zd", userID]);
-                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                    [defaults setObject:[NSString stringWithFormat:@"%zd", userID] forKey:@"user_id"];
-                    [defaults setObject:[NSNumber numberWithBool:true] forKey:@"logged_in"];
-                    
-                    //transitions back to page it came from (property booleans needed here
-                    [self performSegueWithIdentifier:@"toHome" sender:(self)];
-                }
-            });
-        }] resume];
-        
-        
-    }
-    
+    _usernameUnique = false;
+    _emailUnique = false;
+    _email = emailTextField.text;
+    _username = usernameTextField.text;
+    _password = passwordTextField.text;
+    [self uniqueUsername:_username];
+    [self uniqueEmail:_email];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(addAccount)
+                                                 name:@"signUpVerified"
+                                               object:nil];
     //closes all keyboards
     [self.view endEditing:YES];
     
@@ -280,10 +299,19 @@
     
 }
 
+-(BOOL) textFieldShouldReturn:(UITextField *)textField{
+    
+    [textField resignFirstResponder];
+    return YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     _usernameUnique = false;
     _emailUnique = false;
+    usernameTextField.delegate = self;
+    emailTextField.delegate = self;
+    passwordTextField.delegate = self;
     // Do any additional setup after loading the view.
 }
 

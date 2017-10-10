@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SignUp : UIViewController {
+@interface SignUp : UIViewController <UITextFieldDelegate> {
     IBOutlet UITextField *usernameTextField;
     IBOutlet UITextField *emailTextField;
     IBOutlet UITextField *passwordTextField;
@@ -19,6 +19,9 @@
 @property bool emailDataDownloadSuccessful;
 @property bool usernameUnique;
 @property bool emailUnique;
+@property NSString *email;
+@property NSString *username;
+@property NSString *password;
 
 @property NSDictionary *result;
 

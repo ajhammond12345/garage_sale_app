@@ -8,12 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@interface Login : UIViewController {
-    IBOutlet UITextField *emailTextField;
+@interface Login : UIViewController <UITextFieldDelegate> {
+    IBOutlet UITextField *usernameTextField;
     IBOutlet UITextField *passwordTextField;
     IBOutlet UIButton *signInButton;
     IBOutlet UIButton *signUpButton;
 }
+
+@property bool loginTried;
+@property bool loginSuccessful;
+@property NSDictionary *requestResult;
+
 
 -(IBAction)signIn:(id)sender;
 
