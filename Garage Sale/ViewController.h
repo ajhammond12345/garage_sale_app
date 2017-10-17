@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewController : UIViewController {
-    
+
 }
 
 //defines username property - used to check if user has username and to store one if they don't
@@ -17,7 +17,7 @@
 @property NSNumber *loggedOn;
 
 -(IBAction)donate:(id)sender;
-
+-(IBAction)userPage:(id)sender;
 
 
 @end

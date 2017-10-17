@@ -8,10 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+
+
 @interface SignUp : UIViewController <UITextFieldDelegate> {
     IBOutlet UITextField *usernameTextField;
     IBOutlet UITextField *emailTextField;
     IBOutlet UITextField *passwordTextField;
+    IBOutlet UITextField *firstNameTextField;
+    IBOutlet UITextField *lastNameTextField;
+    IBOutlet UITextField *addressTextField;
+    IBOutlet UITextField *passwordVerificationTextField;
 }
 
 @property NSArray *requestResult;
@@ -22,6 +28,9 @@
 @property NSString *email;
 @property NSString *username;
 @property NSString *password;
+@property NSString *firstName;
+@property NSString *lastName;
+@property NSString *address;
 
 @property NSDictionary *result;
 

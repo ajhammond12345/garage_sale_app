@@ -15,16 +15,28 @@
 @implementation Login
 
 -(IBAction)signIn:(id)sender {
+    [self.view endEditing:YES];
     NSString *username = usernameTextField.text;
     NSString *password = passwordTextField.text;
     //improve by running checks against the input (for @ symbol and such)
     if (username != nil && password != nil) {
         //sends url request to login - just needs to store UserID in the defaults
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(transition)
+                                                     name:@"loggedIn"
+                                                   object:nil];
         [self login];
     }
     else {
         //error prompting user to put in email and password
     }
+}
+
+-(void)transition {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"loggedIn"
+                                                  object:nil];
+    [self performSegueWithIdentifier:@"toHomeFromLogin" sender:self];
 }
 
 -(void)login {
@@ -86,7 +98,14 @@
                 [defaults setObject:[NSString stringWithFormat:@"%zd", userID] forKey:@"user_id"];
                 [defaults setObject:[_requestResult objectForKey:@"username"] forKey:@"username"];
                 [defaults setObject:[NSNumber numberWithBool:true] forKey:@"logged_in"];
-                [self performSegueWithIdentifier:@"toHomeFromLogin" sender:self];
+                [defaults setObject:password forKey:@"password"];
+                [defaults setObject:[_requestResult objectForKey:@"user_first_name"] forKey:@"first_name"];
+                [defaults setObject:[_requestResult objectForKey:@"user_last_name"] forKey:@"last_name"];
+                [defaults setObject:[_requestResult objectForKey:@"user_address"] forKey:@"address"];
+                [defaults setObject:[_requestResult objectForKey:@"email_address"] forKey:@"email"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"loggedIn"
+                                                                    object:self
+                                                                  userInfo:nil];
             }
             else {
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Invalid Login" message:@"Please try again" preferredStyle:UIAlertControllerStyleAlert];

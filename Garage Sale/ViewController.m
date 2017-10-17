@@ -120,6 +120,19 @@
     
 }
 
+-(IBAction)userPage:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    _loggedOn = [defaults objectForKey:@"logged_in"];
+    bool tmp = [_loggedOn boolValue];
+    if (tmp) {
+        [self performSegueWithIdentifier:@"toUserPage" sender:self];
+    }
+    else {
+        [self performSegueWithIdentifier:@"toLogin" sender:self];
+    }
+    
+}
+
 -(IBAction)logOut:(id)sender {
      NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSNumber *loggedOut = [NSNumber numberWithBool:false];
@@ -128,7 +141,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    _loggedOn = [defaults objectForKey:@"logged_in"];
+    if (_loggedOn == nil) {
+        
+        //options available for item condition
+        [defaults setObject:[NSNumber numberWithBool:FALSE] forKey:@"logged_in"];
+    }
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -148,12 +167,6 @@
         [defaults setObject:[NSArray arrayWithObjects:@"--Select--", @"Unopened", @"Brand New", @"Exceptional", @"Great Condition", @"Used", @"Falling Apart", @"Broken", nil] forKey:@"conditions"];
     }
     //if no options set, writes the options below (first time app is loaded)
-    _loggedOn = [defaults objectForKey:@"logged_in"];
-    if (_loggedOn == nil) {
-        
-        //options available for item condition
-        [defaults setObject:[NSNumber numberWithBool:FALSE] forKey:@"logged_in"];
-    }
 }
 
 

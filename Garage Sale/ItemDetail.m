@@ -305,6 +305,7 @@
 
 //setup for when the view loads
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
     //updates the view (all UI elements)

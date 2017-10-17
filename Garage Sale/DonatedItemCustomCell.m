@@ -1,44 +1,34 @@
 //
-//  ItemCustomCell.m
+//  DonatedItemCustomCell.m
 //  Garage Sale
 //
-//  Created by Alexander Hammond on 1/21/17.
+//  Created by Alexander Hammond on 10/10/17.
 //  Copyright © 2017 TripleA. All rights reserved.
 //
 
-#import "ItemCustomCell.h"
+#import "DonatedItemCustomCell.h"
 
 
-@implementation ItemCustomCell
+@implementation DonatedItemCustomCell
 
 
-//updates all of the UI elements of the cell to match the item data
+//updates all of the UI elements of the cell to ma(nonatomic) tch the item data
 -(void)updateCell {
     //hides purchased during loading sequence
-    _purchased.hidden = YES;
     NSArray *conditionOptionsCustom = [[NSUserDefaults standardUserDefaults] objectForKey:@"conditions"];
     _name.text = _item.name;
     int tmpInt = (int)_item.condition;
     _condition.text = conditionOptionsCustom[tmpInt];
-    _price.text = [_item getPriceString];
     if ([_item.itemPurchaseState intValue] == 1) {
-        _purchased.hidden = NO;
+        _purchaseStatus.text = [NSString stringWithFormat:@"Purchased"];
     }
     else {
-        _purchased.hidden = YES;
+        _purchaseStatus.text = [NSString stringWithFormat:@"For Sale"];
     }
     //updates like button appearance based on whether or not the object has been liked
-    if (_item.liked) {
-        [_likeButton setImage:[UIImage imageNamed:@"Instagram-Heart-Solid@3x.png"] forState:UIControlStateNormal];
-    }
-    else {
-        [_likeButton setImage:[UIImage imageNamed:@"Instagram-Heart-Transparent.png"] forState:UIControlStateNormal];
-    }
     if ([_image isAnimating]) {
         [_image stopAnimating];
     }
-    
-    
     if (_item.image != nil) {
         _image.image = _item.image;
     }
@@ -63,24 +53,19 @@
         item.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:item.url]]];
         //runs commands in the main queue once the loading is finished
         dispatch_sync(dispatch_get_main_queue(), ^{
-         //reloads the tableView now that images have been saved
+            //reloads the tableView now that images have been saved
             if (item.image == nil) {
                 item.image = [UIImage imageNamed:@"missing.png"];
             }
             [_parentTable beginUpdates];
             [_parentTable reloadRowsAtIndexPaths:@[_cellPath] withRowAnimation:UITableViewRowAnimationNone];
             [_parentTable endUpdates];
-         });
+        });
     });
     
 }
 
 //updates the liked status of the item then updates the view
--(IBAction)likeButtonClicked:(id)sender {
-    [_item changeLiked];
-    [self updateCell];
-    [_parentTable reloadData];
-}
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -88,7 +73,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
 }
 
 @end

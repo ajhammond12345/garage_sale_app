@@ -38,6 +38,8 @@
 		704F2E251F8CAFA5009C881B /* UserSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 704F2E241F8CAFA5009C881B /* UserSettings.m */; };
 		705E89141E35E04300FA4625 /* Comments.m in Sources */ = {isa = PBXBuildFile; fileRef = 705E89131E35E04300FA4625 /* Comments.m */; };
 		705E89191E37BE4F00FA4625 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 705E89171E37BE4F00FA4625 /* Main.storyboard */; };
+		7099DF461F8D9E770016C1DE /* userlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 704F2E1F1F8CABC4009C881B /* userlogo.png */; };
+		7099DF4C1F8DC8B80016C1DE /* DonatedItemCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7099DF4B1F8DC8B80016C1DE /* DonatedItemCustomCell.m */; };
 		70A923B81E3BF39300B4B942 /* Filters.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A923B71E3BF39300B4B942 /* Filters.m */; };
 		70A923BC1E3D8A5D00B4B942 /* missing.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A923BB1E3D8A5D00B4B942 /* missing.png */; };
 		70A923BE1E3D8BA100B4B942 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A923BD1E3D8BA100B4B942 /* default.png */; };
@@ -77,6 +79,8 @@
 		70DC6CCA1E01F6DB00CE6953 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70DC6CC81E01F6DB00CE6953 /* LaunchScreen.storyboard */; };
 		70DC6CD51E01F6DB00CE6953 /* Garage_SaleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC6CD41E01F6DB00CE6953 /* Garage_SaleTests.m */; };
 		70DC6CE01E01F6DB00CE6953 /* Garage_SaleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC6CDF1E01F6DB00CE6953 /* Garage_SaleUITests.m */; };
+		70E037641F959B4D0078582A /* ItemDetailChange.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E037631F959B4D0078582A /* ItemDetailChange.m */; };
+		70E037671F959F4E0078582A /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E037661F959F4E0078582A /* Utility.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +147,8 @@
 		705E89131E35E04300FA4625 /* Comments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comments.m; sourceTree = "<group>"; };
 		705E89181E37BE4F00FA4625 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7091194D1F8B5D2C00A5D66E /* bBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bBar.png; sourceTree = "<group>"; };
+		7099DF4A1F8DC8B80016C1DE /* DonatedItemCustomCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DonatedItemCustomCell.h; sourceTree = "<group>"; };
+		7099DF4B1F8DC8B80016C1DE /* DonatedItemCustomCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DonatedItemCustomCell.m; sourceTree = "<group>"; };
 		70A923B61E3BF39300B4B942 /* Filters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filters.h; sourceTree = "<group>"; };
 		70A923B71E3BF39300B4B942 /* Filters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Filters.m; sourceTree = "<group>"; };
 		70A923BB1E3D8A5D00B4B942 /* missing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = missing.png; sourceTree = "<group>"; };
@@ -192,6 +198,10 @@
 		70DC6CDB1E01F6DB00CE6953 /* Garage SaleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Garage SaleUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		70DC6CDF1E01F6DB00CE6953 /* Garage_SaleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Garage_SaleUITests.m; sourceTree = "<group>"; };
 		70DC6CE11E01F6DB00CE6953 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		70E037621F959B4D0078582A /* ItemDetailChange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItemDetailChange.h; sourceTree = "<group>"; };
+		70E037631F959B4D0078582A /* ItemDetailChange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItemDetailChange.m; sourceTree = "<group>"; };
+		70E037651F959F4E0078582A /* Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
+		70E037661F959F4E0078582A /* Utility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,6 +278,8 @@
 				70DC6CBE1E01F6DB00CE6953 /* AppDelegate.m */,
 				70223CD91E2D7AA4001E3724 /* Donate.h */,
 				70223CDA1E2D7AA4001E3724 /* Donate.m */,
+				7099DF4A1F8DC8B80016C1DE /* DonatedItemCustomCell.h */,
+				7099DF4B1F8DC8B80016C1DE /* DonatedItemCustomCell.m */,
 				705E89121E35E04300FA4625 /* Comments.h */,
 				705E89131E35E04300FA4625 /* Comments.m */,
 				70A923B61E3BF39300B4B942 /* Filters.h */,
@@ -278,6 +290,8 @@
 				7043094D1E343E680059B736 /* ItemCustomCell.m */,
 				7043099B1E3478DC0059B736 /* ItemDetail.h */,
 				7043099C1E3478DC0059B736 /* ItemDetail.m */,
+				70E037621F959B4D0078582A /* ItemDetailChange.h */,
+				70E037631F959B4D0078582A /* ItemDetailChange.m */,
 				70223CD61E2D7A75001E3724 /* Items.h */,
 				70223CD71E2D7A75001E3724 /* Items.m */,
 				7026DB611E8C07B00042F6DE /* Login.h */,
@@ -290,6 +304,8 @@
 				704F2E211F8CAF36009C881B /* UserPage.m */,
 				704F2E231F8CAFA5009C881B /* UserSettings.h */,
 				704F2E241F8CAFA5009C881B /* UserSettings.m */,
+				70E037651F959F4E0078582A /* Utility.h */,
+				70E037661F959F4E0078582A /* Utility.m */,
 				70DC6CC01E01F6DB00CE6953 /* ViewController.h */,
 				70DC6CC11E01F6DB00CE6953 /* ViewController.m */,
 				70DC6CC61E01F6DB00CE6953 /* Assets.xcassets */,
@@ -540,6 +556,7 @@
 				705E89191E37BE4F00FA4625 /* Main.storyboard in Resources */,
 				70A924001E3F0BF100B4B942 /* large1.png in Resources */,
 				70A924031E3F0BF100B4B942 /* large4.png in Resources */,
+				7099DF461F8D9E770016C1DE /* userlogo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,14 +586,17 @@
 				7026DB631E8C07B00042F6DE /* Login.m in Sources */,
 				70223CDB1E2D7AA4001E3724 /* Donate.m in Sources */,
 				702CADCC1E41A3EA00FAC241 /* PurchaseThankYou.m in Sources */,
+				70E037641F959B4D0078582A /* ItemDetailChange.m in Sources */,
 				7026DB661E8C07C40042F6DE /* SignUp.m in Sources */,
 				70223CD81E2D7A75001E3724 /* Items.m in Sources */,
+				70E037671F959F4E0078582A /* Utility.m in Sources */,
 				705E89141E35E04300FA4625 /* Comments.m in Sources */,
 				704F2E221F8CAF36009C881B /* UserPage.m in Sources */,
 				704F2E251F8CAFA5009C881B /* UserSettings.m in Sources */,
 				70DC6CC21E01F6DB00CE6953 /* ViewController.m in Sources */,
 				70223CDE1E2D7AB5001E3724 /* About.m in Sources */,
 				70DC6CBF1E01F6DB00CE6953 /* AppDelegate.m in Sources */,
+				7099DF4C1F8DC8B80016C1DE /* DonatedItemCustomCell.m in Sources */,
 				7043094E1E343E680059B736 /* ItemCustomCell.m in Sources */,
 				70223D1D1E3184CD001E3724 /* Item.m in Sources */,
 				70DC6CBC1E01F6DB00CE6953 /* main.m in Sources */,

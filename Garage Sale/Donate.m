@@ -66,8 +66,13 @@
 -(IBAction)done:(id)sender {
     [self.view endEditing:YES];
 
+    
     //first need to check that all fields have data
-    if ([name isEqualToString:@""] || [condition isEqualToString:@""] || [description isEqualToString:@""] || priceInCents == 0 || !imageUploaded) {
+    if ([name isEqualToString:@""]
+        || [condition isEqualToString:@""]
+        || [description isEqualToString:@""]
+        || priceInCents == 0
+        || !imageUploaded) {
         NSString *errorMessage;
         if ([name isEqualToString:@""]) {
             errorMessage = @"Please put in a name for the item";
@@ -139,9 +144,9 @@
         //creates url for the request
         
         //production url
-        NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/items.json"];
+        //NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/items.json"];
         //testing url
-        //NSURL *url = [NSURL URLWithString:@"http://localhost:3001/items.json"];
+        NSURL *url = [NSURL URLWithString:@"http://localhost:3001/items.json"];
 
         //creates a URL request
         NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
@@ -186,8 +191,6 @@
                 }
             });
         }] resume];
-                           
-  
     }
 }
 
@@ -248,9 +251,11 @@
         [tmpLabel sizeToFit];
         NSLog(@"%f", tmpLabel.frame.size.width);
         if (tmpLabel.frame.size.width < 180) {
-            tmpName = [NSString stringWithFormat:@"%@%@",[[tmpName substringToIndex:1] uppercaseString],[tmpName substringFromIndex:1] ];
-            name = tmpName;
-            nameTextField.text = tmpName;
+            if (![tmpName isEqualToString:@""]) {
+                tmpName = [NSString stringWithFormat:@"%@%@",[[tmpName substringToIndex:1] uppercaseString],[tmpName substringFromIndex:1] ];
+                name = tmpName;
+                nameTextField.text = tmpName;
+            }
         }
         else {
             nameTextField.text = @"";
@@ -313,8 +318,8 @@
 }
 
 //closes the picker view
--(void)clearPickerView {
-    [conditionTextField resignFirstResponder];
+-(void)clearInputView {
+    [self.view endEditing:YES];
 }
 
 //for condition (not directly edited, uses a picker instead)
@@ -406,7 +411,7 @@
     _toolBar.translucent = true;
     [_toolBar sizeToFit];
     //creates the done button for the toolbar
-    UIBarButtonItem *finished = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(clearPickerView)];
+    UIBarButtonItem *finished = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(clearInputView)];
     //adds the done button
     [_toolBar setItems:@[finished] animated: false];
     _toolBar.userInteractionEnabled = true;
