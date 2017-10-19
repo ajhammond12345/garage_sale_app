@@ -7,6 +7,8 @@
 //
 
 #import "UserPage.h"
+#import "Utility.h"
+#import "UserSettings.h"
 
 
 @interface UserPage () <UIImagePickerControllerDelegate, NSURLSessionDelegate, UITableViewDelegate, UITableViewDataSource>
@@ -61,6 +63,15 @@
         destViewController.itemOnDisplay = _itemToSend;
         destViewController.items = _donatedItems;
         [destViewController updateView];
+    }
+    if ([segue.identifier isEqualToString:@"toSettings"]) {
+        UserSettings *destination = segue.destinationViewController;
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        destination.username = [defaults objectForKey:@"username"];
+        destination.firstName = [defaults objectForKey:@"first_name"];
+        destination.lastName = [defaults objectForKey:@"last_name"];
+        destination.address = [defaults objectForKey:@"address"];
+        destination.email = [defaults objectForKey:@"email"];
     }
 }
 
@@ -193,13 +204,14 @@
     NSString *address = [defaults objectForKey:@"address"];
     NSString *email = [defaults objectForKey:@"email"];
     NSString * documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    UIImage *image = [self loadImageWithFileName:@"user_photo" ofType:@"jpg" inDirectory:documentsDirectory];
+    UIImage *image = [Utility loadImageWithFileName:@"user_photo" ofType:@"jpg" inDirectory:documentsDirectory];
     if (image) {
         [userImageButton setImage:image forState:UIControlStateNormal];
     }
     else {
         [userImageButton setImage:[UIImage imageNamed:@"userlogo.png"] forState:UIControlStateNormal];
     }
+    userImageButton.imageView.layer.cornerRadius = userImageButton.frame.size.height / 2;
     navBar.title = username;
     name.text = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
     addressLabel.text = address;
@@ -245,36 +257,18 @@
     UIImage *tmpImage = info[UIImagePickerControllerEditedImage];
     [userImageButton setImage:tmpImage forState:UIControlStateNormal];
     NSString * documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    [self saveImage:tmpImage withFileName:@"user_photo" ofType:@"jpg" inDirectory:documentsDirectory];
+    [Utility saveImage:tmpImage withFileName:@"user_photo" ofType:@"jpg" inDirectory:documentsDirectory];
     [picker dismissViewControllerAnimated:YES completion:NULL];
-}
-
-
-//Image saving/loading methods from Fernando Cervantes on Stack Overflow
--(void)saveImage:(UIImage *)image withFileName:(NSString *)imageName ofType:(NSString *)extension inDirectory:(NSString *)directoryPath {
-    if ([[extension lowercaseString] isEqualToString:@"png"]) {
-        [UIImagePNGRepresentation(image) writeToFile:[directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"png"]] options:NSAtomicWrite error:nil];
-    } else if ([[extension lowercaseString] isEqualToString:@"jpg"] || [[extension lowercaseString] isEqualToString:@"jpeg"]) {
-        [UIImageJPEGRepresentation(image, 1.0) writeToFile:[directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"jpg"]] options:NSAtomicWrite error:nil];
-    } else {
-        NSLog(@"Image Save Failed\nExtension: (%@) is not recognized, use (PNG/JPG)", extension);
-    }
-}
-
--(UIImage *)loadImageWithFileName:(NSString *)fileName ofType:(NSString *)extension inDirectory:(NSString *)directoryPath {
-    UIImage * result = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@.%@", directoryPath, fileName, [extension lowercaseString]]];
-    if (result) {
-        return result;
-    }
-    else {
-        return [UIImage imageNamed:@"userlogo.png"];
-    }
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     
     [picker dismissViewControllerAnimated:YES completion:NULL];
     
+}
+
+-(IBAction)toSettings:(id)sender {
+    [self performSegueWithIdentifier:@"toSettings" sender:self];
 }
 
 - (void)didReceiveMemoryWarning {

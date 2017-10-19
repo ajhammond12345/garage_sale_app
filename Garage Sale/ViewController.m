@@ -100,6 +100,7 @@
 
 
 #import "ViewController.h"
+#import "Utility.h"
 
 @interface ViewController ()
 
@@ -133,12 +134,6 @@
     
 }
 
--(IBAction)logOut:(id)sender {
-     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSNumber *loggedOut = [NSNumber numberWithBool:false];
-    [defaults setObject:loggedOut forKey:@"logged_in"];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -148,6 +143,24 @@
         //options available for item condition
         [defaults setObject:[NSNumber numberWithBool:FALSE] forKey:@"logged_in"];
     }
+    _loggedOn = [defaults objectForKey:@"logged_in"];
+    bool tmp = [_loggedOn boolValue];
+    if (tmp) {
+        userPageButton.hidden = NO;
+    }
+    else {
+        userPageButton.hidden = YES;
+    }
+    NSString * documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    UIImage *image = [Utility loadImageWithFileName:@"user_photo" ofType:@"jpg" inDirectory:documentsDirectory];
+    if (image) {
+        [userPageButton setImage:image forState:UIControlStateNormal];
+    }
+    else {
+        [userPageButton setImage:[UIImage imageNamed:@"userlogo.png"] forState:UIControlStateNormal];
+    }
+    userPageButton.imageView.layer.cornerRadius = userPageButton.frame.size.height / 2;
+    
     // Do any additional setup after loading the view, typically from a nib.
 }
 

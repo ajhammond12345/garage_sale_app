@@ -8,6 +8,24 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UserSettings : UIViewController
+@interface UserSettings : UIViewController {
+    IBOutlet UITableView *settingsList;
+}
+
+//property 1
+@property NSString *firstName;
+@property NSString *lastName;
+//property 2
+@property NSString *username;
+//property 3
+@property NSString *address;
+//property 4
+@property NSString *email;
+//property 5
+@property NSString *password;
+
+@property NSMutableArray *cells;
+
+@property UIImage *userPhoto;
 
 @end

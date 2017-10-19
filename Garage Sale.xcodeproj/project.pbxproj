@@ -34,6 +34,8 @@
 		702CADCE1E42576E00FAC241 /* itunesartwork_2x_720.png in Resources */ = {isa = PBXBuildFile; fileRef = 702CADCD1E42576E00FAC241 /* itunesartwork_2x_720.png */; };
 		7043094E1E343E680059B736 /* ItemCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7043094D1E343E680059B736 /* ItemCustomCell.m */; };
 		7043099D1E3478DC0059B736 /* ItemDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 7043099C1E3478DC0059B736 /* ItemDetail.m */; };
+		7045E9721F97EF4300A619E9 /* EditableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7045E9711F97EF4300A619E9 /* EditableCell.m */; };
+		7045E9751F97EF5C00A619E9 /* NameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7045E9741F97EF5C00A619E9 /* NameCell.m */; };
 		704F2E221F8CAF36009C881B /* UserPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 704F2E211F8CAF36009C881B /* UserPage.m */; };
 		704F2E251F8CAFA5009C881B /* UserSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 704F2E241F8CAFA5009C881B /* UserSettings.m */; };
 		705E89141E35E04300FA4625 /* Comments.m in Sources */ = {isa = PBXBuildFile; fileRef = 705E89131E35E04300FA4625 /* Comments.m */; };
@@ -138,6 +140,10 @@
 		704309961E3463160059B736 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		7043099B1E3478DC0059B736 /* ItemDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemDetail.h; sourceTree = "<group>"; };
 		7043099C1E3478DC0059B736 /* ItemDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemDetail.m; sourceTree = "<group>"; };
+		7045E9701F97EF4300A619E9 /* EditableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditableCell.h; sourceTree = "<group>"; };
+		7045E9711F97EF4300A619E9 /* EditableCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditableCell.m; sourceTree = "<group>"; };
+		7045E9731F97EF5C00A619E9 /* NameCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NameCell.h; sourceTree = "<group>"; };
+		7045E9741F97EF5C00A619E9 /* NameCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NameCell.m; sourceTree = "<group>"; };
 		704F2E1F1F8CABC4009C881B /* userlogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userlogo.png; sourceTree = "<group>"; };
 		704F2E201F8CAF36009C881B /* UserPage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserPage.h; sourceTree = "<group>"; };
 		704F2E211F8CAF36009C881B /* UserPage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserPage.m; sourceTree = "<group>"; };
@@ -304,6 +310,10 @@
 				704F2E211F8CAF36009C881B /* UserPage.m */,
 				704F2E231F8CAFA5009C881B /* UserSettings.h */,
 				704F2E241F8CAFA5009C881B /* UserSettings.m */,
+				7045E9731F97EF5C00A619E9 /* NameCell.h */,
+				7045E9741F97EF5C00A619E9 /* NameCell.m */,
+				7045E9701F97EF4300A619E9 /* EditableCell.h */,
+				7045E9711F97EF4300A619E9 /* EditableCell.m */,
 				70E037651F959F4E0078582A /* Utility.h */,
 				70E037661F959F4E0078582A /* Utility.m */,
 				70DC6CC01E01F6DB00CE6953 /* ViewController.h */,
@@ -584,6 +594,7 @@
 				7043099D1E3478DC0059B736 /* ItemDetail.m in Sources */,
 				70A923B81E3BF39300B4B942 /* Filters.m in Sources */,
 				7026DB631E8C07B00042F6DE /* Login.m in Sources */,
+				7045E9721F97EF4300A619E9 /* EditableCell.m in Sources */,
 				70223CDB1E2D7AA4001E3724 /* Donate.m in Sources */,
 				702CADCC1E41A3EA00FAC241 /* PurchaseThankYou.m in Sources */,
 				70E037641F959B4D0078582A /* ItemDetailChange.m in Sources */,
@@ -591,6 +602,7 @@
 				70223CD81E2D7A75001E3724 /* Items.m in Sources */,
 				70E037671F959F4E0078582A /* Utility.m in Sources */,
 				705E89141E35E04300FA4625 /* Comments.m in Sources */,
+				7045E9751F97EF5C00A619E9 /* NameCell.m in Sources */,
 				704F2E221F8CAF36009C881B /* UserPage.m in Sources */,
 				704F2E251F8CAFA5009C881B /* UserSettings.m in Sources */,
 				70DC6CC21E01F6DB00CE6953 /* ViewController.m in Sources */,

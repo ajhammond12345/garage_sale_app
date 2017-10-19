@@ -11,6 +11,10 @@
 
 @interface Utility : NSObject
 
++(void)saveImage:(UIImage *)image withFileName:(NSString *)imageName ofType:(NSString *)extension inDirectory:(NSString *)directoryPath;
+
++(UIImage *)loadImageWithFileName:(NSString *)fileName ofType:(NSString *)extension inDirectory:(NSString *)directoryPath;
+
 +(void)throwAlertWithTitle:(NSString *)title message:(NSString *)message sender:(id)sender;
 
 

@@ -282,25 +282,13 @@
                         [self presentViewController:alert animated:YES completion:nil];
                     }
                     else {
-                        //opens user defaults to save data locally
-                        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                        NSArray *donatedArray = [defaults objectForKey:@"DonatedItems"];
-                        NSMutableArray *tmpDonatedItems = [[NSMutableArray alloc] init];
-                        //creates array with all of the saved items
-                        for (int i = 0; i < donatedArray.count; i++) {
-                            NSDictionary *tmpDic = [donatedArray objectAtIndex:i];
-                            [tmpDonatedItems addObject:[self itemFromDictionaryInternal:tmpDic]];
-                        }
-                        //adds the new item to the donated list
-                        [tmpDonatedItems addObject:[self itemFromDictionaryInternal:newItem.localDictionary]];
-                        //transitions to the thank you page
                         [self performSegueWithIdentifier:@"returnToItems" sender:(self)];
                     }
                 });
             }] resume];
         }
         else {
-            [self performSegueWithIdentifier:@"returnToItems" sender:(self)];
+            [self performSegueWithIdentifier:@"returnFromSettings" sender:self];
         }
     }
     
@@ -533,7 +521,6 @@
 }
 
 - (void)viewDidLoad {
-    NSLog([NSString stringWithFormat:@"\n\n\n\n\n\nItem ID: %zd\n\n\n\n\n\n\n", _itemOnDisplay.itemID]);
 
     //creates a 'done' toolbar to be used for all non-keyboard inputs
     _toolBar = [[UIToolbar alloc] init];
