@@ -14,14 +14,7 @@
 
 @end
 
-@implementation Items 
-
-//when an item clicked in the table view it passes on the item info and shows the item
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    ItemCustomCell *tmpCell = [itemsView cellForRowAtIndexPath:indexPath];
-    _itemToSend = tmpCell.item;
-    [self performSegueWithIdentifier:@"showItem" sender:indexPath];
-}
+@implementation Items
 
 //goes to the filters page
 -(IBAction)filters:(id)sender {
@@ -40,6 +33,13 @@
         Filters *destination = segue.destinationViewController;
         destination.filtersInPlace = _filters;
     }
+}
+
+//when an item clicked in the table view it passes on the item info and shows the item
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    ItemCustomCell *tmpCell = [itemsView cellForRowAtIndexPath:indexPath];
+    _itemToSend = tmpCell.item;
+    [self performSegueWithIdentifier:@"showItem" sender:indexPath];
 }
 
 //delegate method used to load table view
@@ -398,7 +398,7 @@
     //NSLog(@"%@", [dictionary objectForKey:@"id"]);
     //NSLog(@"%zd", tmpID);
     tmpItem.itemID = tmpID;
-    //NSLog(@"%zd", tmpItem.itemID);
+    NSLog(@"Item ID when saved: %zd", tmpItem.itemID);
     tmpItem.itemPurchaseState = (NSNumber *)[dictionary objectForKey:@"item_purchase_state"];
     return tmpItem;
 }

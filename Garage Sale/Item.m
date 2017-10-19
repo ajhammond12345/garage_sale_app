@@ -182,6 +182,10 @@
     commentsCopy, @"item_comments",
     purchaseState, @"item_purchase_state", [NSString stringWithFormat:@"%zd", _userID], @"user_id",
                         nil];
+    NSLog([NSString stringWithFormat:@"Item ID from Item: %zd", _itemID]);
+    NSInteger *tmpID = (NSInteger*)[[_localDictionary objectForKey:@"id"] integerValue];
+    //removes extra keys (item_image is replaced with a different key for the image data)
+    NSLog([NSString stringWithFormat:@"\n\n\n\n\n\nItem ID: %zd\n\n\n\n\n\n\n", tmpID]);
 }
 
 

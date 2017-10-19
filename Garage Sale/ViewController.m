@@ -100,6 +100,7 @@
 
 
 #import "ViewController.h"
+#import "Utility.h"
 
 @interface ViewController ()
 
@@ -109,9 +110,9 @@
 
 -(IBAction)donate:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSNumber *isLoggedIn = [defaults objectForKey:@"logged_in"];
-    _loggedOn = [isLoggedIn boolValue];
-    if (_loggedOn) {
+    _loggedOn = [defaults objectForKey:@"logged_in"];
+    bool tmp = [_loggedOn boolValue];
+    if (tmp) {
         [self performSegueWithIdentifier:@"toDonate" sender:self];
     }
     else {
@@ -120,14 +121,45 @@
     
 }
 
--(IBAction)logOut:(id)sender {
-     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSNumber *loggedOut = [NSNumber numberWithBool:false];
-    [defaults setObject:loggedOut forKey:@"logged_in"];
+-(IBAction)userPage:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    _loggedOn = [defaults objectForKey:@"logged_in"];
+    bool tmp = [_loggedOn boolValue];
+    if (tmp) {
+        [self performSegueWithIdentifier:@"toUserPage" sender:self];
+    }
+    else {
+        [self performSegueWithIdentifier:@"toLogin" sender:self];
+    }
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    _loggedOn = [defaults objectForKey:@"logged_in"];
+    if (_loggedOn == nil) {
+        
+        //options available for item condition
+        [defaults setObject:[NSNumber numberWithBool:FALSE] forKey:@"logged_in"];
+    }
+    _loggedOn = [defaults objectForKey:@"logged_in"];
+    bool tmp = [_loggedOn boolValue];
+    if (tmp) {
+        userPageButton.hidden = NO;
+    }
+    else {
+        userPageButton.hidden = YES;
+    }
+    NSString * documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    UIImage *image = [Utility loadImageWithFileName:@"user_photo" ofType:@"jpg" inDirectory:documentsDirectory];
+    if (image) {
+        [userPageButton setImage:image forState:UIControlStateNormal];
+    }
+    else {
+        [userPageButton setImage:[UIImage imageNamed:@"userlogo.png"] forState:UIControlStateNormal];
+    }
+    userPageButton.imageView.layer.cornerRadius = userPageButton.frame.size.height / 2;
     
     // Do any additional setup after loading the view, typically from a nib.
 }
@@ -147,15 +179,7 @@
         //options available for item condition
         [defaults setObject:[NSArray arrayWithObjects:@"--Select--", @"Unopened", @"Brand New", @"Exceptional", @"Great Condition", @"Used", @"Falling Apart", @"Broken", nil] forKey:@"conditions"];
     }
-    NSArray *userData = [defaults objectForKey:@"user_data"];
-    
     //if no options set, writes the options below (first time app is loaded)
-    _loggedOn = [defaults objectForKey:@"logged_in"];
-    if (_loggedOn == nil) {
-        
-        //options available for item condition
-        [defaults setObject:[NSNumber numberWithBool:FALSE] forKey:@"logged_in"];
-    }
 }
 
 

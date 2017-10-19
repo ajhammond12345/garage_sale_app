@@ -9,6 +9,8 @@
 #import "Filters.h"
 #import "Items.h"
 
+//TODO error when using only minimum filter - likely server problem
+
 @interface Filters () <UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
 
 @end

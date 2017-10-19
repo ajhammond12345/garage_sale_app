@@ -1,24 +1,129 @@
 //
-//  Donate.m
+//  ItemDetailChange.m
 //  Garage Sale
 //
-//  Created by Alexander Hammond on 1/16/17.
+//  Created by Alexander Hammond on 10/16/17.
 //  Copyright © 2017 TripleA. All rights reserved.
 //
 
-#import "Donate.h"
-#import "Item.h"
+#import "ItemDetailChange.h"
+#import "Utility.h"
 
 
-@interface Donate () <UITextViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+
+
+@interface ItemDetailChange () <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate, UIImagePickerControllerDelegate>
 
 @end
 
-@implementation Donate
+@implementation ItemDetailChange
+
+
+
+
+
+
+-(IBAction)back:(id)sender {
+    [self performSegueWithIdentifier:@"returnToItems" sender:self];
+}
+
+//runs before segues
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    //if going to the comments page it sets the current item to the item for the comments page to use when displaying comments
+    if ([segue.identifier isEqualToString: @"returnToItems"]) {
+        UserPage *destinationViewController = segue.destinationViewController;
+        destinationViewController.donatedItems = _items;
+        
+    }
+}
+
+//updates all parts of the UI for the page (easy method to call when data loads or changes (i.e. liked or purchased)
+-(void)updateView {
+    //hides the purchased button to ensure it won't incorrectly show up
+    purchased.hidden = YES;
+    
+    //sets the name text
+    nameTextField.text = _itemOnDisplay.name;
+    
+    //gets the int that represents condition (indicative of its position in the conditions array)
+    int index = (int) _itemOnDisplay.condition;
+    
+    //loads the conditions array
+    NSArray *conditionOptionsDetail = [[NSUserDefaults standardUserDefaults] objectForKey:@"conditions"];
+    
+    //sets the condition text based on index value
+    conditionTextField.text = conditionOptionsDetail[index];
+    
+    //displays the price (uses helper method from the Item class to convert the int in cents to a string in $)
+    priceTextField.text = [_itemOnDisplay getPriceString];
+    
+    //displays the description text
+    descriptionTextView.text = _itemOnDisplay.itemDescription;
+    
+    //if item liked, sets the heart to solid
+    
+    //if the item has an image (server errors may cause it to be missing an image) it displays it
+    if (_itemOnDisplay.image != nil) {
+        [imageView setBackgroundImage:_itemOnDisplay.image forState:UIControlStateNormal];
+    }
+    else {
+        //if missing the image it shows a default image that shows the image is missing
+        [imageView setBackgroundImage:[UIImage imageNamed:@"missing.png"] forState:UIControlStateNormal];
+    }
+    
+    //if item purchased, it shows the purchased image, if not it hides it
+    if ([self isItemPurchased]) {
+        purchased.hidden = NO;
+    }
+    else {
+        purchased.hidden = YES;
+    }
+}
+
+
+
+
+
+
+
+
+-(bool)textViewShouldReturn:(UITextField *)textField {
+    [self.view endEditing:true];
+    return true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+-(bool)isItemPurchased {
+    if ([_itemOnDisplay.itemPurchaseState intValue] == 1) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+
+-(IBAction)selectImageAction:(id)sender {
+    if (![self isItemPurchased]) {
+        [self selectImage];
+    }
+}
+
 
 //run when user clicks on the image or the camera button
--(IBAction)selectImage:(id)sender {
-    //creates image picker
+-(void)selectImage {
+        //creates image picker
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.allowsEditing = YES;
@@ -50,9 +155,9 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     //saves the selected image to the image field
     UIImage *tmpImage = info[UIImagePickerControllerEditedImage];
-    image = tmpImage;
-    imageUploaded = true;
-    [imageView setBackgroundImage:image forState:UIControlStateNormal];
+    _itemOnDisplay.image = tmpImage;
+    _imageUpdated = true;
+    [imageView setBackgroundImage:_theNewImage forState:UIControlStateNormal];
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
@@ -63,31 +168,27 @@
 }
 
 //this is the method run when the users submits an item
--(IBAction)done:(id)sender {
+-(IBAction)save:(id)sender {
     [self.view endEditing:YES];
-
+    Item *newItem = [[Item alloc] init];
     
     //first need to check that all fields have data
-    if ([name isEqualToString:@""]
-        || [condition isEqualToString:@""]
-        || [description isEqualToString:@""]
-        || priceInCents == 0
-        || !imageUploaded) {
+    if ([_theNewName isEqualToString:@""]
+        || [_theNewCondition isEqualToString:@""]
+        || [_theNewDescription isEqualToString:@""]
+        || _theNewPriceInCents == 0) {
         NSString *errorMessage;
-        if ([name isEqualToString:@""]) {
+        if ([_theNewName isEqualToString:@""]) {
             errorMessage = @"Please put in a name for the item";
         }
-        else if ([condition isEqualToString:@""]) {
+        else if ([_theNewCondition isEqualToString:@""]) {
             errorMessage = @"Please select a condition for this item";
         }
-        else if ([description isEqualToString:@""]) {
+        else if ([_theNewDescription isEqualToString:@""]) {
             errorMessage = [NSString stringWithFormat: @"Please provide a brief description of your item"];
         }
-        else if (priceInCents == 0) {
+        else if (_theNewPriceInCents == 0) {
             errorMessage = @"Please suggest a price";
-        }
-        else if (!imageUploaded) {
-            errorMessage = @"Please take a picture of this item by selecting the camera button.";
         }
         //shows error message for missing information
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Missing Information" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
@@ -100,98 +201,97 @@
         //closes keyboards
         [self.view endEditing:YES];
         //creates the Item object
-        Item *newItem = [[Item alloc] init];
-        newItem.name = name;
-        newItem.image = image;
-        newItem.condition = conditionInt;
-        newItem.priceInCents = priceInCents;
+        newItem.name = _theNewName;
+        newItem.image = _theNewImage;
+        newItem.condition = _theNewConditionInt;
+        newItem.priceInCents = _theNewPriceInCents;
         NSLog(@"%zd", newItem.priceInCents);
-        newItem.itemDescription = description;
+        newItem.itemDescription = _theNewDescription;
         //Note: item has not been liked (does nothing except prevent nil from stopping dictionary creation)
-        newItem.liked = false;
+        newItem.liked = _itemOnDisplay.liked;
         //0 means it has not been purchased
-        newItem.itemPurchaseState = 0;
-    
-        
-        //Then upload the item to the database
-        //refreshes the internal item dictionary
-        [newItem setItemDictionary];
-        
-        //creates error handler
-        NSError *error;
-        
-        //creates mutable copy of the dictionary to remove extra keys
-        NSMutableDictionary *tmpDic = [newItem.localDictionary mutableCopy];
-        
-        //removes extra keys (item_image is replaced with a different key for the image data)
-        [tmpDic removeObjectForKey:@"id"];
-        [tmpDic removeObjectForKey:@"item_image"];
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSNumber *userID = [defaults objectForKey:@"user_id"];
-        [tmpDic setObject:userID forKey:@"user_id"];
-        NSData *imageData = UIImageJPEGRepresentation(image, .6);
-        NSString *imageBase64 = [imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
-        //NSLog(@"Upload Data: %@", imageBase64);
-        [tmpDic setObject:imageBase64 forKey:@"va_image_data"];
-        [tmpDic setObject:[NSString stringWithFormat:@"%i", 0] forKey:@"item_purchase_state"];
-
-        //JSON Upload - does not upload the image
-        //converts the dictionary to json
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
-        //logs the data to check if it is created successfully
-        NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
-        
-        //creates url for the request
-        
-        //production url
-        NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/items.json"];
-        //testing url
-        //NSURL *url = [NSURL URLWithString:@"http://localhost:3001/items.json"];
-
-        //creates a URL request
-        NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-        
-        //specifics for the request (it is a post request with json content)
-        [uploadRequest setHTTPMethod:@"POST"];
-        [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-        [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        [uploadRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
-        [uploadRequest setHTTPBody: jsonData];
-        
-        //create some type of waiting image here
-        NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-        
-        //runs the data task
-        [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-            NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-                NSLog(@"requestReply: %@", [[requestReply class] description]);
-                //if the result has the class type __NSCFConstantString then the item failed to upload
-                if ([[[requestReply class] description] isEqualToString:@"__NSCFConstantString"]) {
-                    //alert for failing to upload
-                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Connection\n" message:@"Could not donate the item. Please check your internet connection and try again." preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
-                    [alert addAction:defaultAction];
-                    [self presentViewController:alert animated:YES completion:nil];
-                }
-                else {
-                    //opens user defaults to save data locally
-                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                    NSArray *donatedArray = [defaults objectForKey:@"DonatedItems"];
-                    NSMutableArray *tmpDonatedItems = [[NSMutableArray alloc] init];
-                    //creates array with all of the saved items
-                    for (int i = 0; i < donatedArray.count; i++) {
-                        NSDictionary *tmpDic = [donatedArray objectAtIndex:i];
-                        [tmpDonatedItems addObject:[self itemFromDictionaryInternal:tmpDic]];
+        newItem.itemPurchaseState = _itemOnDisplay.itemPurchaseState;
+        //checks to see if any data changed, if any has it reuploads,
+        //if not it simply presents the segue back to the main list
+        if (![_theNewName isEqualToString:_itemOnDisplay.name]
+            || ![_theNewDescription isEqualToString:_itemOnDisplay.itemDescription]
+            || !(_theNewConditionInt == _itemOnDisplay.condition)
+            || !(_theNewPriceInCents == _itemOnDisplay.priceInCents)
+            || _imageUpdated) {
+            
+            
+            //Then upload the item to the database
+            //refreshes the internal item dictionary
+            [newItem setItemDictionary];
+            
+            //creates error handler
+            NSError *error;
+            
+            //creates mutable copy of the dictionary to remove extra keys
+            NSMutableDictionary *tmpDic = [newItem.localDictionary mutableCopy];
+            NSInteger *tmpID = (NSInteger*)[[tmpDic objectForKey:@"id"] integerValue];
+            //removes extra keys (item_image is replaced with a different key for the image data)
+            NSLog([NSString stringWithFormat:@"\n\n\n\n\n\nItem ID: %zd\n\n\n\n\n\n\n", _itemOnDisplay.itemID]);
+            [tmpDic removeObjectForKey:@"item_image"];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSNumber *userID = [defaults objectForKey:@"user_id"];
+            [tmpDic setObject:userID forKey:@"user_id"];
+            NSData *imageData = UIImageJPEGRepresentation(_theNewImage, .6);
+            NSString *imageBase64 = [imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
+            //NSLog(@"Upload Data: %@", imageBase64);
+            [tmpDic setObject:imageBase64 forKey:@"va_image_data"];
+            [tmpDic setObject:[NSString stringWithFormat:@"%i", 0] forKey:@"item_purchase_state"];
+            
+            //JSON Upload - does not upload the image
+            //converts the dictionary to json
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
+            //logs the data to check if it is created successfully
+            NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+            
+            //creates url for the request
+            
+            //production url
+            NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/items/%zd.json", _itemOnDisplay.itemID]];
+            //testing url
+            //NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:3001/items/%zd.json", _itemOnDisplay.itemID]];
+            
+            //creates a URL request
+            NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+            
+            //specifics for the request (it is a post request with json content)
+            [uploadRequest setHTTPMethod:@"PATCH"];
+            [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+            [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+            [uploadRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
+            [uploadRequest setHTTPBody: jsonData];
+            
+            //create some type of waiting image here
+            NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+            
+            //runs the data task
+            [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+                    NSLog(@"requestReply Type: %@\nrequestReply: %@", [[requestReply class] description], requestReply);
+                    //if the result has the class type __NSCFConstantString then the item failed to upload
+                    if ([[[requestReply class] description] isEqualToString:@"__NSCFConstantString"]) {
+                        //alert for failing to upload
+                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Connection\n" message:@"Could not update the item. Please check your internet connection and try again." preferredStyle:UIAlertControllerStyleAlert];
+                        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+                        [alert addAction:defaultAction];
+                        [self presentViewController:alert animated:YES completion:nil];
                     }
-                    //adds the new item to the donated list
-                    [tmpDonatedItems addObject:[self itemFromDictionaryInternal:newItem.localDictionary]];
-                    //transitions to the thank you page
-                    [self performSegueWithIdentifier:@"showDonationThankYou" sender:(self)];
-                }
-            });
-        }] resume];
+                    else {
+                        [self performSegueWithIdentifier:@"returnToItems" sender:(self)];
+                    }
+                });
+            }] resume];
+        }
+        else {
+            [self performSegueWithIdentifier:@"returnToItems" sender:self];
+        }
     }
+    
 }
 
 -(Item *)itemFromDictionaryInternal:(NSDictionary *) dictionary {
@@ -228,6 +328,8 @@
     return YES;
 }
 
+
+
 //makes keyboard disappear after finished editing
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     
@@ -253,13 +355,13 @@
         if (tmpLabel.frame.size.width < 180) {
             if (![tmpName isEqualToString:@""]) {
                 tmpName = [NSString stringWithFormat:@"%@%@",[[tmpName substringToIndex:1] uppercaseString],[tmpName substringFromIndex:1] ];
-                name = tmpName;
+                _theNewName = tmpName;
                 nameTextField.text = tmpName;
             }
         }
         else {
             nameTextField.text = @"";
-            name = @"";
+            _theNewName = @"";
             nameTextField.placeholder = @"Name of Item";
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Invalid Name\n" message:@"Please use a shorter name" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
@@ -302,13 +404,13 @@
         NSLog(@"Price: %@%i", dollars, priceDollars);
         //saving input
         finalPriceInCents = (priceDollars * 100) + priceCents;
-        priceInCents = (NSInteger *)finalPriceInCents;
-        NSLog(@"%zd", priceInCents);
+        _theNewPriceInCents = (NSInteger *)finalPriceInCents;
+        NSLog(@"%zd", _theNewPriceInCents);
         //outputting formatted input
         priceTextField.text = [NSString stringWithFormat:@"$%@.%@", dollars, cents];
         if ([priceTextField.text isEqualToString:@"$0.00"]) {
             priceTextField.text = @"";
-            priceInCents = nil;
+            _theNewPriceInCents = nil;
             priceTextField.placeholder = @"$0.00";
         }
     }
@@ -318,12 +420,16 @@
 }
 
 //closes the picker view
--(void)clearInputView {
+-(void)clearEdit {
     [self.view endEditing:YES];
 }
 
 //for condition (not directly edited, uses a picker instead)
--(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+-(bool)textFieldShouldBeginEditing:(UITextField *)textField {
+    if ([self isItemPurchased]) {
+        [Utility throwAlertWithTitle:@"Item Sold" message:@"This item has been purchased. No changes are allowed." sender:self];
+        return false;
+    }
     if (textField.tag == 2 || [textField isEqual:conditionTextField]) {
         _conditionPicker = [[UIPickerView alloc] init];
         _conditionPicker.dataSource = self;
@@ -337,9 +443,11 @@
     }
     if ([textField isEqual: priceTextField]) {
         textField.inputAccessoryView = _toolBar;
+        priceTextField.text = @"";
     }
     return YES;
 }
+
 
 //number of columns - only one for condition
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -350,13 +458,13 @@
 // The number of rows of data
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return conditionOptionsDonate.count;
+    return _conditionOptionsItemUpdate.count;
 }
 
 // The data to return for the row and component (column) that's being passed in
 - (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return conditionOptionsDonate[row];
+    return _conditionOptionsItemUpdate[row];
 }
 
 
@@ -364,16 +472,16 @@
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     //if user selected a row with data in it, it saves that data as the selected condition
     if (row != 0) {
-        conditionTextField.text = conditionOptionsDonate[row];
+        conditionTextField.text = _conditionOptionsItemUpdate[row];
         long rowTmp = row;
-        conditionInt = (NSInteger *)rowTmp;
-        condition = conditionOptionsDonate[row];
+        _theNewConditionInt = (NSInteger *)rowTmp;
+        _theNewCondition = _conditionOptionsItemUpdate[row];
     }
     //if user selects --select-- (meant to be an empty option) it saves the condition selected as empty
     else {
         conditionTextField.text = @"";
         conditionTextField.placeholder = @"Condition";
-        condition = @"";
+        _theNewCondition = @"";
     }
 }
 
@@ -385,8 +493,8 @@
         descriptionTextView.text = [NSString stringWithFormat:@"Insert description here"];
     }
     else {
-        description = [NSString stringWithFormat:@"%@%@",[[descriptionTextView.text substringToIndex:1] uppercaseString],[descriptionTextView.text substringFromIndex:1] ];
-        descriptionTextView.text = description;
+        _theNewDescription = [NSString stringWithFormat:@"%@%@",[[descriptionTextView.text substringToIndex:1] uppercaseString],[descriptionTextView.text substringFromIndex:1] ];
+        descriptionTextView.text = _theNewDescription;
     }
     //closes keyboard
     [textView resignFirstResponder];
@@ -399,19 +507,28 @@
     }
 }
 
+-(bool)textViewShouldBeginEditing:(UITextField *)textField {
+    if ([self isItemPurchased]) {
+        [Utility throwAlertWithTitle:@"Item Sold" message:@"This item has been purchased. No changes are allowed." sender:self];
+        return false;
+    }
+    return true;
+}
+
 //dismisses keyboards when large button in background clicked - enables users to navigate away from editting in an intelligent way
 -(IBAction)dismissKeyBoards:(id)sender {
     [self.view endEditing:YES];
 }
 
 - (void)viewDidLoad {
+
     //creates a 'done' toolbar to be used for all non-keyboard inputs
     _toolBar = [[UIToolbar alloc] init];
     _toolBar.barStyle = UIBarStyleDefault;
     _toolBar.translucent = true;
     [_toolBar sizeToFit];
     //creates the done button for the toolbar
-    UIBarButtonItem *finished = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(clearInputView)];
+    UIBarButtonItem *finished = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(clearEdit)];
     //adds the done button
     [_toolBar setItems:@[finished] animated: false];
     _toolBar.userInteractionEnabled = true;
@@ -419,12 +536,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     //initializes the variables to be empty (prevents needing to account for both empty and null when verifying user input)
-    name = @"";
-    condition = @"";
-    priceInCents = 0;
-    description = @"";
+    _theNewName = _itemOnDisplay.name;
+    _theNewConditionInt = _itemOnDisplay.condition;
+    _theNewPriceInCents = _itemOnDisplay.priceInCents;
+    _theNewDescription = _itemOnDisplay.itemDescription;
     //creats the conditions array
-    conditionOptionsDonate = [[NSUserDefaults standardUserDefaults] objectForKey:@"conditions"];
+    _conditionOptionsItemUpdate = [[NSUserDefaults standardUserDefaults] objectForKey:@"conditions"];
+    _theNewCondition = [_conditionOptionsItemUpdate objectAtIndex:(long)_theNewConditionInt];
+    _theNewImage = _itemOnDisplay.image;
+    
     
     //sets the delegate for the text fields
     nameTextField.delegate = self;
@@ -432,13 +552,41 @@
     descriptionTextView.delegate = self;
     priceTextField.delegate = self;
     tmpLabel.hidden = YES;
-    imageUploaded = false;
+    _imageUpdated = false;
+    [self updateView];
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

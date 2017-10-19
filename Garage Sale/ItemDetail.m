@@ -9,6 +9,9 @@
 #import "ItemDetail.h"
 #import "PurchaseThankYou.h"
 
+//TODO heart too big?
+//TODO share button
+
 @interface ItemDetail () <UITextViewDelegate, PKPaymentAuthorizationViewControllerDelegate>
 
 @end
@@ -305,6 +308,7 @@
 
 //setup for when the view loads
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
     //updates the view (all UI elements)

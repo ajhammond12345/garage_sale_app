@@ -12,6 +12,8 @@
 
 @end
 
+//TODO share button
+
 @implementation PurchaseThankYou
 
 //programatically called segue so that the prepare for segue method will be called

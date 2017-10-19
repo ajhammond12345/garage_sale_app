@@ -15,16 +15,28 @@
 @implementation Login
 
 -(IBAction)signIn:(id)sender {
+    [self.view endEditing:YES];
     NSString *username = usernameTextField.text;
     NSString *password = passwordTextField.text;
     //improve by running checks against the input (for @ symbol and such)
     if (username != nil && password != nil) {
         //sends url request to login - just needs to store UserID in the defaults
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(transition)
+                                                     name:@"loggedIn"
+                                                   object:nil];
         [self login];
     }
     else {
         //error prompting user to put in email and password
     }
+}
+
+-(void)transition {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"loggedIn"
+                                                  object:nil];
+    [self performSegueWithIdentifier:@"toHomeFromLogin" sender:self];
 }
 
 -(void)login {
@@ -45,7 +57,10 @@
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
     
     //creates url for request
-    NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users/login.json"];
+    //production URL
+    NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/users/login.json"];
+    //testing URL
+    //NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users/login.json"];    
     
     //creates a URL request
     NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
@@ -63,7 +78,7 @@
     //sets the boolean to false to indicate the download has not yet finished
     _loginSuccessful = false;
     //creates empty array to store the response from the server
-    _requestResult = [[NSArray alloc] init];
+    _requestResult = [[NSDictionary alloc] init];
     
     //initiates the url session with a handler that processes the data returned from the server
     [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -78,7 +93,8 @@
             NSLog(@"%@", [[_requestResult class] description]);
             
             //if the response is the valid type it indicates the download is successful and proceeds with the segue back to the main page, if unsuccessful it proceeds while leaving the downloadSuccessful as false (the segue delegate method uses this to determine what data to pass to the Items view controller
-            if ([[[_requestResult class] description] isEqualToString:@"__NSDictionaryM"]) {
+            NSInteger *userIDCheck = (NSInteger *)[[_requestResult objectForKey:@"id"] integerValue];
+            if (userIDCheck != 0) {
                 _loginSuccessful = true;
                 NSInteger *userID = (NSInteger *)[[_requestResult objectForKey:@"id"] integerValue];
                 NSLog(@"User ID From download: %@", [NSString stringWithFormat:@"%zd", userID]);
@@ -86,7 +102,14 @@
                 [defaults setObject:[NSString stringWithFormat:@"%zd", userID] forKey:@"user_id"];
                 [defaults setObject:[_requestResult objectForKey:@"username"] forKey:@"username"];
                 [defaults setObject:[NSNumber numberWithBool:true] forKey:@"logged_in"];
-                [self performSegueWithIdentifier:@"toHomeFromLogin" sender:self];
+                [defaults setObject:password forKey:@"password"];
+                [defaults setObject:[_requestResult objectForKey:@"user_first_name"] forKey:@"first_name"];
+                [defaults setObject:[_requestResult objectForKey:@"user_last_name"] forKey:@"last_name"];
+                [defaults setObject:[_requestResult objectForKey:@"user_address"] forKey:@"address"];
+                [defaults setObject:[_requestResult objectForKey:@"email_address"] forKey:@"email"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"loggedIn"
+                                                                    object:self
+                                                                  userInfo:nil];
             }
             else {
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Invalid Login" message:@"Please try again" preferredStyle:UIAlertControllerStyleAlert];
