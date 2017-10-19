@@ -120,7 +120,7 @@
     NSLog(@"Started checking for email");
     NSMutableDictionary *dataDic = [[NSMutableDictionary alloc] init];
     //goes through every field, if it is not empty it adds it to the dictionary (empty fields are handled by the database with default values)
-    [dataDic setObject:email forKey:@"email"];
+    [dataDic setObject:email forKey:@"email_address"];
     //creates a dictionary for sending the request - puts it under the data heading to match what the database expects
     NSMutableDictionary *tmpDic = [NSMutableDictionary dictionaryWithObject:dataDic forKey:@"data"];
     //NSLog(@"%@", tmpDic);
@@ -132,7 +132,10 @@
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
     
     //creates url for request
-    NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users/unique_email.json"];
+    //production URL
+    NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/users/unique_email.json"];
+    //testing URL
+    //NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users/unique_email.json"];
     
     //creates a URL request
     NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
@@ -161,8 +164,8 @@
                 NSError *jsonError;
                 //stores the response
                 _requestResult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
-                //NSLog(@"requestReply: %@", _requestResult);
-                //NSLog(@"%@", [[_requestResult class] description]);
+                NSLog(@"requestReply: %@", _requestResult);
+                NSLog(@"%@", [[_requestResult class] description]);
                 
                 //if the response is the valid type it indicates the download is successful and proceeds with the segue back to the main page, if unsuccessful it proceeds while leaving the downloadSuccessful as false (the segue delegate method uses this to determine what data to pass to the Items view controller
                 if ([[[_requestResult class] description] isEqualToString:@"__NSArrayM"]) {
@@ -215,7 +218,10 @@
     //NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
     
     //creates url for the request
-    NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users.json"];
+    //production URL
+    NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/users.json"];
+    //testing URL
+    //NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users.json"];
     
     //creates a URL request
     NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];

@@ -28,6 +28,7 @@
     IBOutlet UIButton *imageView;
     IBOutlet UIButton *cameraButton;
     IBOutlet UIImageView *purchased;
+    IBOutlet UIBarButtonItem *saveButton;
     
     IBOutlet UILabel *tmpLabel;
     

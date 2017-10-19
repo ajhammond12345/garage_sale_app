@@ -9,6 +9,9 @@
 #import "ItemDetailChange.h"
 #import "Utility.h"
 
+
+
+
 @interface ItemDetailChange () <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate, UIImagePickerControllerDelegate>
 
 @end
@@ -248,12 +251,9 @@
             //creates url for the request
             
             //production url
-            NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/items.json"];
+            NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/items/%zd.json", _itemOnDisplay.itemID]];
             //testing url
-            //NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:3001/items/%zd.json", _itemOnDisplay.itemID
-                                               
-                                               
-                                               ]];
+            //NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:3001/items/%zd.json", _itemOnDisplay.itemID]];
             
             //creates a URL request
             NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
@@ -288,7 +288,7 @@
             }] resume];
         }
         else {
-            [self performSegueWithIdentifier:@"returnFromSettings" sender:self];
+            [self performSegueWithIdentifier:@"returnToItems" sender:self];
         }
     }
     
@@ -544,6 +544,7 @@
     _conditionOptionsItemUpdate = [[NSUserDefaults standardUserDefaults] objectForKey:@"conditions"];
     _theNewCondition = [_conditionOptionsItemUpdate objectAtIndex:(long)_theNewConditionInt];
     _theNewImage = _itemOnDisplay.image;
+    
     
     //sets the delegate for the text fields
     nameTextField.delegate = self;

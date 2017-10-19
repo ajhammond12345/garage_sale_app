@@ -9,6 +9,9 @@
 #import "ItemDetail.h"
 #import "PurchaseThankYou.h"
 
+//TODO heart too big?
+//TODO share button
+
 @interface ItemDetail () <UITextViewDelegate, PKPaymentAuthorizationViewControllerDelegate>
 
 @end

@@ -2112,6 +2112,7 @@
                         <outlet property="nameTextField" destination="Bzm-8L-ola" id="4Yl-cr-e3x"/>
                         <outlet property="priceTextField" destination="hho-wc-Jqb" id="NBO-Eg-3tO"/>
                         <outlet property="purchased" destination="mBb-pJ-FPC" id="DLk-Vf-vD5"/>
+                        <outlet property="saveButton" destination="XVu-Cd-e6O" id="qjP-5N-WP7"/>
                         <outlet property="tmpLabel" destination="C8o-t2-sSJ" id="BNR-XO-bUx"/>
                         <segue destination="XQK-xi-IRL" kind="presentation" identifier="returnToItems" id="Dyh-WQ-zpC"/>
                     </connections>
@@ -2147,6 +2148,6 @@
         <segue reference="Nyl-ft-tfW"/>
         <segue reference="yEy-Ux-EQd"/>
         <segue reference="qxU-em-jdH"/>
-        <segue reference="avY-IK-v5V"/>
+        <segue reference="Dyh-WQ-zpC"/>
     </inferredMetricsTieBreakers>
 </document>

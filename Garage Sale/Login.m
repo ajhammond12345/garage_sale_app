@@ -93,7 +93,8 @@
             NSLog(@"%@", [[_requestResult class] description]);
             
             //if the response is the valid type it indicates the download is successful and proceeds with the segue back to the main page, if unsuccessful it proceeds while leaving the downloadSuccessful as false (the segue delegate method uses this to determine what data to pass to the Items view controller
-            if ([[[_requestResult class] description] isEqualToString:@"__NSDictionaryM"]) {
+            NSInteger *userIDCheck = (NSInteger *)[[_requestResult objectForKey:@"id"] integerValue];
+            if (userIDCheck != 0) {
                 _loginSuccessful = true;
                 NSInteger *userID = (NSInteger *)[[_requestResult objectForKey:@"id"] integerValue];
                 NSLog(@"User ID From download: %@", [NSString stringWithFormat:@"%zd", userID]);
