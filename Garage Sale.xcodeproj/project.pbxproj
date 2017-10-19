@@ -64,10 +64,6 @@
 		70D2BE5E1E38930300F39435 /* cameraIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D2BE381E38930300F39435 /* cameraIcon@2x.png */; };
 		70D2BE5F1E38930300F39435 /* cameraIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D2BE391E38930300F39435 /* cameraIcon@3x.png */; };
 		70D2BE611E38930300F39435 /* gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D2BE3B1E38930300F39435 /* gradient.png */; };
-		70D2BE621E38930300F39435 /* Instagram-Heart-Solid@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D2BE3C1E38930300F39435 /* Instagram-Heart-Solid@3x.png */; };
-		70D2BE631E38930300F39435 /* Instagram-Heart-Transparent@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D2BE3D1E38930300F39435 /* Instagram-Heart-Transparent@1x.png */; };
-		70D2BE641E38930300F39435 /* Instagram-Heart-Transparent@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D2BE3E1E38930300F39435 /* Instagram-Heart-Transparent@2x.png */; };
-		70D2BE651E38930300F39435 /* Instagram-Heart-Transparent@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D2BE3F1E38930300F39435 /* Instagram-Heart-Transparent@3x.png */; };
 		70D2BE6F1E38930300F39435 /* Screen Shot 2017-01-13 at 3.34.10 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D2BE491E38930300F39435 /* Screen Shot 2017-01-13 at 3.34.10 PM.png */; };
 		70D2BE701E38930300F39435 /* Screen Shot 2017-01-13 at 3.43.03 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D2BE4A1E38930300F39435 /* Screen Shot 2017-01-13 at 3.43.03 PM.png */; };
 		70D2BE711E38930300F39435 /* Screen Shot 2017-01-13 at 3.43.15 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D2BE4B1E38930300F39435 /* Screen Shot 2017-01-13 at 3.43.15 PM.png */; };
@@ -175,14 +171,12 @@
 		70A924041E3F0E2D00B4B942 /* bb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bb.png; sourceTree = "<group>"; };
 		70A924051E3F0E2D00B4B942 /* bb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bb@2x.png"; sourceTree = "<group>"; };
 		70A924061E3F0E2D00B4B942 /* bb@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bb@3x.png"; sourceTree = "<group>"; };
+		70C84E921F9917630026EB95 /* Instagram-Heart-Solid@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Instagram-Heart-Solid@3x.png"; sourceTree = "<group>"; };
+		70C84E931F9917790026EB95 /* Instagram-Heart-Transparent@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Instagram-Heart-Transparent@3x.png"; sourceTree = "<group>"; };
 		70D2BE371E38930300F39435 /* cameraIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraIcon.png; sourceTree = "<group>"; };
 		70D2BE381E38930300F39435 /* cameraIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraIcon@2x.png"; sourceTree = "<group>"; };
 		70D2BE391E38930300F39435 /* cameraIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraIcon@3x.png"; sourceTree = "<group>"; };
 		70D2BE3B1E38930300F39435 /* gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradient.png; sourceTree = "<group>"; };
-		70D2BE3C1E38930300F39435 /* Instagram-Heart-Solid@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Instagram-Heart-Solid@3x.png"; sourceTree = "<group>"; };
-		70D2BE3D1E38930300F39435 /* Instagram-Heart-Transparent@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Instagram-Heart-Transparent@1x.png"; sourceTree = "<group>"; };
-		70D2BE3E1E38930300F39435 /* Instagram-Heart-Transparent@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Instagram-Heart-Transparent@2x.png"; sourceTree = "<group>"; };
-		70D2BE3F1E38930300F39435 /* Instagram-Heart-Transparent@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Instagram-Heart-Transparent@3x.png"; sourceTree = "<group>"; };
 		70D2BE491E38930300F39435 /* Screen Shot 2017-01-13 at 3.34.10 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2017-01-13 at 3.34.10 PM.png"; sourceTree = "<group>"; };
 		70D2BE4A1E38930300F39435 /* Screen Shot 2017-01-13 at 3.43.03 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2017-01-13 at 3.43.03 PM.png"; sourceTree = "<group>"; };
 		70D2BE4B1E38930300F39435 /* Screen Shot 2017-01-13 at 3.43.15 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2017-01-13 at 3.43.15 PM.png"; sourceTree = "<group>"; };
@@ -361,6 +355,8 @@
 				70A923F51E3F058F00B4B942 /* 2.png */,
 				70A923F61E3F058F00B4B942 /* 3.png */,
 				70A923F71E3F058F00B4B942 /* 4.png */,
+				70C84E921F9917630026EB95 /* Instagram-Heart-Solid@3x.png */,
+				70C84E931F9917790026EB95 /* Instagram-Heart-Transparent@3x.png */,
 				70D2BE371E38930300F39435 /* cameraIcon.png */,
 				70D2BE381E38930300F39435 /* cameraIcon@2x.png */,
 				70D2BE391E38930300F39435 /* cameraIcon@3x.png */,
@@ -370,10 +366,6 @@
 				70A923BD1E3D8BA100B4B942 /* default.png */,
 				70A923BB1E3D8A5D00B4B942 /* missing.png */,
 				70D2BE3B1E38930300F39435 /* gradient.png */,
-				70D2BE3C1E38930300F39435 /* Instagram-Heart-Solid@3x.png */,
-				70D2BE3D1E38930300F39435 /* Instagram-Heart-Transparent@1x.png */,
-				70D2BE3E1E38930300F39435 /* Instagram-Heart-Transparent@2x.png */,
-				70D2BE3F1E38930300F39435 /* Instagram-Heart-Transparent@3x.png */,
 				70D2BE491E38930300F39435 /* Screen Shot 2017-01-13 at 3.34.10 PM.png */,
 				70D2BE4A1E38930300F39435 /* Screen Shot 2017-01-13 at 3.43.03 PM.png */,
 				70D2BE4B1E38930300F39435 /* Screen Shot 2017-01-13 at 3.43.15 PM.png */,
@@ -515,7 +507,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70D2BE641E38930300F39435 /* Instagram-Heart-Transparent@2x.png in Resources */,
 				5A455EDB1E8D6E5F00A41266 /* testingLike.icns in Resources */,
 				5A455ED61E8D45CA00A41266 /* comment.png in Resources */,
 				5AF3C40D1E7C5DE600990AA2 /* SettingsButton.png in Resources */,
@@ -525,7 +516,6 @@
 				70D2BE5E1E38930300F39435 /* cameraIcon@2x.png in Resources */,
 				70A923F81E3F058F00B4B942 /* 1.png in Resources */,
 				70A924021E3F0BF100B4B942 /* large3.png in Resources */,
-				70D2BE651E38930300F39435 /* Instagram-Heart-Transparent@3x.png in Resources */,
 				5A455ED91E8D5DDD00A41266 /* sideBar.png in Resources */,
 				5AF3C3F51E7B863300990AA2 /* listButton.png in Resources */,
 				5AF3C3FF1E7B8A5600990AA2 /* aboutBulb.png in Resources */,
@@ -538,7 +528,6 @@
 				70A923C31E3D8E8C00B4B942 /* purchased@2x.png in Resources */,
 				5AF3C40F1E7C5FB700990AA2 /* comments.png in Resources */,
 				5AF3C3F31E7B859B00990AA2 /* navBarColor.png in Resources */,
-				70D2BE631E38930300F39435 /* Instagram-Heart-Transparent@1x.png in Resources */,
 				70DC6CCA1E01F6DB00CE6953 /* LaunchScreen.storyboard in Resources */,
 				70D2BE711E38930300F39435 /* Screen Shot 2017-01-13 at 3.43.15 PM.png in Resources */,
 				70A923FA1E3F058F00B4B942 /* 3.png in Resources */,
@@ -551,7 +540,6 @@
 				5AF3C3FD1E7B8A4D00990AA2 /* Tag.png in Resources */,
 				70A923C21E3D8E8C00B4B942 /* purchased.png in Resources */,
 				5AF3C3F71E7B871400990AA2 /* WhiteBackground.png in Resources */,
-				70D2BE621E38930300F39435 /* Instagram-Heart-Solid@3x.png in Resources */,
 				5AF3C3F91E7B87BE00990AA2 /* RefreshG.png in Resources */,
 				70A923FB1E3F058F00B4B942 /* 4.png in Resources */,
 				70A923F91E3F058F00B4B942 /* 2.png in Resources */,

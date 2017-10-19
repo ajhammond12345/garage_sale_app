@@ -1423,12 +1423,15 @@
                                             </barButtonItem>
                                             <barButtonItem systemItem="action" id="QRv-Np-hKj">
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <connections>
+                                                    <action selector="share:" destination="aWM-kn-DrQ" id="WB2-wZ-2w5"/>
+                                                </connections>
                                             </barButtonItem>
                                         </leftBarButtonItems>
                                         <rightBarButtonItems>
                                             <barButtonItem title="like" style="plain" id="W9C-wG-Eou">
                                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yNG-fx-Uwm">
-                                                    <rect key="frame" x="322" y="6" width="37" height="32"/>
+                                                    <rect key="frame" x="276" y="0.0" width="83" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" image="Instagram-Heart-Transparent.png"/>
                                                     <connections>
@@ -2123,7 +2126,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Instagram-Heart-Transparent.png" width="37" height="32"/>
+        <image name="Instagram-Heart-Transparent.png" width="83" height="72"/>
         <image name="Login page.png" width="375" height="667"/>
         <image name="RefreshG.png" width="62" height="62"/>
         <image name="Screen Shot 2017-01-17 at 11.19.21 AM.png" width="42" height="52"/>
@@ -2144,8 +2147,9 @@
         <image name="userlogo.png" width="1132" height="1136"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="evc-38-6St"/>
-        <segue reference="Nyl-ft-tfW"/>
+        <segue reference="rxM-xP-588"/>
+        <segue reference="sLi-CX-hcV"/>
+        <segue reference="e9g-dc-COm"/>
         <segue reference="yEy-Ux-EQd"/>
         <segue reference="qxU-em-jdH"/>
         <segue reference="Dyh-WQ-zpC"/>
