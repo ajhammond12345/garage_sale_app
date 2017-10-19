@@ -1429,21 +1429,21 @@
                                             </barButtonItem>
                                         </leftBarButtonItems>
                                         <rightBarButtonItems>
-                                            <barButtonItem title="like" style="plain" id="W9C-wG-Eou">
-                                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yNG-fx-Uwm">
-                                                    <rect key="frame" x="276" y="0.0" width="83" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" image="Instagram-Heart-Transparent.png"/>
-                                                    <connections>
-                                                        <action selector="like:" destination="aWM-kn-DrQ" eventType="touchUpInside" id="iVQ-Xt-i0s"/>
-                                                    </connections>
-                                                </button>
-                                            </barButtonItem>
                                             <barButtonItem style="plain" systemItem="compose" id="lhJ-ct-VCS">
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <connections>
                                                     <action selector="comments:" destination="aWM-kn-DrQ" id="zRl-2z-3fl"/>
                                                 </connections>
+                                            </barButtonItem>
+                                            <barButtonItem title="like" style="plain" id="W9C-wG-Eou">
+                                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yNG-fx-Uwm">
+                                                    <rect key="frame" x="273" y="0.0" width="44" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" image="Instagram-Heart-Transparent-Tall.png"/>
+                                                    <connections>
+                                                        <action selector="like:" destination="aWM-kn-DrQ" eventType="touchUpInside" id="iVQ-Xt-i0s"/>
+                                                    </connections>
+                                                </button>
                                             </barButtonItem>
                                         </rightBarButtonItems>
                                     </navigationItem>
@@ -1544,7 +1544,7 @@
                         <outlet property="displayCondition" destination="ZBK-hC-7zf" id="auN-7y-iI3"/>
                         <outlet property="displayDescription" destination="Dhx-NQ-R1S" id="Dvm-Dz-sSL"/>
                         <outlet property="displayImage" destination="Fc6-kP-heL" id="nof-Sv-d76"/>
-                        <outlet property="displayLikeButton" destination="yNG-fx-Uwm" id="pXS-HU-3c9"/>
+                        <outlet property="displayLikeButton" destination="yNG-fx-Uwm" id="09C-sU-qEU"/>
                         <outlet property="displayName" destination="Z8g-Oq-wGD" id="QE8-F6-Tii"/>
                         <outlet property="displayPrice" destination="7ob-3y-ZLC" id="jDY-Dg-hls"/>
                         <outlet property="purchased" destination="Y9g-fj-j98" id="KaS-6Y-vWr"/>
@@ -2126,7 +2126,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Instagram-Heart-Transparent.png" width="83" height="72"/>
+        <image name="Instagram-Heart-Transparent-Tall.png" width="29" height="30"/>
+        <image name="Instagram-Heart-Transparent.png" width="37" height="32"/>
         <image name="Login page.png" width="375" height="667"/>
         <image name="RefreshG.png" width="62" height="62"/>
         <image name="Screen Shot 2017-01-17 at 11.19.21 AM.png" width="42" height="52"/>
@@ -2147,10 +2148,9 @@
         <image name="userlogo.png" width="1132" height="1136"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="rxM-xP-588"/>
-        <segue reference="sLi-CX-hcV"/>
+        <segue reference="TsY-k4-Fxp"/>
         <segue reference="e9g-dc-COm"/>
-        <segue reference="yEy-Ux-EQd"/>
+        <segue reference="tsN-tD-BU3"/>
         <segue reference="qxU-em-jdH"/>
         <segue reference="Dyh-WQ-zpC"/>
     </inferredMetricsTieBreakers>

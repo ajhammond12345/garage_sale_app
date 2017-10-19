@@ -198,6 +198,10 @@
 		70DC6CDB1E01F6DB00CE6953 /* Garage SaleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Garage SaleUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		70DC6CDF1E01F6DB00CE6953 /* Garage_SaleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Garage_SaleUITests.m; sourceTree = "<group>"; };
 		70DC6CE11E01F6DB00CE6953 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		70DF0CA41F99263400E7C042 /* Instagram-Heart-Transparent-Tall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Instagram-Heart-Transparent-Tall.png"; sourceTree = "<group>"; };
+		70DF0CA51F9928CA00E7C042 /* Instagram-Heart-Solid-Tall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Instagram-Heart-Solid-Tall.png"; sourceTree = "<group>"; };
+		70DF0CA61F99298200E7C042 /* Instagram-Heart-Transparent@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Instagram-Heart-Transparent@2x.png"; sourceTree = "<group>"; };
+		70DF0CA71F99298700E7C042 /* Instagram-Heart-Transparent@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Instagram-Heart-Transparent@1x.png"; sourceTree = "<group>"; };
 		70E037621F959B4D0078582A /* ItemDetailChange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItemDetailChange.h; sourceTree = "<group>"; };
 		70E037631F959B4D0078582A /* ItemDetailChange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItemDetailChange.m; sourceTree = "<group>"; };
 		70E037651F959F4E0078582A /* Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
@@ -347,6 +351,10 @@
 				70A923F51E3F058F00B4B942 /* 2.png */,
 				70A923F61E3F058F00B4B942 /* 3.png */,
 				70A923F71E3F058F00B4B942 /* 4.png */,
+				70DF0CA41F99263400E7C042 /* Instagram-Heart-Transparent-Tall.png */,
+				70DF0CA51F9928CA00E7C042 /* Instagram-Heart-Solid-Tall.png */,
+				70DF0CA71F99298700E7C042 /* Instagram-Heart-Transparent@1x.png */,
+				70DF0CA61F99298200E7C042 /* Instagram-Heart-Transparent@2x.png */,
 				70C84E921F9917630026EB95 /* Instagram-Heart-Solid@3x.png */,
 				70C84E931F9917790026EB95 /* Instagram-Heart-Transparent@3x.png */,
 				70D2BE371E38930300F39435 /* cameraIcon.png */,
