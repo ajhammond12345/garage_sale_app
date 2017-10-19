@@ -57,7 +57,10 @@
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
     
     //creates url for request
-    NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users/login.json"];
+    //production URL
+    NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/users/login.json"];
+    //testing URL
+    //NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users/login.json"];    
     
     //creates a URL request
     NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];

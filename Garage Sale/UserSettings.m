@@ -65,9 +65,9 @@
         //creates url for the request
         
         //production url
-        //NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/users/%zd.json", userID]
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/users/%zd.json", [userID integerValue]]];
         //testing url
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:3001/users/%zd.json", [userID integerValue]]];
+        //NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:3001/users/%zd.json", [userID integerValue]]];
         NSLog(url.path);
         //creates a URL request
         NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];

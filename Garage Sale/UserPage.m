@@ -94,7 +94,11 @@
     }
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *userID = [defaults objectForKey:@"user_id"];
-    NSString *jsonUrlString = [NSString stringWithFormat:@"http://localhost:3001/users/%@.json", userID];
+    //production URL
+    NSString *jsonUrlString = [NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/users/%@.json", userID];
+    
+    //testing URL
+    //NSString *jsonUrlString = [NSString stringWithFormat:@"http://localhost:3001/users/%@.json", userID];
     NSURL *url = [NSURL URLWithString:jsonUrlString];
     NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:[NSOperationQueue mainQueue]];
