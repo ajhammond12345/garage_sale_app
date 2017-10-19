@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "UserSettings.h"
 
-@interface NameCell : UITableViewCell <UITextFieldDelegate, UIImagePickerControllerDelegate> {
+@interface NameCell : UITableViewCell <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
     IBOutlet UIButton *userPhotoView;
     IBOutlet UITextField *firstNameTextField;
     IBOutlet UITextField *lastNameTextField;

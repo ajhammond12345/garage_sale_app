@@ -49,7 +49,6 @@
     UIImage *tmpImage = info[UIImagePickerControllerEditedImage];
     NSString * documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     [Utility saveImage:tmpImage withFileName:@"user_photo" ofType:@"jpg" inDirectory:documentsDirectory];
-    UIImage *reload = [Utility loadImageWithFileName:@"user_photo" ofType:@"jpg" inDirectory:documentsDirectory];
     [userPhotoView setImage:tmpImage forState:UIControlStateNormal];
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
