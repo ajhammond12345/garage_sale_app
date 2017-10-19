@@ -9,8 +9,6 @@
 #import "Filters.h"
 #import "Items.h"
 
-//TODO error when using only minimum filter - likely server problem
-
 @interface Filters () <UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
 
 @end
@@ -41,13 +39,15 @@
         NSString *price_max = [NSString stringWithFormat:@"%zd", _maxPriceInCents];
         [dataDic setObject:price_max forKey:@"price_max"];
     }
-    if (_worstConditionInt < _bestConditionInt) {
+    if (_worstConditionInt != nil && _bestConditionInt != nil && _worstConditionInt < _bestConditionInt ) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Impossible Filter" message:@"Cannot filter with given conditions." preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
         [alert addAction:defaultAction];
         [self presentViewController:alert animated:YES completion:nil];
     }
-    else if (_maxPriceInCents < _minPriceInCents) {
+    else if (_minPriceInCents != nil && _maxPriceInCents != nil && _maxPriceInCents < _minPriceInCents) {
+        NSLog(@"Max Price: %zd", _maxPriceInCents);
+        NSLog(@"Min Price: %zd", _minPriceInCents);
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Impossible Filter" message:@"Cannot filter with given price range." preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
         [alert addAction:defaultAction];
@@ -320,7 +320,7 @@
         maximumPrice.text = [NSString stringWithFormat:@"$%@.%@", dollars, cents];
         if ([maximumPrice.text isEqualToString:@"$0.00"]) {
             maximumPrice.text = @"";
-            _maxPriceInCents = nil;
+            _maxPriceInCents = (long *) -1;
             maximumPrice.placeholder = @"$0.00";
         }
     }
