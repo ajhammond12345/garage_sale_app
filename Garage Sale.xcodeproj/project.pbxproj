@@ -239,13 +239,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		7091194C1F8B5C5500A5D66E /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		70DC6CAE1E01F6DB00CE6953 = {
 			isa = PBXGroup;
 			children = (
@@ -254,7 +247,6 @@
 				70DC6CDE1E01F6DB00CE6953 /* Garage SaleUITests */,
 				70DC6CB81E01F6DB00CE6953 /* Products */,
 				704309951E3463160059B736 /* Frameworks */,
-				7091194C1F8B5C5500A5D66E /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
