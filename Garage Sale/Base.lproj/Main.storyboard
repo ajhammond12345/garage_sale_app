@@ -1224,18 +1224,8 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default.png" translatesAutoresizingMaskIntoConstraints="NO" id="WKh-5A-S7d">
-                                                    <rect key="frame" x="8" y="0.0" width="359" height="276"/>
+                                                    <rect key="frame" x="8" y="8" width="359" height="268"/>
                                                 </imageView>
-                                                <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="glk-1Q-oLQ">
-                                                    <rect key="frame" x="331.5" y="8" width="26" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" secondItem="glk-1Q-oLQ" secondAttribute="height" multiplier="26:21" id="6rp-vI-dsh"/>
-                                                    </constraints>
-                                                    <state key="normal" title="Button" image="Instagram-Heart-Transparent.png"/>
-                                                    <connections>
-                                                        <action selector="likeButtonClicked:" destination="gPU-b3-8Wy" eventType="touchUpInside" id="fEC-PH-B8h"/>
-                                                    </connections>
-                                                </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gradient.png" translatesAutoresizingMaskIntoConstraints="NO" id="eqx-if-ptN">
                                                     <rect key="frame" x="8" y="208" width="359" height="68"/>
                                                     <constraints>
@@ -1255,17 +1245,27 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="4" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$00.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8l9-u4-zQM">
-                                                    <rect key="frame" x="310.5" y="230" width="46.5" height="25"/>
+                                                    <rect key="frame" x="311.5" y="230" width="46.5" height="25"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="18"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="purchased.png" translatesAutoresizingMaskIntoConstraints="NO" id="OET-xX-Gqb">
-                                                    <rect key="frame" x="67" y="105" width="240" height="67"/>
+                                                    <rect key="frame" x="67" y="109" width="240" height="67"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="OET-xX-Gqb" secondAttribute="height" multiplier="240:67" id="Ync-NH-uSa"/>
                                                     </constraints>
                                                 </imageView>
+                                                <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="glk-1Q-oLQ">
+                                                    <rect key="frame" x="332" y="16" width="26" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="glk-1Q-oLQ" secondAttribute="height" multiplier="26:21" id="6rp-vI-dsh"/>
+                                                    </constraints>
+                                                    <state key="normal" image="like_empty.png"/>
+                                                    <connections>
+                                                        <action selector="likeButtonClicked:" destination="gPU-b3-8Wy" eventType="touchUpInside" id="fEC-PH-B8h"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottomMargin" secondItem="wFX-wg-15M" secondAttribute="bottom" constant="7" id="5KD-Md-ZSd"/>
@@ -1275,12 +1275,12 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="eqx-if-ptN" secondAttribute="trailing" id="8QW-fu-1gf"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="2dW-ng-so9" secondAttribute="bottom" constant="32" id="Hty-GC-J1T"/>
                                                 <constraint firstItem="wFX-wg-15M" firstAttribute="leading" secondItem="i45-p3-fd5" secondAttribute="leadingMargin" constant="10" id="PJK-cb-yCk"/>
-                                                <constraint firstItem="WKh-5A-S7d" firstAttribute="top" secondItem="i45-p3-fd5" secondAttribute="topMargin" constant="-8" id="PM8-fT-LKa"/>
+                                                <constraint firstItem="WKh-5A-S7d" firstAttribute="top" secondItem="i45-p3-fd5" secondAttribute="topMargin" id="PM8-fT-LKa"/>
                                                 <constraint firstItem="8l9-u4-zQM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2dW-ng-so9" secondAttribute="trailing" constant="8" id="REj-oA-1aq"/>
+                                                <constraint firstItem="glk-1Q-oLQ" firstAttribute="top" secondItem="i45-p3-fd5" secondAttribute="top" constant="16" id="Rxo-rp-12P"/>
                                                 <constraint firstItem="OET-xX-Gqb" firstAttribute="width" secondItem="WKh-5A-S7d" secondAttribute="width" multiplier="240:359" id="Vaj-uA-ZRF"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="WKh-5A-S7d" secondAttribute="leading" id="WFe-Ij-noT"/>
                                                 <constraint firstItem="8l9-u4-zQM" firstAttribute="centerY" secondItem="eqx-if-ptN" secondAttribute="centerY" id="pSi-UM-lHs"/>
-                                                <constraint firstItem="WKh-5A-S7d" firstAttribute="top" secondItem="glk-1Q-oLQ" secondAttribute="bottom" constant="-29" id="pVy-ry-LnP"/>
                                                 <constraint firstItem="OET-xX-Gqb" firstAttribute="centerX" secondItem="WKh-5A-S7d" secondAttribute="centerX" id="sis-gT-OdE"/>
                                                 <constraint firstItem="glk-1Q-oLQ" firstAttribute="leading" secondItem="WKh-5A-S7d" secondAttribute="trailing" constant="-35" id="tu3-kk-79W"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="WKh-5A-S7d" secondAttribute="trailing" id="u3G-6K-zgb"/>
@@ -1437,9 +1437,9 @@
                                             </barButtonItem>
                                             <barButtonItem title="like" style="plain" id="W9C-wG-Eou">
                                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yNG-fx-Uwm">
-                                                    <rect key="frame" x="273" y="0.0" width="44" height="44"/>
+                                                    <rect key="frame" x="288" y="7" width="29" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" image="Instagram-Heart-Transparent-Tall.png"/>
+                                                    <state key="normal" image="tall_like_empty.png" backgroundImage="tall_like_empty.png"/>
                                                     <connections>
                                                         <action selector="like:" destination="aWM-kn-DrQ" eventType="touchUpInside" id="iVQ-Xt-i0s"/>
                                                     </connections>
@@ -2126,8 +2126,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Instagram-Heart-Transparent-Tall.png" width="29" height="30"/>
-        <image name="Instagram-Heart-Transparent.png" width="37" height="32"/>
         <image name="Login page.png" width="375" height="667"/>
         <image name="RefreshG.png" width="62" height="62"/>
         <image name="Screen Shot 2017-01-17 at 11.19.21 AM.png" width="42" height="52"/>
@@ -2143,8 +2141,10 @@
         <image name="default.png" width="1258" height="998"/>
         <image name="donateBox.png" width="76" height="60"/>
         <image name="gradient.png" width="926" height="580"/>
+        <image name="like_empty.png" width="37" height="32"/>
         <image name="navBarColor.png" width="375" height="74"/>
         <image name="purchased.png" width="349" height="111"/>
+        <image name="tall_like_empty.png" width="29" height="30"/>
         <image name="userlogo.png" width="1132" height="1136"/>
     </resources>
     <inferredMetricsTieBreakers>

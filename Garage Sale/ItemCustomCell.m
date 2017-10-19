@@ -29,10 +29,10 @@
     }
     //updates like button appearance based on whether or not the object has been liked
     if (_item.liked) {
-        [_likeButton setImage:[UIImage imageNamed:@"Instagram-Heart-Solid.png"] forState:UIControlStateNormal];
+        [_likeButton setImage:[UIImage imageNamed:@"like_full.png"] forState:UIControlStateNormal];
     }
     else {
-        [_likeButton setImage:[UIImage imageNamed:@"Instagram-Heart-Transparent.png"] forState:UIControlStateNormal];
+        [_likeButton setImage:[UIImage imageNamed:@"like_empty.png"] forState:UIControlStateNormal];
     }
     if ([_image isAnimating]) {
         [_image stopAnimating];

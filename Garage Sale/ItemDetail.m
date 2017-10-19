@@ -182,11 +182,13 @@
     
     //if item liked, sets the heart to solid
     if (_itemOnDisplay.liked) {
-        [displayLikeButton setImage:[UIImage imageNamed:@"Instagram-Heart-Solid-Tall.png"] forState:UIControlStateNormal];
+        NSLog(@"Liked");
+        [displayLikeButton setImage:[UIImage imageNamed:@"Tall-Instagram-Heart-Solid.png"] forState:UIControlStateNormal];
     }
     //if item not liked sets the hear to transparent
     else {
-        [displayLikeButton setImage:[UIImage imageNamed:@"Instagram-Heart-Transparent-Tall.png"] forState:UIControlStateNormal];
+        NSLog(@"Disliked");
+        [displayLikeButton setImage:[UIImage imageNamed:@"Tall-Instagram-Heart-Transparent.png"] forState:UIControlStateNormal];
     }
     
     //if the item has an image (server errors may cause it to be missing an image) it displays it
@@ -299,10 +301,10 @@
 -(IBAction)like:(id)sender {
     [_itemOnDisplay changeLiked];
     if (_itemOnDisplay.liked) {
-        [displayLikeButton setImage:[UIImage imageNamed:@"Instagram-Heart-Solid-Tall.png"] forState:UIControlStateNormal];
+        [displayLikeButton setImage:[UIImage imageNamed:@"tall_like_full.png"] forState:UIControlStateNormal];
     }
     else {
-        [displayLikeButton setImage:[UIImage imageNamed:@"Instagram-Heart-Transparent-Tall.png"] forState:UIControlStateNormal];
+        [displayLikeButton setImage:[UIImage imageNamed:@"tall_like_empty.png"] forState:UIControlStateNormal];
     }
 }
 
