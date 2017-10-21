@@ -9,7 +9,7 @@
 #import "ItemDetail.h"
 #import "PurchaseThankYou.h"
 
-//TODO heart too big?
+//TODO heart update item in saved list when liked
 //TODO share button
 
 @interface ItemDetail () <UITextViewDelegate, PKPaymentAuthorizationViewControllerDelegate>
@@ -182,13 +182,10 @@
     
     //if item liked, sets the heart to solid
     if (_itemOnDisplay.liked) {
-        NSLog(@"Liked");
-        [displayLikeButton setImage:[UIImage imageNamed:@"Tall-Instagram-Heart-Solid.png"] forState:UIControlStateNormal];
+        [displayLikeButton setImage:[UIImage imageNamed:@"tall_like_full.png"] forState:UIControlStateNormal];
     }
-    //if item not liked sets the hear to transparent
     else {
-        NSLog(@"Disliked");
-        [displayLikeButton setImage:[UIImage imageNamed:@"Tall-Instagram-Heart-Transparent.png"] forState:UIControlStateNormal];
+        [displayLikeButton setImage:[UIImage imageNamed:@"tall_like_empty.png"] forState:UIControlStateNormal];
     }
     
     //if the item has an image (server errors may cause it to be missing an image) it displays it

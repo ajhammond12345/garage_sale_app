@@ -11,7 +11,7 @@
 #import "UserSettings.h"
 
 
-@interface UserPage () <UIImagePickerControllerDelegate, NSURLSessionDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface UserPage () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, NSURLSessionDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @end
 

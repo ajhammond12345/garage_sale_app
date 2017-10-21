@@ -8,6 +8,7 @@
 
 #import "Donate.h"
 #import "Item.h"
+#import "DonationThankYou.h"
 
 
 @interface Donate () <UITextViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
@@ -191,6 +192,14 @@
                 }
             });
         }] resume];
+    }
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"showDonationThankYou"]) {
+        DonationThankYou *destination = segue.destinationViewController;
+        destination.donatedItemName = name;
+        destination.donatedItemImage = image;
     }
 }
 

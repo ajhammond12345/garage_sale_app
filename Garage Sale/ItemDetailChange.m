@@ -12,7 +12,7 @@
 
 
 
-@interface ItemDetailChange () <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate, UIImagePickerControllerDelegate>
+@interface ItemDetailChange () <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @end
 
@@ -229,9 +229,8 @@
             
             //creates mutable copy of the dictionary to remove extra keys
             NSMutableDictionary *tmpDic = [newItem.localDictionary mutableCopy];
-            NSInteger *tmpID = (NSInteger*)[[tmpDic objectForKey:@"id"] integerValue];
             //removes extra keys (item_image is replaced with a different key for the image data)
-            NSLog([NSString stringWithFormat:@"\n\n\n\n\n\nItem ID: %zd\n\n\n\n\n\n\n", _itemOnDisplay.itemID]);
+            //NSLog(@"\n\n\n\n\n\nItem ID: %zd\n\n\n\n\n\n\n", _itemOnDisplay.itemID);
             [tmpDic removeObjectForKey:@"item_image"];
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSNumber *userID = [defaults objectForKey:@"user_id"];

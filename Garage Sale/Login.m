@@ -14,6 +14,10 @@
 
 @implementation Login
 
+/**
+ TODO transition to home screen messes up buttons
+ */
+
 -(IBAction)signIn:(id)sender {
     [self.view endEditing:YES];
     NSString *username = usernameTextField.text;
