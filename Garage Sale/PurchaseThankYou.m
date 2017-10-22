@@ -12,7 +12,6 @@
 
 @end
 
-//TODO share button
 
 @implementation PurchaseThankYou
 

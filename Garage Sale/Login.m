@@ -14,9 +14,7 @@
 
 @implementation Login
 
-/**
- TODO transition to home screen messes up buttons
- */
+
 
 -(IBAction)signIn:(id)sender {
     [self.view endEditing:YES];
@@ -111,9 +109,11 @@
                 [defaults setObject:[_requestResult objectForKey:@"user_last_name"] forKey:@"last_name"];
                 [defaults setObject:[_requestResult objectForKey:@"user_address"] forKey:@"address"];
                 [defaults setObject:[_requestResult objectForKey:@"email_address"] forKey:@"email"];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"loggedIn"
-                                                                    object:self
-                                                                  userInfo:nil];
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    [self performSegueWithIdentifier:@"toHomeFromLogin" sender:self];
+                });
+                
+                
             }
             else {
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Invalid Login" message:@"Please try again" preferredStyle:UIAlertControllerStyleAlert];

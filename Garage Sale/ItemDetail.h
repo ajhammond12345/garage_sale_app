@@ -34,6 +34,7 @@
 //declares the properties, actions, and publicly accessible methods
 
 @property Item *itemOnDisplay;
+@property long itemOnDisplayRow;
 
 //this is passed on to prevent needing to reload when going back to main page
 @property NSMutableArray *items;

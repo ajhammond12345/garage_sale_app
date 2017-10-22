@@ -10,7 +10,6 @@
 #import "PurchaseThankYou.h"
 
 //TODO heart update item in saved list when liked
-//TODO share button
 
 @interface ItemDetail () <UITextViewDelegate, PKPaymentAuthorizationViewControllerDelegate>
 
@@ -297,6 +296,7 @@
 //action for like button - calls the internal method to change the liked status of the object then update the UI by changing the button image to reflect the new state
 -(IBAction)like:(id)sender {
     [_itemOnDisplay changeLiked];
+    [_items replaceObjectAtIndex:_itemOnDisplayRow withObject:_itemOnDisplay];
     if (_itemOnDisplay.liked) {
         [displayLikeButton setImage:[UIImage imageNamed:@"tall_like_full.png"] forState:UIControlStateNormal];
     }

@@ -6,13 +6,7 @@
 //  Copyright © 2017 TripleA. All rights reserved.
 //
 
-/*
- Things left for this page:
-    Test unique verification
-    Test ID saving
-    Transistions back to page it comes from
- 
- */
+
 
 #import "SignUp.h"
 

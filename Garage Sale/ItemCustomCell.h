@@ -11,7 +11,9 @@
 
 
 //class declarations
-@interface ItemCustomCell : UITableViewCell
+@interface ItemCustomCell : UITableViewCell {
+    
+}
 
 @property Item *item;
 @property UITableView *parentTable;

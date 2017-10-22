@@ -27,6 +27,7 @@
         ItemDetail *destViewController = segue.destinationViewController;
         destViewController.itemOnDisplay = _itemToSend;
         destViewController.items = _items;
+        destViewController.itemOnDisplayRow = _itemToSendRow;
         [destViewController updateView];
     }
     if ([segue.identifier isEqualToString:@"toFilters"]) {
@@ -39,6 +40,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     ItemCustomCell *tmpCell = [itemsView cellForRowAtIndexPath:indexPath];
     _itemToSend = tmpCell.item;
+    _itemToSendRow = indexPath.row;
     [self performSegueWithIdentifier:@"showItem" sender:indexPath];
 }
 

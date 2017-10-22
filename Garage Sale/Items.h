@@ -37,6 +37,7 @@
 @property bool showFiltered;
 @property bool showAll;
 @property Item *itemToSend;
+@property long itemToSendRow;
 @property NSDictionary *filters;
 
 
