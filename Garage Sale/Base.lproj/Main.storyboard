@@ -738,24 +738,25 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Info Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwo-mg-9hY">
-                                                    <rect key="frame" x="20" y="11" width="71" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwo-mg-9hY">
+                                                    <rect key="frame" x="20" y="11" width="79" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Editable Info" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1dJ-2b-5eh">
-                                                    <rect key="frame" x="150" y="11" width="99" height="21"/>
+                                                    <rect key="frame" x="121" y="11" width="99" height="21"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="1dJ-2b-5eh" firstAttribute="leading" secondItem="gwo-mg-9hY" secondAttribute="trailing" constant="59" id="4Jz-XU-yvG"/>
+                                                <constraint firstItem="1dJ-2b-5eh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gwo-mg-9hY" secondAttribute="trailing" constant="8" id="4Jz-XU-yvG"/>
                                                 <constraint firstItem="1dJ-2b-5eh" firstAttribute="centerY" secondItem="fPd-0e-8Tj" secondAttribute="centerY" id="DTA-F6-pbc"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1dJ-2b-5eh" secondAttribute="trailing" constant="8" id="Gfz-pM-Xet"/>
                                                 <constraint firstItem="gwo-mg-9hY" firstAttribute="centerY" secondItem="fPd-0e-8Tj" secondAttribute="centerY" id="QbL-NZ-J9d"/>
+                                                <constraint firstItem="1dJ-2b-5eh" firstAttribute="leading" secondItem="gwo-mg-9hY" secondAttribute="leading" constant="101" id="boT-mE-6iY"/>
                                                 <constraint firstItem="gwo-mg-9hY" firstAttribute="leading" secondItem="fPd-0e-8Tj" secondAttribute="leading" constant="20" id="u2l-XS-NHi"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -2177,7 +2178,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="sLi-CX-hcV"/>
         <segue reference="e9g-dc-COm"/>
-        <segue reference="hrg-ki-lJl"/>
+        <segue reference="yEy-Ux-EQd"/>
         <segue reference="qxU-em-jdH"/>
         <segue reference="Ocf-ql-D94"/>
     </inferredMetricsTieBreakers>
