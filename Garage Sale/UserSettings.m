@@ -37,24 +37,23 @@
 
     
     
-    //NEED TO ADD PASSWORD
     if (![_username isEqualToString:originalUsername]
         || ![_firstName isEqualToString:originalFirstName]
         || ![_lastName isEqualToString:originalLastName]
         || ![_email isEqualToString:originalEmail]
         || ![_address isEqualToString:originalAddress]) {
-        NSLog(@"FUCK XCODE");
         NSError *error;
         
         //creates mutable copy of the dictionary to remove extra keys
         NSMutableDictionary *tmpDic = [[NSMutableDictionary alloc] init];
+        //TODO: Add checks for these fields that reflect any checks done on the Sign-Up page
+            //should probably do through common method put in Utility class
         [tmpDic setObject:_username forKey:@"username"];
         [tmpDic setObject:_firstName forKey:@"user_first_name"];
         [tmpDic setObject:_lastName forKey:@"user_last_name"];
         [tmpDic setObject:_email forKey:@"email_address"];
         [tmpDic setObject:_address forKey:@"user_address"];
         //removes extra keys (item_image is replaced with a different key for the image data)
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSNumber *userID = [defaults objectForKey:@"user_id"];
         [tmpDic setObject:userID forKey:@"id"];
         
@@ -110,7 +109,6 @@
         }] resume];
     }
     else {
-        NSLog(@"FUCK XCODE");
         [self performSegueWithIdentifier:@"returnFromSettings" sender:self];
     }
 }
@@ -130,7 +128,162 @@
         [defaults setObject:loggedOut forKey:@"logged_in"];
         [self performSegueWithIdentifier:@"returnToHomePage" sender:self];
     }
+    if (indexPath.row == 6) {
+        [self changePasswordWithMessage:@"Please verify password"];
+    }
 }
+
+-(void)changePasswordWithMessage:(NSString *)message {
+    NSString *title = @"Change Password";
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * action)
+                                    {
+                                        
+                                    }];
+    UIAlertAction *continueAction = [UIAlertAction actionWithTitle:@"Continue" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action)
+                                    {
+                                        NSString *passwordCheck = alert.textFields.firstObject.text;
+                                        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                        NSString *oldPassword = [defaults objectForKey:@"password"];
+                                        if ([passwordCheck isEqualToString:oldPassword]) {
+                                            [self inputNewPasswordWithMessage:@"Type your new password"];
+                                        }
+                                        else {
+                                            [self changePasswordWithMessage:@"Incorrect password. Please try again"];
+                                        }
+                                    }];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = NSLocalizedString(@"password", @"Password");
+    }];
+    [alert addAction:cancelAction];
+    [alert addAction:continueAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+-(void) inputNewPasswordWithMessage:(NSString *)message {
+    NSString *title = @"New Password";
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * action)
+                                   {
+                                       
+                                   }];
+    UIAlertAction *continueAction = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action)
+                                     {
+                                         NSString *newPassword = alert.textFields.firstObject.text;
+                                         
+                                         NSString *passwordVerification = alert.textFields.lastObject.text;
+                                         if ([newPassword isEqualToString:passwordVerification]) {
+                                             if ([self passwordCheck:newPassword]) {
+                                                 [self uploadNewPassword:newPassword];
+                                             }
+                                         }
+                                         else {
+                                             [self inputNewPasswordWithMessage:@"Passwords don't match. Please try again"];
+                                         }
+                                     }];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = NSLocalizedString(@"new password", @"New Password");
+    }];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = NSLocalizedString(@"retype password", @"Retype Password");
+    }];
+    [alert addAction:cancelAction];
+    [alert addAction:continueAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+
+-(bool) passwordCheck:(NSString *)password {
+    if ([password isEqualToString:@""] || password == nil) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+-(void) uploadNewPassword:(NSString *)password {
+    NSError *error;
+    
+    //creates mutable copy of the dictionary to remove extra keys
+    NSMutableDictionary *tmpDic = [[NSMutableDictionary alloc] init];
+    [tmpDic setObject:password forKey:@"user_password"];
+    //removes extra keys (item_image is replaced with a different key for the image data)
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *userID = [defaults objectForKey:@"user_id"];
+    [tmpDic setObject:userID forKey:@"id"];
+    
+    //JSON Upload - does not upload the image
+    //converts the dictionary to json
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
+    //logs the data to check if it is created successfully
+    NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+    
+    //creates url for the request
+    
+    //production url
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/users/%zd.json", [userID integerValue]]];
+    //testing url
+    //NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:3001/users/%zd.json", [userID integerValue]]];
+    //NSLog(url.path);
+    //creates a URL request
+    NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    
+    //specifics for the request (it is a post request with json content)
+    [uploadRequest setHTTPMethod:@"PATCH"];
+    [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [uploadRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
+    [uploadRequest setHTTPBody: jsonData];
+    
+    //create some type of waiting image here
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    
+    //runs the data task
+    [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+            NSLog(@"requestReply Type: %@\nrequestReply: %@", [[requestReply class] description], requestReply);
+            //if the result has the class type __NSCFConstantString then the item failed to upload
+            if ([[[requestReply class] description] isEqualToString:@"__NSCFConstantString"]) {
+                //alert for failing to upload
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Connection\n" message:@"Could not update the item. Please check your internet connection and try again." preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+                [alert addAction:defaultAction];
+                [self presentViewController:alert animated:YES completion:nil];
+            }
+            else {
+                [defaults setObject:password forKey:@"password"];
+                
+            }
+        });
+    }] resume];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.row) {
