@@ -35,9 +35,9 @@
         
         //creates url for request
     //production URL
-    NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/users/unique_username.json"];
+    //NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/users/unique_username.json"];
     //testing URL
-    //NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users/unique_username.json"];
+    NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users/unique_username.json"];
         //creates a URL request
         NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
         
@@ -64,14 +64,14 @@
                     //error handler
                     NSError *jsonError;
                     //stores the response
-                    _requestResult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
-                    //NSLog(@"requestReply: %@", _requestResult);
-                    //NSLog(@"%@", [[_requestResult class] description]);
+                    _usernameUniqueRequestReply = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
+                    NSLog(@"Email requestReply: %@", _usernameUniqueRequestReply);
+                    NSLog(@"%@", [[_usernameUniqueRequestReply class] description]);
                     
                     //if the response is the valid type it indicates the download is successful and proceeds with the segue back to the main page, if unsuccessful it proceeds while leaving the downloadSuccessful as false (the segue delegate method uses this to determine what data to pass to the Items view controller
-                    if ([[[_requestResult class] description] isEqualToString:@"__NSArrayM"]) {
+                    if ([_usernameUniqueRequestReply objectForKey:@"msg"] != nil) {
                         _usernameDataDownloadSuccessful = true;
-                        if (_requestResult.count < 1) {
+                        if ([[_usernameUniqueRequestReply objectForKey:@"msg"] isEqualToString:@"unique"]) {
                             NSLog(@"Verified username is Unique");
                             _usernameUnique = true;
                             if (_usernameUnique && _emailUnique) {
@@ -80,7 +80,10 @@
                             //SHOW USERNAME IS VALID SOMEWHERE IN UI
                         }
                         else {
-                            [self throwAlertWithTitle:@"Username already in use" message:@"Please choose a different username"];
+                            if (!_isShowingError) {
+                                _isShowingError = true;
+                                [self throwAlertWithTitle:@"Username already in use" message:@"Please choose a different username"];
+                            }
                             _usernameUnique = false;
                         }
                     }
@@ -127,9 +130,9 @@
     
     //creates url for request
     //production URL
-    NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/users/unique_email.json"];
+    //NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/users/unique_email.json"];
     //testing URL
-    //NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users/unique_email.json"];
+    NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users/unique_email.json"];
     
     //creates a URL request
     NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
@@ -157,14 +160,14 @@
                 //error handler
                 NSError *jsonError;
                 //stores the response
-                _requestResult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
-                NSLog(@"requestReply: %@", _requestResult);
-                NSLog(@"%@", [[_requestResult class] description]);
+                _emailUniqueRequestReply = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
+                NSLog(@"Email requestReply: %@", _emailUniqueRequestReply);
+                NSLog(@"%@", [[_emailUniqueRequestReply class] description]);
                 
                 //if the response is the valid type it indicates the download is successful and proceeds with the segue back to the main page, if unsuccessful it proceeds while leaving the downloadSuccessful as false (the segue delegate method uses this to determine what data to pass to the Items view controller
-                if ([[[_requestResult class] description] isEqualToString:@"__NSArrayM"]) {
+                if ([_emailUniqueRequestReply objectForKey:@"msg"] != nil) {
                     _emailDataDownloadSuccessful = true;
-                    if (_requestResult.count < 1) {
+                    if ([[_emailUniqueRequestReply objectForKey:@"msg"] isEqualToString:@"unique"]) {
                         NSLog(@"Verified email is Unique");
                         _emailUnique = true;
                         if (_usernameUnique && _emailUnique) {
@@ -175,7 +178,10 @@
                         //SHOW EMAIL IS VALID SOMEWHERE IN UI
                     }
                     else {
-                        [self throwAlertWithTitle:@"Email already in use" message:@"Please choose a different email"];
+                        if (!_isShowingError) {
+                            _isShowingError = true;
+                            [self throwAlertWithTitle:@"Email already in use" message:@"Please choose a different email"];
+                        }
                         _emailUnique = false;
                     }
                 }
@@ -213,9 +219,9 @@
     
     //creates url for the request
     //production URL
-    NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/users.json"];
+    //NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/users.json"];
     //testing URL
-    //NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users.json"];
+    NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users.json"];
     
     //creates a URL request
     NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
@@ -238,6 +244,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
             NSLog(@"requestReply: %@", [[requestReply class] description]);
+            NSLog(@"requestReply: %@", requestReply);
             //if the result has the class type __NSCFConstantString then the item failed to upload
             if ([[[requestReply class] description] isEqualToString:@"__NSCFConstantString"]) {
                 //alert for failing to upload
@@ -257,6 +264,8 @@
                 [defaults setObject:[_result objectForKey:@"user_last_name"] forKey:@"last_name"];
                 [defaults setObject:[_result objectForKey:@"user_address"] forKey:@"address"];
                 [defaults setObject:[_result objectForKey:@"email_address"] forKey:@"email"];
+                [defaults setObject:[_result objectForKey:@"user_unique_key"] forKey:@"unique_key"];
+                NSLog(@"Unique Key: %@", [_result objectForKey:@"user_unique_key"]);
                 
                 //transitions back to page it came from (property booleans needed here
                 [self performSegueWithIdentifier:@"toHome" sender:(self)];
@@ -285,6 +294,7 @@
     
     _usernameUnique = false;
     _emailUnique = false;
+    _isShowingError = false;
     _email = emailTextField.text;
     _username = usernameTextField.text;
     _password = passwordTextField.text;

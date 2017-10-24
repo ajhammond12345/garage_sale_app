@@ -234,7 +234,9 @@
             [tmpDic removeObjectForKey:@"item_image"];
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSNumber *userID = [defaults objectForKey:@"user_id"];
+            NSString *uniqueKey = [defaults objectForKey:@"unique_key"];
             [tmpDic setObject:userID forKey:@"user_id"];
+            [tmpDic setObject:uniqueKey forKey:@"user_unique_key"];
             NSData *imageData = UIImageJPEGRepresentation(_theNewImage, .6);
             NSString *imageBase64 = [imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
             //NSLog(@"Upload Data: %@", imageBase64);
@@ -250,9 +252,9 @@
             //creates url for the request
             
             //production url
-            NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/items/%zd.json", _itemOnDisplay.itemID]];
+            //NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/items/%zd.json", _itemOnDisplay.itemID]];
             //testing url
-            //NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:3001/items/%zd.json", _itemOnDisplay.itemID]];
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:3001/items/%zd.json", _itemOnDisplay.itemID]];
             
             //creates a URL request
             NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
@@ -270,12 +272,14 @@
             //runs the data task
             [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    NSError *jsonError;
                     NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
                     NSLog(@"requestReply Type: %@\nrequestReply: %@", [[requestReply class] description], requestReply);
+                    NSDictionary *check = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
                     //if the result has the class type __NSCFConstantString then the item failed to upload
-                    if ([[[requestReply class] description] isEqualToString:@"__NSCFConstantString"]) {
+                    if (![[check objectForKey:@"msg"] isEqualToString:@"updated"]) {
                         //alert for failing to upload
-                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Connection\n" message:@"Could not update the item. Please check your internet connection and try again." preferredStyle:UIAlertControllerStyleAlert];
+                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to update item\n" message:@"Could not update the item. Please check your internet connection and try again. You may need to logout and log back in." preferredStyle:UIAlertControllerStyleAlert];
                         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
                         [alert addAction:defaultAction];
                         [self presentViewController:alert animated:YES completion:nil];

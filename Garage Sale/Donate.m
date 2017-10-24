@@ -129,7 +129,9 @@
         [tmpDic removeObjectForKey:@"item_image"];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSNumber *userID = [defaults objectForKey:@"user_id"];
+        NSString *user_key = [defaults objectForKey:@"unique_key"];
         [tmpDic setObject:userID forKey:@"user_id"];
+        [tmpDic setObject:user_key forKey:@"user_unique_key"];
         NSData *imageData = UIImageJPEGRepresentation(image, .6);
         NSString *imageBase64 = [imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
         //NSLog(@"Upload Data: %@", imageBase64);
@@ -145,9 +147,9 @@
         //creates url for the request
         
         //production url
-        NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/items.json"];
+        //NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/items.json"];
         //testing url
-        //NSURL *url = [NSURL URLWithString:@"http://localhost:3001/items.json"];
+        NSURL *url = [NSURL URLWithString:@"http://localhost:3001/items.json"];
 
         //creates a URL request
         NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
@@ -165,12 +167,22 @@
         //runs the data task
         [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                NSError *jsonError;
             NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
                 NSLog(@"requestReply: %@", [[requestReply class] description]);
+                NSLog(@"Response: %@", requestReply);
+            NSDictionary *check = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
                 //if the result has the class type __NSCFConstantString then the item failed to upload
-                if ([[[requestReply class] description] isEqualToString:@"__NSCFConstantString"]) {
+                if ([[check objectForKey:@"msg"] isEqualToString:@"failed_to_donate"]) {
                     //alert for failing to upload
                     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Connection\n" message:@"Could not donate the item. Please check your internet connection and try again." preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+                    [alert addAction:defaultAction];
+                    [self presentViewController:alert animated:YES completion:nil];
+                }
+                else if ([[check objectForKey:@"msg"] isEqualToString:@"invalid_key"]) {
+                    //alert for failing to upload
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Invalid Login Session\n" message:@"Could not verify your identity. Please log out and try again." preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
                     [alert addAction:defaultAction];
                     [self presentViewController:alert animated:YES completion:nil];
