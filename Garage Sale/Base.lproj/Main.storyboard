@@ -1068,14 +1068,19 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="yfM-27-6f2">
+                                <rect key="frame" x="177" y="323" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="yfM-27-6f2" firstAttribute="centerY" secondItem="tH6-j5-8d5" secondAttribute="centerY" id="0Cg-zp-nod"/>
                             <constraint firstItem="P8S-zN-JeG" firstAttribute="top" secondItem="z9F-fM-Sa6" secondAttribute="bottom" constant="206" id="0d6-6J-2ag"/>
                             <constraint firstItem="QbP-44-Viy" firstAttribute="top" secondItem="3iN-vq-mUv" secondAttribute="bottom" constant="29" id="2wA-jc-nLi"/>
                             <constraint firstItem="z9F-fM-Sa6" firstAttribute="top" secondItem="QbP-44-Viy" secondAttribute="bottom" constant="1" id="3qL-Qd-jUF"/>
                             <constraint firstItem="ehQ-R9-GSf" firstAttribute="top" secondItem="5Mg-Gt-h0u" secondAttribute="bottom" id="7Yf-yj-5IV"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Ier-70-c8R" secondAttribute="trailing" constant="22" id="883-5c-dMu"/>
+                            <constraint firstItem="yfM-27-6f2" firstAttribute="centerX" secondItem="tH6-j5-8d5" secondAttribute="centerX" id="ESo-kh-s6o"/>
                             <constraint firstAttribute="leadingMargin" secondItem="3iN-vq-mUv" secondAttribute="leading" id="Eff-ea-mrV"/>
                             <constraint firstItem="3iN-vq-mUv" firstAttribute="top" secondItem="bvb-HL-oJj" secondAttribute="bottom" constant="-35" id="ElR-u8-xG5"/>
                             <constraint firstItem="5Mg-Gt-h0u" firstAttribute="centerX" secondItem="Z2g-f4-UaY" secondAttribute="centerX" id="H4Z-Tq-OyW"/>
@@ -1116,6 +1121,7 @@
                         <outlet property="conditionTextField" destination="8Bx-wc-f5W" id="wqU-7y-S5z"/>
                         <outlet property="descriptionTextView" destination="z9F-fM-Sa6" id="XCr-o0-wzq"/>
                         <outlet property="imageView" destination="3iN-vq-mUv" id="4hi-Z7-Lm8"/>
+                        <outlet property="loading" destination="yfM-27-6f2" id="A5t-Vc-A2B"/>
                         <outlet property="nameTextField" destination="Veo-Ez-QAX" id="bTp-qF-IMR"/>
                         <outlet property="priceTextField" destination="Ier-70-c8R" id="mf4-7h-06m"/>
                         <outlet property="tmpLabel" destination="Z2g-f4-UaY" id="d06-FR-pY7"/>
@@ -2178,7 +2184,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="sLi-CX-hcV"/>
         <segue reference="e9g-dc-COm"/>
-        <segue reference="yEy-Ux-EQd"/>
+        <segue reference="wqe-qP-Q92"/>
         <segue reference="qxU-em-jdH"/>
         <segue reference="Ocf-ql-D94"/>
     </inferredMetricsTieBreakers>
