@@ -130,9 +130,9 @@
     
     //creates url for request
     //production URL
-    //NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/users/unique_email.json"];
+    NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/users/unique_email.json"];
     //testing URL
-    NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users/unique_email.json"];
+    //NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users/unique_email.json"];
     
     //creates a URL request
     NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
@@ -219,9 +219,9 @@
     
     //creates url for the request
     //production URL
-    //NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/users.json"];
+    NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/users.json"];
     //testing URL
-    NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users.json"];
+    //NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users.json"];
     
     //creates a URL request
     NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
