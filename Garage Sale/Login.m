@@ -62,7 +62,7 @@
     //production URL
     NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/users/login.json"];
     //testing URL
-    //NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users/login.json"];    
+    //NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users/login.json"];
     
     //creates a URL request
     NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
@@ -102,6 +102,7 @@
                 NSLog(@"User ID From download: %@", [NSString stringWithFormat:@"%zd", userID]);
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                 [defaults setObject:[NSString stringWithFormat:@"%zd", userID] forKey:@"user_id"];
+                [defaults setObject:[_requestResult objectForKey:@"user_unique_key"] forKey:@"unique_key"];
                 [defaults setObject:[_requestResult objectForKey:@"username"] forKey:@"username"];
                 [defaults setObject:[NSNumber numberWithBool:true] forKey:@"logged_in"];
                 [defaults setObject:password forKey:@"password"];

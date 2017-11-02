@@ -137,6 +137,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    //uncomment this line if there is a glitch with user login, allows access to sign in again
+    //[defaults setObject:[NSNumber numberWithBool:false] forKey:@"logged_in"];
     _loggedOn = [defaults objectForKey:@"logged_in"];
     if (_loggedOn == nil) {
         

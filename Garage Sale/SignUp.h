@@ -20,11 +20,14 @@
     IBOutlet UITextField *passwordVerificationTextField;
 }
 
+@property NSDictionary *emailUniqueRequestReply;
+@property NSDictionary *usernameUniqueRequestReply;
 @property NSArray *requestResult;
 @property bool usernameDataDownloadSuccessful;
 @property bool emailDataDownloadSuccessful;
 @property bool usernameUnique;
 @property bool emailUnique;
+@property bool isShowingError;
 @property NSString *email;
 @property NSString *username;
 @property NSString *password;

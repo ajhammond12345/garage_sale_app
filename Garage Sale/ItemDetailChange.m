@@ -234,7 +234,9 @@
             [tmpDic removeObjectForKey:@"item_image"];
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSNumber *userID = [defaults objectForKey:@"user_id"];
+            NSString *uniqueKey = [defaults objectForKey:@"unique_key"];
             [tmpDic setObject:userID forKey:@"user_id"];
+            [tmpDic setObject:uniqueKey forKey:@"user_unique_key"];
             NSData *imageData = UIImageJPEGRepresentation(_theNewImage, .6);
             NSString *imageBase64 = [imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
             //NSLog(@"Upload Data: %@", imageBase64);
@@ -270,12 +272,14 @@
             //runs the data task
             [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    NSError *jsonError;
                     NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
                     NSLog(@"requestReply Type: %@\nrequestReply: %@", [[requestReply class] description], requestReply);
+                    NSDictionary *check = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
                     //if the result has the class type __NSCFConstantString then the item failed to upload
-                    if ([[[requestReply class] description] isEqualToString:@"__NSCFConstantString"]) {
+                    if (![[check objectForKey:@"msg"] isEqualToString:@"updated"]) {
                         //alert for failing to upload
-                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Connection\n" message:@"Could not update the item. Please check your internet connection and try again." preferredStyle:UIAlertControllerStyleAlert];
+                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to update item\n" message:@"Could not update the item. Please check your internet connection and try again. You may need to logout and log back in." preferredStyle:UIAlertControllerStyleAlert];
                         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
                         [alert addAction:defaultAction];
                         [self presentViewController:alert animated:YES completion:nil];
@@ -424,7 +428,7 @@
 }
 
 //for condition (not directly edited, uses a picker instead)
--(bool)textFieldShouldBeginEditing:(UITextField *)textField {
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     if ([self isItemPurchased]) {
         [Utility throwAlertWithTitle:@"Item Sold" message:@"This item has been purchased. No changes are allowed." sender:self];
         return false;
@@ -506,7 +510,7 @@
     }
 }
 
--(bool)textViewShouldBeginEditing:(UITextField *)textField {
+-(BOOL)textViewShouldBeginEditing:(UITextField *)textField {
     if ([self isItemPurchased]) {
         [Utility throwAlertWithTitle:@"Item Sold" message:@"This item has been purchased. No changes are allowed." sender:self];
         return false;

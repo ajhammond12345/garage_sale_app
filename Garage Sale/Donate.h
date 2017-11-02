@@ -28,6 +28,7 @@ NSArray *conditionOptionsDonate;
     IBOutlet UITextField *conditionTextField;
     IBOutlet UITextField *priceTextField;
     IBOutlet UITextView *descriptionTextView;
+    IBOutlet UIActivityIndicatorView *loading;
     IBOutlet UIButton *imageView;
     IBOutlet UIButton *cameraButton;
     IBOutlet UILabel *tmpLabel;
@@ -36,6 +37,7 @@ NSArray *conditionOptionsDonate;
 //class properties
 @property (strong, nonatomic) UIPickerView *conditionPicker;
 @property UIToolbar *toolBar;
+@property bool doneClicked;
 
 //Action methods (actions are linked to UI events)
 -(IBAction)done:(id)sender;

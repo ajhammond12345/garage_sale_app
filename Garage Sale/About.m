@@ -79,7 +79,10 @@
     //sets to default of 0
     _amountRaisedInCents = 0;
     //creates url session to load amount raised
+    //production url
     NSString *jsonUrlString = [NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/total.json"];
+    //testing url
+    //NSString *jsonUrlString = [NSString stringWithFormat:@"http://localhost:3001/total.json"];
     NSURL *url = [NSURL URLWithString:jsonUrlString];
     NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:[NSOperationQueue mainQueue]];

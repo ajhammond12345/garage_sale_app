@@ -13,7 +13,7 @@
 
 //TODO: Change Password
 
-@interface UserSettings () <UITableViewDelegate, UITableViewDataSource>
+@interface UserSettings () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @end
 
@@ -55,13 +55,15 @@
         [tmpDic setObject:_address forKey:@"user_address"];
         //removes extra keys (item_image is replaced with a different key for the image data)
         NSNumber *userID = [defaults objectForKey:@"user_id"];
+        NSString *unique_key = [defaults objectForKey:@"unique_key"];
         [tmpDic setObject:userID forKey:@"id"];
+        [tmpDic setObject:unique_key forKey:@"user_unique_key"];
         
         //JSON Upload - does not upload the image
         //converts the dictionary to json
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
         //logs the data to check if it is created successfully
-        NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+        NSLog(@"Data to send:\n%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
         
         //creates url for the request
         
@@ -86,10 +88,11 @@
         //runs the data task
         [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+                NSError *jsonError;
+                NSDictionary *requestReply = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
                 NSLog(@"requestReply Type: %@\nrequestReply: %@", [[requestReply class] description], requestReply);
                 //if the result has the class type __NSCFConstantString then the item failed to upload
-                if ([[[requestReply class] description] isEqualToString:@"__NSCFConstantString"]) {
+                if (![[requestReply objectForKey:@"msg"] isEqualToString:@"updated"]) {
                     //alert for failing to upload
                     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Connection\n" message:@"Could not update the item. Please check your internet connection and try again." preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
@@ -222,13 +225,16 @@
     //removes extra keys (item_image is replaced with a different key for the image data)
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSNumber *userID = [defaults objectForKey:@"user_id"];
+    NSString *unique_key = [defaults objectForKey:@"unique_key"];
     [tmpDic setObject:userID forKey:@"id"];
+    [tmpDic setObject:unique_key forKey:@"user_unique_key"];
+
     
     //JSON Upload - does not upload the image
     //converts the dictionary to json
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
     //logs the data to check if it is created successfully
-    NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+    NSLog(@"Password Data: %@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
     
     //creates url for the request
     

@@ -9,6 +9,7 @@
 #import "Donate.h"
 #import "Item.h"
 #import "DonationThankYou.h"
+#import "Utility.h"
 
 
 @interface Donate () <UITextViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
@@ -65,133 +66,151 @@
 
 //this is the method run when the users submits an item
 -(IBAction)done:(id)sender {
-    [self.view endEditing:YES];
-
-    
-    //first need to check that all fields have data
-    if ([name isEqualToString:@""]
-        || [condition isEqualToString:@""]
-        || [description isEqualToString:@""]
-        || priceInCents == 0
-        || !imageUploaded) {
-        NSString *errorMessage;
-        if ([name isEqualToString:@""]) {
-            errorMessage = @"Please put in a name for the item";
-        }
-        else if ([condition isEqualToString:@""]) {
-            errorMessage = @"Please select a condition for this item";
-        }
-        else if ([description isEqualToString:@""]) {
-            errorMessage = [NSString stringWithFormat: @"Please provide a brief description of your item"];
-        }
-        else if (priceInCents == 0) {
-            errorMessage = @"Please suggest a price";
-        }
-        else if (!imageUploaded) {
-            errorMessage = @"Please take a picture of this item by selecting the camera button.";
-        }
-        //shows error message for missing information
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Missing Information" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
-        [alert addAction:defaultAction];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
-    //if all information present
-    else {
-        //closes keyboards
+    if (_doneClicked == false) {
+        _doneClicked = true;
         [self.view endEditing:YES];
-        //creates the Item object
-        Item *newItem = [[Item alloc] init];
-        newItem.name = name;
-        newItem.image = image;
-        newItem.condition = conditionInt;
-        newItem.priceInCents = priceInCents;
-        NSLog(@"%zd", newItem.priceInCents);
-        newItem.itemDescription = description;
-        //Note: item has not been liked (does nothing except prevent nil from stopping dictionary creation)
-        newItem.liked = false;
-        //0 means it has not been purchased
-        newItem.itemPurchaseState = 0;
-    
-        
-        //Then upload the item to the database
-        //refreshes the internal item dictionary
-        [newItem setItemDictionary];
-        
-        //creates error handler
-        NSError *error;
-        
-        //creates mutable copy of the dictionary to remove extra keys
-        NSMutableDictionary *tmpDic = [newItem.localDictionary mutableCopy];
-        
-        //removes extra keys (item_image is replaced with a different key for the image data)
-        [tmpDic removeObjectForKey:@"id"];
-        [tmpDic removeObjectForKey:@"item_image"];
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSNumber *userID = [defaults objectForKey:@"user_id"];
-        [tmpDic setObject:userID forKey:@"user_id"];
-        NSData *imageData = UIImageJPEGRepresentation(image, .6);
-        NSString *imageBase64 = [imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
-        //NSLog(@"Upload Data: %@", imageBase64);
-        [tmpDic setObject:imageBase64 forKey:@"va_image_data"];
-        [tmpDic setObject:[NSString stringWithFormat:@"%i", 0] forKey:@"item_purchase_state"];
 
-        //JSON Upload - does not upload the image
-        //converts the dictionary to json
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
-        //logs the data to check if it is created successfully
-        NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
         
-        //creates url for the request
+        //first need to check that all fields have data
+        if ([name isEqualToString:@""]
+            || [condition isEqualToString:@""]
+            || [description isEqualToString:@""]
+            || priceInCents == 0
+            || !imageUploaded) {
+            NSString *errorMessage;
+            if ([name isEqualToString:@""]) {
+                errorMessage = @"Please put in a name for the item";
+            }
+            else if ([condition isEqualToString:@""]) {
+                errorMessage = @"Please select a condition for this item";
+            }
+            else if ([description isEqualToString:@""]) {
+                errorMessage = [NSString stringWithFormat: @"Please provide a brief description of your item"];
+            }
+            else if (priceInCents == 0) {
+                errorMessage = @"Please suggest a price";
+            }
+            else if (!imageUploaded) {
+                errorMessage = @"Please take a picture of this item by selecting the camera button.";
+            }
+            //shows error message for missing information
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Missing Information" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+            [alert addAction:defaultAction];
+            _doneClicked = false;
+            [self presentViewController:alert animated:YES completion:nil];
+        }
+        //if all information present
+        else {
+            //closes keyboards
+            [self.view endEditing:YES];
+            //creates the Item object
+            Item *newItem = [[Item alloc] init];
+            newItem.name = name;
+            newItem.image = image;
+            newItem.condition = conditionInt;
+            newItem.priceInCents = priceInCents;
+            NSLog(@"%zd", newItem.priceInCents);
+            newItem.itemDescription = description;
+            //Note: item has not been liked (does nothing except prevent nil from stopping dictionary creation)
+            newItem.liked = false;
+            //0 means it has not been purchased
+            newItem.itemPurchaseState = 0;
         
-        //production url
-        NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/items.json"];
-        //testing url
-        //NSURL *url = [NSURL URLWithString:@"http://localhost:3001/items.json"];
+            
+            //Then upload the item to the database
+            //refreshes the internal item dictionary
+            [newItem setItemDictionary];
+            
+            //creates error handler
+            NSError *error;
+            
+            //creates mutable copy of the dictionary to remove extra keys
+            NSMutableDictionary *tmpDic = [newItem.localDictionary mutableCopy];
+            
+            //removes extra keys (item_image is replaced with a different key for the image data)
+            [tmpDic removeObjectForKey:@"id"];
+            [tmpDic removeObjectForKey:@"item_image"];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSNumber *userID = [defaults objectForKey:@"user_id"];
+            NSString *user_key = [defaults objectForKey:@"unique_key"];
+            [tmpDic setObject:userID forKey:@"user_id"];
+            [tmpDic setObject:user_key forKey:@"user_unique_key"];
+            NSData *imageData = UIImageJPEGRepresentation(image, .6);
+            NSString *imageBase64 = [imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
+            //NSLog(@"Upload Data: %@", imageBase64);
+            [tmpDic setObject:imageBase64 forKey:@"va_image_data"];
+            [tmpDic setObject:[NSString stringWithFormat:@"%i", 0] forKey:@"item_purchase_state"];
 
-        //creates a URL request
-        NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-        
-        //specifics for the request (it is a post request with json content)
-        [uploadRequest setHTTPMethod:@"POST"];
-        [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-        [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        [uploadRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
-        [uploadRequest setHTTPBody: jsonData];
-        
-        //create some type of waiting image here
-        NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-        
-        //runs the data task
-        [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-            NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-                NSLog(@"requestReply: %@", [[requestReply class] description]);
-                //if the result has the class type __NSCFConstantString then the item failed to upload
-                if ([[[requestReply class] description] isEqualToString:@"__NSCFConstantString"]) {
-                    //alert for failing to upload
-                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Connection\n" message:@"Could not donate the item. Please check your internet connection and try again." preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
-                    [alert addAction:defaultAction];
-                    [self presentViewController:alert animated:YES completion:nil];
-                }
-                else {
-                    //opens user defaults to save data locally
-                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                    NSArray *donatedArray = [defaults objectForKey:@"DonatedItems"];
-                    NSMutableArray *tmpDonatedItems = [[NSMutableArray alloc] init];
-                    //creates array with all of the saved items
-                    for (int i = 0; i < donatedArray.count; i++) {
-                        NSDictionary *tmpDic = [donatedArray objectAtIndex:i];
-                        [tmpDonatedItems addObject:[self itemFromDictionaryInternal:tmpDic]];
+            //JSON Upload - does not upload the image
+            //converts the dictionary to json
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
+            //logs the data to check if it is created successfully
+            NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+            
+            //creates url for the request
+            
+            //production url
+            NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/items.json"];
+            //testing url
+            //NSURL *url = [NSURL URLWithString:@"http://localhost:3001/items.json"];
+
+            //creates a URL request
+            NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+            
+            //specifics for the request (it is a post request with json content)
+            [uploadRequest setHTTPMethod:@"POST"];
+            [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+            [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+            [uploadRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
+            [uploadRequest setHTTPBody: jsonData];
+            
+            //create some type of waiting image here
+            NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+            loading.hidden = NO;
+            [loading startAnimating];
+            //runs the data task
+            [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    //indicates that the button has finished its action so it can be click again
+                    [loading stopAnimating];
+                    loading.hidden = YES;
+                    _doneClicked = false;
+                    NSError *jsonError;
+                    NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+                    NSLog(@"requestReply: %@", [[requestReply class] description]);
+                    NSLog(@"Response: %@", requestReply);
+                    NSDictionary *check = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
+                    //if the result has the class type __NSCFConstantString then the item failed to upload
+                    if ([[check objectForKey:@"msg"] isEqualToString:@"failed_to_donate"]) {
+                        [Utility throwAlertWithTitle:@"Donation Failed" message:@"Could not save your donation. Thank you for trying to donate. Please try again later." sender:self];
+
                     }
-                    //adds the new item to the donated list
-                    [tmpDonatedItems addObject:[self itemFromDictionaryInternal:newItem.localDictionary]];
-                    //transitions to the thank you page
-                    [self performSegueWithIdentifier:@"showDonationThankYou" sender:(self)];
-                }
-            });
-        }] resume];
+                    else if ([[check objectForKey:@"msg"] isEqualToString:@"invalid_key"]) {
+                        //alert for failing to upload
+                        [Utility throwAlertWithTitle:@"Invalid Login Session" message:@"Could not verify your identity. Please log out and try again." sender:self];
+                    }
+                    else if ([[[NSNumberFormatter alloc] init] numberFromString:requestReply] != nil){
+                        //opens user defaults to save data locally
+                        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                        NSArray *donatedArray = [defaults objectForKey:@"DonatedItems"];
+                        NSMutableArray *tmpDonatedItems = [[NSMutableArray alloc] init];
+                        //creates array with all of the saved items
+                        for (int i = 0; i < donatedArray.count; i++) {
+                            NSDictionary *tmpDic = [donatedArray objectAtIndex:i];
+                            [tmpDonatedItems addObject:[self itemFromDictionaryInternal:tmpDic]];
+                        }
+                        //adds the new item to the donated list
+                        [tmpDonatedItems addObject:[self itemFromDictionaryInternal:newItem.localDictionary]];
+                        //transitions to the thank you page
+                        [self performSegueWithIdentifier:@"showDonationThankYou" sender:(self)];
+                    }
+                    else {
+                        [Utility throwAlertWithTitle:@"No Connection" message:@"Unable to connect to server" sender:self];
+                    }
+                });
+            }] resume];
+        }
     }
 }
 
@@ -442,6 +461,7 @@
     priceTextField.delegate = self;
     tmpLabel.hidden = YES;
     imageUploaded = false;
+    loading.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning {

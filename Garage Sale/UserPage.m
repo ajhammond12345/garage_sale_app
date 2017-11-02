@@ -11,7 +11,7 @@
 #import "UserSettings.h"
 
 
-@interface UserPage () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, NSURLSessionDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface UserPage () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @end
 
@@ -85,72 +85,109 @@
     }
 }
 
-//loads all of the items
 -(void)loadDonatedItems {
-    NSLog(@"Started Loading Items");
-    //-- Make URL request with server to load all of the items
-    if (_donatedItems != nil) {
-        [donatedItemsView reloadData];
-    }
+    NSMutableDictionary *dataDic = [[NSMutableDictionary alloc] init];
+    //goes through every field, if it is not empty it adds it to the dictionary (empty fields are handled by the database with default values)
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *userID = [defaults objectForKey:@"user_id"];
-    //production URL
-    NSString *jsonUrlString = [NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/users/%@.json", userID];
+    NSString *unique_key = [defaults objectForKey:@"unique_key"];
+    [dataDic setObject:userID forKey:@"user_id"];
+    [dataDic setObject:unique_key forKey:@"user_unique_key"];
     
-    //testing URL
-    //NSString *jsonUrlString = [NSString stringWithFormat:@"http://localhost:3001/users/%@.json", userID];
-    NSURL *url = [NSURL URLWithString:jsonUrlString];
-    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:[NSOperationQueue mainQueue]];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url];
-    [dataTask resume];
-}
-
-
-//loads all of the items when the data task is complete
-- (void)URLSession:(NSURLSession *)session
-          dataTask:(NSURLSessionDataTask *)dataTask
-    didReceiveData:(NSData *)data {
-    
+    //error handler
     NSError *error;
-    _result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    //NSLog(@"Result (Length: %zd) = %@",_result.count, _result);
-    //this interprets the data received a creates a bunch of items from it
-    NSMutableArray *tmpDonatedItemArray = [[NSMutableArray alloc] init];
-    NSMutableArray *tmpPurchasedItemArray = [[NSMutableArray alloc] init];
-    NSArray *items = [_result objectForKey:@"items"];
-    NSLog(@"%@",items);
-    for (int i = 0; i < items.count; i++) {
-        NSDictionary *tmpDic = [items objectAtIndex:i];
-        NSLog(@"Dictionary %@", tmpDic);
-        Item *loadItem = [self itemFromDictionaryExternal:tmpDic];
-        NSLog(@"LoadItemID: %zd", loadItem.itemID);
-        //[self loadItemImage:loadItem];
-        [tmpDonatedItemArray addObject:loadItem];
-        if ([loadItem.itemPurchaseState isEqualToNumber:[[NSNumber alloc] initWithInt:1]]) {
-            [tmpPurchasedItemArray addObject:loadItem];
+    
+    //creates the json data for the url request
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dataDic options:NSJSONWritingPrettyPrinted error:&error];
+    
+    
+    
+    //production URL
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/users/%@.json", userID]];
+    //testing URL
+    //NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:3001/users/%@/info.json", userID]];
+    //creates a URL request
+    NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    
+    
+    
+    
+    //specifics for the request (it is a post request with json content)
+    [uploadRequest setHTTPMethod:@"POST"];
+    [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [uploadRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [uploadRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
+    [uploadRequest setHTTPBody: jsonData];
+    
+    //creates the URLSession to start the request
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    //initiates the url session with a handler that processes the data returned from the server
+    [[session dataTaskWithRequest:uploadRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSLog(@"Error: %@", error);
+        //if the data is empty it will report an error, if not it will process the list of items returned by the filter parameters
+        if (data != nil) {
+            //error handler
+            NSError *jsonError;
+            //stores the response
+            _result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
+            NSLog(@"Result: %@", _result);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //if the response is the valid type it indicates the download is successful and proceeds with the segue back to the main page, if unsuccessful it proceeds while leaving the downloadSuccessful as false (the segue delegate method uses this to determine what data to pass to the Items view controller
+                if ([[_result objectForKey:@"msg"] isEqualToString:@"invalid_key"]) {
+                    NSLog(@"Invalid login session");
+                    [Utility throwAlertWithTitle:@"Invalid Session" message:@"Cannot verify login session. Please logout and log back in." sender:self];
+                }
+                else if ([_result objectForKey:@"items"] != nil) {
+                    NSMutableArray *tmpDonatedItemArray = [[NSMutableArray alloc] init];
+                    NSMutableArray *tmpPurchasedItemArray = [[NSMutableArray alloc] init];
+                    NSArray *items = [_result objectForKey:@"items"];
+                    NSLog(@"%@",items);
+                    for (int i = 0; i < items.count; i++) {
+                        NSDictionary *tmpDic = [items objectAtIndex:i];
+                        NSLog(@"Dictionary %@", tmpDic);
+                        Item *loadItem = [self itemFromDictionaryExternal:tmpDic];
+                        NSLog(@"LoadItemID: %zd", loadItem.itemID);
+                        //[self loadItemImage:loadItem];
+                        [tmpDonatedItemArray addObject:loadItem];
+                        if ([loadItem.itemPurchaseState isEqualToNumber:[[NSNumber alloc] initWithInt:1]]) {
+                            [tmpPurchasedItemArray addObject:loadItem];
+                        }
+                    }
+                    
+                    //if data receieved it saves the interpreted data to the local array
+                    if (tmpDonatedItemArray != nil) {
+                        _donatedItems = tmpDonatedItemArray;
+                    }
+                    if (tmpPurchasedItemArray != nil) {
+                        _purchasedItems = tmpPurchasedItemArray;
+                    }
+                    [donatedItemsView reloadData];
+                    NSLog(@"%@", tmpDonatedItemArray);
+                }
+                else {
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Server Error" message:@"Unable to process your request at this moment." preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action)
+                                                    {
+                                                        
+                                                    }];
+                    [alert addAction:defaultAction];
+                    [self presentViewController:alert animated:YES completion:nil];
+                }
+            });
         }
-    }
-    
-    //if data receieved it saves the interpreted data to the local array
-    if (tmpDonatedItemArray != nil) {
-        _donatedItems = tmpDonatedItemArray;
-    }
-    if (tmpPurchasedItemArray != nil) {
-        _purchasedItems = tmpPurchasedItemArray;
-    }
-    
-    else {
-        //if no data received it provides this alert
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Connection\n" message:@"Could not load items" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
-        [alert addAction:defaultAction];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
-    [donatedItemsView reloadData];
-    NSLog(@"%@", tmpDonatedItemArray);
-    [session invalidateAndCancel];
-    
+        //logs if data is nil and the phone did not connect to a server
+        else {
+            NSLog(@"NO DATA RECEIVED FROM USER CREATION REQUEST");
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Connection Error" message:@"Could not connect to create user." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action)
+                                            {
+                                                
+                                            }];
+            [alert addAction:defaultAction];
+            [self presentViewController:alert animated:YES completion:nil];
+            
+        }
+    }] resume];
 }
 
 //Loads items from the dictionary passed by the server (uses URL for image grab)
