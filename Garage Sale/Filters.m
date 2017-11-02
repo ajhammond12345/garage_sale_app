@@ -323,7 +323,7 @@
         maximumPrice.text = [NSString stringWithFormat:@"$%@.%@", dollars, cents];
         if ([maximumPrice.text isEqualToString:@"$0.00"]) {
             maximumPrice.text = @"";
-            _maxPriceInCents = (long *)-1;
+            _maxPriceInCents = (NSInteger *)-1;
             maximumPrice.placeholder = @"$0.00";
         }
     }
