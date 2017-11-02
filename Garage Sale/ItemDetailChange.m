@@ -252,9 +252,9 @@
             //creates url for the request
             
             //production url
-            //NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/items/%zd.json", _itemOnDisplay.itemID]];
+            NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/items/%zd.json", _itemOnDisplay.itemID]];
             //testing url
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:3001/items/%zd.json", _itemOnDisplay.itemID]];
+            //NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:3001/items/%zd.json", _itemOnDisplay.itemID]];
             
             //creates a URL request
             NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
@@ -428,7 +428,7 @@
 }
 
 //for condition (not directly edited, uses a picker instead)
--(bool)textFieldShouldBeginEditing:(UITextField *)textField {
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     if ([self isItemPurchased]) {
         [Utility throwAlertWithTitle:@"Item Sold" message:@"This item has been purchased. No changes are allowed." sender:self];
         return false;
@@ -510,7 +510,7 @@
     }
 }
 
--(bool)textViewShouldBeginEditing:(UITextField *)textField {
+-(BOOL)textViewShouldBeginEditing:(UITextField *)textField {
     if ([self isItemPurchased]) {
         [Utility throwAlertWithTitle:@"Item Sold" message:@"This item has been purchased. No changes are allowed." sender:self];
         return false;

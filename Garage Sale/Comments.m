@@ -17,9 +17,9 @@
 //initiates url session to download comments
 -(void)downloadComments {
     //production url
-    //NSString *jsonUrlString = [NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/items/%zd.json", _item.itemID];
+    NSString *jsonUrlString = [NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/items/%zd.json", _item.itemID];
     //test url
-    NSString *jsonUrlString = [NSString stringWithFormat:@"http://localhost:3001/items/%zd.json", _item.itemID];
+    //NSString *jsonUrlString = [NSString stringWithFormat:@"http://localhost:3001/items/%zd.json", _item.itemID];
     //NSLog(@"URL Request: %@", jsonUrlString);
     NSURL *url = [NSURL URLWithString:jsonUrlString];
     NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];

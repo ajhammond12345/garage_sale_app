@@ -1025,20 +1025,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please ship to:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C47-QB-sRt">
-                                <rect key="frame" x="136" y="521" width="102" height="28"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Warning:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C47-QB-sRt">
+                                <rect key="frame" x="154" y="521" width="66" height="28"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Johns Creek, GA 30022" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehQ-R9-GSf">
-                                <rect key="frame" x="105" y="579" width="164" height="28"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="to test it by &quot;donating&quot; an item, know that you are not donating anything." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehQ-R9-GSf">
+                                <rect key="frame" x="57.5" y="579" width="260" height="55"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5575 State Bridge Rd" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Mg-Gt-h0u">
-                                <rect key="frame" x="112" y="551" width="150" height="28"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This app is not yet active. If you wish" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Mg-Gt-h0u">
+                                <rect key="frame" x="62" y="551" width="251" height="28"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1091,6 +1091,8 @@
                             <constraint firstItem="8Bx-wc-f5W" firstAttribute="leading" secondItem="3iN-vq-mUv" secondAttribute="trailing" constant="21" id="Lgt-C6-emM"/>
                             <constraint firstItem="Veo-Ez-QAX" firstAttribute="leading" secondItem="bvb-HL-oJj" secondAttribute="trailing" constant="129" id="M8j-45-6eB"/>
                             <constraint firstItem="5Mg-Gt-h0u" firstAttribute="centerX" secondItem="U9n-io-J9l" secondAttribute="centerX" id="MHQ-qm-nD9"/>
+                            <constraint firstItem="P8S-zN-JeG" firstAttribute="top" secondItem="ehQ-R9-GSf" secondAttribute="bottom" constant="33" id="Ntb-0q-hcE"/>
+                            <constraint firstItem="5Mg-Gt-h0u" firstAttribute="width" secondItem="tH6-j5-8d5" secondAttribute="width" multiplier="251:375" id="NzX-pU-VM7"/>
                             <constraint firstItem="Ier-70-c8R" firstAttribute="leading" secondItem="3iN-vq-mUv" secondAttribute="trailing" constant="21" id="Ph3-z9-dPz"/>
                             <constraint firstItem="8Bx-wc-f5W" firstAttribute="top" secondItem="Veo-Ez-QAX" secondAttribute="bottom" constant="23" id="Rsj-ZZ-VlD"/>
                             <constraint firstItem="5Mg-Gt-h0u" firstAttribute="top" secondItem="C47-QB-sRt" secondAttribute="bottom" constant="2" id="TBX-Bi-0Ve"/>
@@ -1106,10 +1108,11 @@
                             <constraint firstItem="z9F-fM-Sa6" firstAttribute="leading" secondItem="3iN-vq-mUv" secondAttribute="leading" id="ewp-ip-6wo"/>
                             <constraint firstItem="3iN-vq-mUv" firstAttribute="top" secondItem="Veo-Ez-QAX" secondAttribute="top" constant="-8" id="ftP-UO-tbP"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="QbP-44-Viy" secondAttribute="trailing" constant="8" id="ifP-Yk-OgS"/>
+                            <constraint firstItem="ehQ-R9-GSf" firstAttribute="width" secondItem="5Mg-Gt-h0u" secondAttribute="width" multiplier="260:251" id="kS6-wF-Vl4"/>
                             <constraint firstItem="Veo-Ez-QAX" firstAttribute="leading" secondItem="tH6-j5-8d5" secondAttribute="leading" constant="187" id="rn2-Cw-wm5"/>
                             <constraint firstItem="0PP-sl-4H9" firstAttribute="top" secondItem="tH6-j5-8d5" secondAttribute="top" id="rsx-bY-Tcv"/>
+                            <constraint firstItem="ehQ-R9-GSf" firstAttribute="centerX" secondItem="tH6-j5-8d5" secondAttribute="centerX" id="sIV-yp-q6v"/>
                             <constraint firstItem="U9n-io-J9l" firstAttribute="leading" secondItem="tH6-j5-8d5" secondAttribute="leading" id="sT3-u5-JDk"/>
-                            <constraint firstItem="5Mg-Gt-h0u" firstAttribute="centerX" secondItem="ehQ-R9-GSf" secondAttribute="centerX" id="sa6-ek-xA7"/>
                             <constraint firstAttribute="trailing" secondItem="0PP-sl-4H9" secondAttribute="trailing" id="sw2-Ld-ijN"/>
                             <constraint firstItem="Veo-Ez-QAX" firstAttribute="leading" secondItem="3iN-vq-mUv" secondAttribute="trailing" constant="21" id="tWV-8W-oH7"/>
                             <constraint firstItem="Ier-70-c8R" firstAttribute="top" secondItem="8Bx-wc-f5W" secondAttribute="bottom" constant="23" id="uXt-2P-sFK"/>
@@ -1130,7 +1133,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="okL-iO-dIA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="668" y="1244"/>
+            <point key="canvasLocation" x="668" y="1243.6281859070466"/>
         </scene>
         <!--tyDonate-->
         <scene sceneID="rwP-TG-360">

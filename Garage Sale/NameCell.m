@@ -17,7 +17,7 @@
     //creates image picker
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
-    picker.allowsEditing = _superView;
+    picker.allowsEditing = YES;
     //lets user choose camera or photo library
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     //camera action

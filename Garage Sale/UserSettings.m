@@ -13,7 +13,7 @@
 
 //TODO: Change Password
 
-@interface UserSettings () <UITableViewDelegate, UITableViewDataSource>
+@interface UserSettings () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @end
 
@@ -63,14 +63,14 @@
         //converts the dictionary to json
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
         //logs the data to check if it is created successfully
-        NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+        NSLog(@"Data to send:\n%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
         
         //creates url for the request
         
         //production url
-        //NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/users/%zd.json", [userID integerValue]]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/users/%zd.json", [userID integerValue]]];
         //testing url
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:3001/users/%zd.json", [userID integerValue]]];
+        //NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:3001/users/%zd.json", [userID integerValue]]];
         //NSLog(url.path);
         //creates a URL request
         NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
@@ -225,20 +225,23 @@
     //removes extra keys (item_image is replaced with a different key for the image data)
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSNumber *userID = [defaults objectForKey:@"user_id"];
+    NSString *unique_key = [defaults objectForKey:@"unique_key"];
     [tmpDic setObject:userID forKey:@"id"];
+    [tmpDic setObject:unique_key forKey:@"user_unique_key"];
+
     
     //JSON Upload - does not upload the image
     //converts the dictionary to json
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tmpDic options:NSJSONWritingPrettyPrinted error:&error];
     //logs the data to check if it is created successfully
-    NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+    NSLog(@"Password Data: %@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
     
     //creates url for the request
     
     //production url
-    //NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/users/%zd.json", [userID integerValue]]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://murmuring-everglades-79720.herokuapp.com/users/%zd.json", [userID integerValue]]];
     //testing url
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:3001/users/%zd.json", [userID integerValue]]];
+    //NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:3001/users/%zd.json", [userID integerValue]]];
     //NSLog(url.path);
     //creates a URL request
     NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];

@@ -35,9 +35,9 @@
         
         //creates url for request
     //production URL
-    //NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/users/unique_username.json"];
+    NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/users/unique_username.json"];
     //testing URL
-    NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users/unique_username.json"];
+    //NSURL *url = [NSURL URLWithString:@"http://localhost:3001/users/unique_username.json"];
         //creates a URL request
         NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
         
@@ -254,21 +254,25 @@
                 //opens user defaults to save data locally
                 NSLog(@"%@", _result);
                 NSInteger *userID = (NSInteger *)[[_result objectForKey:@"id"] integerValue];
-                NSLog(@"User ID From download: %@", [NSString stringWithFormat:@"%zd", userID]);
-                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                [defaults setObject:[NSString stringWithFormat:@"%zd", userID] forKey:@"user_id"];
-                [defaults setObject:[NSNumber numberWithBool:true] forKey:@"logged_in"];
-                [defaults setObject:[_result objectForKey:@"username"] forKey:@"username"];
-                [defaults setObject:_password forKey:@"password"];
-                [defaults setObject:[_result objectForKey:@"user_first_name"] forKey:@"first_name"];
-                [defaults setObject:[_result objectForKey:@"user_last_name"] forKey:@"last_name"];
-                [defaults setObject:[_result objectForKey:@"user_address"] forKey:@"address"];
-                [defaults setObject:[_result objectForKey:@"email_address"] forKey:@"email"];
-                [defaults setObject:[_result objectForKey:@"user_unique_key"] forKey:@"unique_key"];
-                NSLog(@"Unique Key: %@", [_result objectForKey:@"user_unique_key"]);
-                
-                //transitions back to page it came from (property booleans needed here
-                [self performSegueWithIdentifier:@"toHome" sender:(self)];
+                if (userID == 0) {
+                    [self throwAlertWithTitle:@"No Connection\n" message:@"Could not create user. Please check your internet connection and try again."];
+                }
+                else {
+                    NSLog(@"User ID From download: %@", [NSString stringWithFormat:@"%zd", userID]);
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    [defaults setObject:[NSString stringWithFormat:@"%zd", userID] forKey:@"user_id"];
+                    [defaults setObject:[NSNumber numberWithBool:true] forKey:@"logged_in"];
+                    [defaults setObject:[_result objectForKey:@"username"] forKey:@"username"];
+                    [defaults setObject:_password forKey:@"password"];
+                    [defaults setObject:[_result objectForKey:@"user_first_name"] forKey:@"first_name"];
+                    [defaults setObject:[_result objectForKey:@"user_last_name"] forKey:@"last_name"];
+                    [defaults setObject:[_result objectForKey:@"user_address"] forKey:@"address"];
+                    [defaults setObject:[_result objectForKey:@"email_address"] forKey:@"email"];
+                    [defaults setObject:[_result objectForKey:@"user_unique_key"] forKey:@"unique_key"];
+                    NSLog(@"Unique Key: %@", [_result objectForKey:@"user_unique_key"]);
+                    //transitions back to page it came from (property booleans needed here
+                    [self performSegueWithIdentifier:@"toHome" sender:(self)];
+                }
             }
         });
     }] resume];

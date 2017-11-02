@@ -26,9 +26,9 @@
     
     //creates url for the request
     //production url
-    //NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/comments.json"];
+    NSURL *url = [NSURL URLWithString:@"https://murmuring-everglades-79720.herokuapp.com/comments.json"];
     //testing url
-    NSURL *url = [NSURL URLWithString:@"http://localhost:3001/comments.json"];
+    //NSURL *url = [NSURL URLWithString:@"http://localhost:3001/comments.json"];
     
     //creates a URL request
     NSMutableURLRequest *uploadRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
